@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.U2D;
 using TMPro;
+using ExtensionMethods;
 
 public class RaceDayHelper : MonoBehaviour
 {
@@ -51,7 +52,7 @@ public class RaceDayHelper : MonoBehaviour
         trackWeather.text = TrackGenerator.GenerateWeather();
 
         competitorsArray[0].competitor_Name.text = _competitorCarsArray[0].driver.name;
-        competitorsArray[0].competitor_CarNumber_AndColor.text = (_competitorCarsArray[0].driver.carNumber < 10) ? string.Format("0{0}", _competitorCarsArray[0].driver.carNumber) : _competitorCarsArray[0].driver.carNumber.ToString();
+        competitorsArray[0].competitor_CarNumber_AndColor.text = _competitorCarsArray[0].driver.carNumber.FormatIntoDoubleDigits();
         competitorsArray[0].competitor_CarNumber_AndColor.color = PlayerManager.Instance.TeamColor;
         _competitorCarsArray[0].sprite.color = PlayerManager.Instance.TeamColor;
 
@@ -60,7 +61,7 @@ public class RaceDayHelper : MonoBehaviour
         {
 
             competitorsArray[i].competitor_Name.text = _competitorCarsArray[i].driver.name;
-            competitorsArray[i].competitor_CarNumber_AndColor.text = (_competitorCarsArray[i].driver.carNumber < 10) ? string.Format("0{0}", _competitorCarsArray[i].driver.carNumber) : _competitorCarsArray[i].driver.carNumber.ToString();
+            competitorsArray[i].competitor_CarNumber_AndColor.text = _competitorCarsArray[i].driver.carNumber.FormatIntoDoubleDigits();
             Color rngColor = Random.ColorHSV(0f, 1f, 1f, 1f, 0f, 1f, 1f, 1f); ;
             competitorsArray[i].competitor_CarNumber_AndColor.color = rngColor;
             _competitorCarsArray[i].sprite.color = rngColor;

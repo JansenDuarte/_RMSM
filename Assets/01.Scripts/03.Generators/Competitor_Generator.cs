@@ -13,14 +13,16 @@ public static class Competitor_Generator
 
         for (int i = 0; i < _ammount; i++)
         {
-            npcDriver = new();
-            npcDriver.name = layout[i].name;
-            npcDriver.country = layout[i].country;
-            npcDriver.sex = layout[i].sex;
-            npcDriver.age = layout[i].age;
+            npcDriver = new()
+            {
+                name = layout[i].name,
+                country = layout[i].country,
+                sex = layout[i].sex,
+                age = layout[i].age,
 
-            //Debuging
-            npcDriver.carNumber = Random.Range(0, 100);
+                //Debuging
+                carNumber = Random.Range(0, 100)
+            };
             npcDriver.skills[0].VALUE = Random.Range(1, 11) * _difficulty;
             npcDriver.skills[0].VALUE = Random.Range(1, 11) * _difficulty;
             npcDriver.skills[0].VALUE = Random.Range(1, 11) * _difficulty;
@@ -28,7 +30,6 @@ public static class Competitor_Generator
             //Debuging//
 
             competitorList.Add(npcDriver);
-            //Debug.Log(i);
         }
 
         return competitorList;

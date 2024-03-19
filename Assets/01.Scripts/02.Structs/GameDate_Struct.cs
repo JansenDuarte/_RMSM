@@ -1,15 +1,13 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+
 
 [System.Serializable]
 public struct GameDate_Struct
 {
-    int m_week;
+    private int m_week;
 
     public int Week
     {
-        get { return m_week; }
+        readonly get { return m_week; }
         set
         {
             m_week = value;
@@ -21,15 +19,15 @@ public struct GameDate_Struct
         }
     }
 
-    Months m_month;
+    private Months m_month;
 
     public Months Month
     {
-        get { return m_month; }
+        readonly get { return m_month; }
         set
         {
             m_month = value;
-            if(m_month > (Months)12)
+            if (m_month > (Months)12)
             {
                 m_month = (Months)1;
                 Year += 1;
@@ -37,11 +35,11 @@ public struct GameDate_Struct
         }
     }
 
-    int m_year;
+    private int m_year;
 
     public int Year
     {
-        get { return m_year; }
+        readonly get { return m_year; }
         set
         {
             m_year = value;
@@ -59,16 +57,16 @@ public struct GameDate_Struct
 
 public enum Months
 {
-    JAN  = 1,
-    FEV  = 2,
-    MAR  = 3,
-    ABR  = 4,
+    JAN = 1,
+    FEV = 2,
+    MAR = 3,
+    ABR = 4,
     MAIO = 5,
-    JUN  = 6,
-    JUL  = 7,
-    AGO  = 8,
-    SET  = 9,
-    OUT  = 10,
-    NOV  = 11,
-    DEZ  = 12
+    JUN = 6,
+    JUL = 7,
+    AGO = 8,
+    SET = 9,
+    OUT = 10,
+    NOV = 11,
+    DEZ = 12
 }

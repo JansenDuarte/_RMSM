@@ -10,6 +10,8 @@ public abstract class NpcLayout
     private const int AGE_THRESHOLD = 30;
 
     private const int LEVELUP_SCALING = 10;
+    public const int LOWER_SKILL_LIMIT = 1;
+    public const int UPPER_SKILL_LIMIT = 100;
     #endregion // CONSTANTS
 
     #region VARIBLES
@@ -67,13 +69,13 @@ public abstract class NpcLayout
             skills[Random.Range(i + 1, skills.Length)] += scrambleFactor;
         }
 
-        //values cannot be higher than 100
+        //values cannot be higher than the upper limit
         for (int i = 0; i < skills.Length; i++)
         {
-            if (skills[i] > 100)
+            if (skills[i] > UPPER_SKILL_LIMIT)
             {
-                //cut the value below 100
-                skills[i] = 100;
+                //cut the value to the upper limit
+                skills[i] = UPPER_SKILL_LIMIT;
             }
         }
 

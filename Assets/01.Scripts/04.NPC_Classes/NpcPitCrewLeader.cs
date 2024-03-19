@@ -26,7 +26,7 @@ public class NpcPitCrewLeader : NpcLayout
 
         List<int> list = new();
         list.AddRange(values);
-        int listIndex = -1;
+        int listIndex;
 
         for (int i = 0; i < values.Length; i++)
         {
