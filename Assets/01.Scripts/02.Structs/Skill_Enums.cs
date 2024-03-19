@@ -1,0 +1,33 @@
+
+
+public enum DRIVER_SKILLS
+{
+    STAMINA = 0,
+    SPEED = 1,
+    TECHNIQUE = 2,
+    CONSISTENCY = 3
+}
+
+public enum PIT_LEADER_SKILLS
+{
+    LEADERSHIP = 0,
+    CREW_COACHING = 1,
+    TECH_KNOWLEDGE = 2,
+    CONSISTENCY = 3
+}
+
+public enum PIT_MEMBER_SKILLS
+{
+    SPEED = 0,
+    CONSISTENCY = 1,
+    TEAM_WORK = 2,
+    STAMINA = 3
+}
+
+public enum ENGINEER_SKILLS
+{
+    RACE_KNOWLEDGE = 0,
+    RACE_STRATEGY = 1,
+    CAR_KNOWLEDGE = 2,
+    DRIVER_COACHING = 3
+}
