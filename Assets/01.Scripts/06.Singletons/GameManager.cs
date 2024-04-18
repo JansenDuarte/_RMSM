@@ -80,7 +80,7 @@ public class GameManager : MonoBehaviour
             //  00.MainMenu
             case 0:
                 mainMenu_Controler = FindObjectOfType<MainMenu_Controler>();
-                m_savedGames = DbInstance.GetSavedGames();
+                m_savedGames = DbInstance.Get_SavedGames();
                 mainMenu_Controler.FillUsedSaveSlots(m_savedGames);
                 break;
 

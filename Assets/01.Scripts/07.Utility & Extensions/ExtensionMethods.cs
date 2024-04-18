@@ -307,6 +307,32 @@ namespace ExtensionMethods
 
 
         /// <summary>
+        /// Parse the curve to a string
+        /// </summary>
+        /// <param name="_curve"></param>
+        /// <returns></returns>
+        public static string Convert_TrackToString(this BezierCurve _curve)
+        {
+            BezierPoint[] points = _curve.GetAnchorPoints();
+            string retValue = string.Empty;
+            char style;
+
+            for (int i = 0; i < _curve.pointCount; i++)
+            {
+                style = points[i].handleStyle.ToString()[0]; //first letter of the style
+                retValue += string.Format("[{0},{1},{2},{3}];",
+                points[i].localPosition,
+                points[i].handle1,
+                points[i].handle2,
+                style);
+            }
+
+            Debug.Log(retValue);
+            return retValue;
+        }
+
+
+        /// <summary>
         /// Turns a string in the format "RGBA(#.###, #.###, #.###, #.###)" into a Color
         /// </summary>
         /// <param name="_s"></param>

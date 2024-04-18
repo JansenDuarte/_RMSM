@@ -2,6 +2,7 @@ using Mono.Data.Sqlite;
 using System.Data;
 using UnityEngine;
 
+
 public class DBConnector : MonoBehaviour
 {
     #region SIMPLE_SINGLETON
@@ -39,11 +40,15 @@ public class DBConnector : MonoBehaviour
 
     [SerializeField]
     [Tooltip("Name of the general database")]
-    private string GameDb_Url;
+    private string GameDb_url;
 
     [SerializeField]
     [Tooltip("Name of the NPC database with names, surenames and nationalities")]
-    private string NpcDataDb_Url;
+    private string NpcDataDb_url;
+
+    [SerializeField]
+    [Tooltip("Database for the tracks")]
+    private string TracksDb_url;
 
     private IDbConnection _connection = null;
 
@@ -57,8 +62,9 @@ public class DBConnector : MonoBehaviour
 
     private void PrepareDataBaseInfo()
     {
-        GameDb_Url = "URI=file:" + Application.dataPath + "/99.InternalDataBase/" + GameDb_Url;
-        NpcDataDb_Url = "URI=file:" + Application.dataPath + "/99.InternalDataBase/" + NpcDataDb_Url;
+        GameDb_url = "URI=file:" + Application.dataPath + "/99.InternalDataBase/" + GameDb_url;
+        NpcDataDb_url = "URI=file:" + Application.dataPath + "/99.InternalDataBase/" + NpcDataDb_url;
+        TracksDb_url = "URI=file:" + Application.dataPath + "/99.InternalDataBase/" + TracksDb_url;
     }
 
 
@@ -71,7 +77,7 @@ public class DBConnector : MonoBehaviour
 
     private bool Connect()
     {
-        _connection = new SqliteConnection(GameDb_Url);
+        _connection = new SqliteConnection(GameDb_url);
 
         if (_connection != null)
         {
@@ -82,7 +88,7 @@ public class DBConnector : MonoBehaviour
             return false;
     }
 
-    public Saved_Game_Struct[] GetSavedGames()
+    public Saved_Game_Struct[] Get_SavedGames()
     {
         if (Connect() == false)
         {
@@ -113,7 +119,7 @@ public class DBConnector : MonoBehaviour
                 );
         }
 
-        Print_OpTimer("GetSavedGames()");
+        Print_OpTimer("Get_SavedGames()");
 
         CloseConnection();
 
@@ -424,7 +430,7 @@ public class DBConnector : MonoBehaviour
         if (_connection != null)
             _connection.Close();
 
-        _connection = new SqliteConnection(NpcDataDb_Url);
+        _connection = new SqliteConnection(NpcDataDb_url);
 
         //Debug.Log(NpcDataDb_Url);
 
@@ -453,7 +459,7 @@ public class DBConnector : MonoBehaviour
         }
         else
         {
-            int rng = Random.Range(1, 1001);
+            int rng = Random.Range(1, NAMES_SIZE);
 
             _command = _connection.CreateCommand();
 
@@ -481,7 +487,7 @@ public class DBConnector : MonoBehaviour
             reader.Close();
             //Debug.Log(string.Format("First fetch result: ID {0} Name {1} Sex {2}", rng, layout.Name, layout.Sex));
 
-            rng = Random.Range(1, 1001);
+            rng = Random.Range(1, NAMES_SIZE);
 
             _command.CommandText = "SELECT * FROM Names WHERE ID=" + rng;
 
@@ -495,7 +501,7 @@ public class DBConnector : MonoBehaviour
             reader.Close();
             //Debug.Log(string.Format("Second fetch result: ID {0} Full Name {1}", rng, layout.Name));
 
-            rng = Random.Range(1, 196);
+            rng = Random.Range(1, COUNTRIES_SIZE);
 
             _command.CommandText = "SELECT * FROM CountriesOfTheWorld WHERE ID=" + rng;
 
@@ -606,9 +612,36 @@ public class DBConnector : MonoBehaviour
     #endregion // DATABASE_METHODS
 
 
+
+    #region TRACK_DB_METHODS
+
+    private bool Connect_TrackDb()
+    {
+        _connection = new SqliteConnection(TracksDb_url);
+
+        if (_connection != null)
+        {
+            _connection.Open();
+            return true;
+        }
+        else
+            return false;
+    }
+
+    //TODO create track loading
+    public void Load_Track()
+    {
+
+    }
+
+    #endregion // TRACK_DB_METHODS
+
+
+
     private void CloseConnection()
     {
-        _connection.Close();
+        if (_connection != null)
+            _connection.Close();
 
         _connection = null;
     }

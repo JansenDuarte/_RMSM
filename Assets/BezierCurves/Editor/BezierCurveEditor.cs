@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEditor;
 using System.Collections;
+using ExtensionMethods;
 
 [CustomEditor(typeof(BezierCurve))]
 public class BezierCurveEditor : Editor
@@ -10,6 +11,10 @@ public class BezierCurveEditor : Editor
 	SerializedProperty closeProp;
 	SerializedProperty pointsProp;
 	SerializedProperty colorProp;
+
+	//Modifications made by Jansen Duarte
+	public string[] trackOptions = { "Circuit", "Rally", "Hill Climb", "Oval", "Drag" };
+	public int trackType = 0;
 
 	private static bool showPoints = true;
 
@@ -30,6 +35,8 @@ public class BezierCurveEditor : Editor
 		EditorGUILayout.PropertyField(resolutionProp);
 		EditorGUILayout.PropertyField(closeProp);
 		EditorGUILayout.PropertyField(colorProp);
+
+
 
 		showPoints = EditorGUILayout.Foldout(showPoints, "Points");
 
@@ -60,7 +67,14 @@ public class BezierCurveEditor : Editor
 				pointsProp.InsertArrayElementAtIndex(pointsProp.arraySize);
 				pointsProp.GetArrayElementAtIndex(pointsProp.arraySize - 1).objectReferenceValue = newPoint;
 			}
+
 		}
+
+		//Modifications made by Jansen Duarte
+		trackType = EditorGUILayout.Popup("Track Type", trackType, trackOptions);
+
+		if (GUILayout.Button("Export Curve"))
+			TrackSaver.Save_Track(ExM.Convert_TrackToString(curve), (TrackType)trackType, curve.length);
 
 		if (GUI.changed)
 		{
