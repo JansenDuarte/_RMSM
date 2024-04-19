@@ -1,6 +1,9 @@
+using ExtensionMethods;
 using Mono.Data.Sqlite;
 using System.Data;
+using System.Globalization;
 using UnityEngine;
+
 
 public class DBConnector : MonoBehaviour
 {
@@ -39,11 +42,15 @@ public class DBConnector : MonoBehaviour
 
     [SerializeField]
     [Tooltip("Name of the general database")]
-    private string GameDb_Url;
+    private string GameDb_url;
 
     [SerializeField]
     [Tooltip("Name of the NPC database with names, surenames and nationalities")]
-    private string NpcDataDb_Url;
+    private string NpcDataDb_url;
+
+    [SerializeField]
+    [Tooltip("Database for the tracks")]
+    private string TracksDb_url;
 
     private IDbConnection _connection = null;
 
@@ -57,8 +64,9 @@ public class DBConnector : MonoBehaviour
 
     private void PrepareDataBaseInfo()
     {
-        GameDb_Url = "URI=file:" + Application.dataPath + "/99.InternalDataBase/" + GameDb_Url;
-        NpcDataDb_Url = "URI=file:" + Application.dataPath + "/99.InternalDataBase/" + NpcDataDb_Url;
+        GameDb_url = "URI=file:" + Application.dataPath + "/99.InternalDataBase/" + GameDb_url;
+        NpcDataDb_url = "URI=file:" + Application.dataPath + "/99.InternalDataBase/" + NpcDataDb_url;
+        TracksDb_url = "URI=file:" + Application.dataPath + "/99.InternalDataBase/" + TracksDb_url;
     }
 
 
@@ -71,7 +79,7 @@ public class DBConnector : MonoBehaviour
 
     private bool Connect()
     {
-        _connection = new SqliteConnection(GameDb_Url);
+        _connection = new SqliteConnection(GameDb_url);
 
         if (_connection != null)
         {
@@ -82,7 +90,7 @@ public class DBConnector : MonoBehaviour
             return false;
     }
 
-    public Saved_Game_Struct[] GetSavedGames()
+    public Saved_Game_Struct[] Get_SavedGames()
     {
         if (Connect() == false)
         {
@@ -113,7 +121,7 @@ public class DBConnector : MonoBehaviour
                 );
         }
 
-        Print_OpTimer("GetSavedGames()");
+        Print_OpTimer("Get_SavedGames()");
 
         CloseConnection();
 
@@ -424,7 +432,7 @@ public class DBConnector : MonoBehaviour
         if (_connection != null)
             _connection.Close();
 
-        _connection = new SqliteConnection(NpcDataDb_Url);
+        _connection = new SqliteConnection(NpcDataDb_url);
 
         if (_connection != null)
         {
@@ -597,9 +605,71 @@ public class DBConnector : MonoBehaviour
     #endregion // DATABASE_METHODS
 
 
+
+    #region TRACK_DB_METHODS
+
+    private bool Connect_TrackDb()
+    {
+        _connection = new SqliteConnection(TracksDb_url);
+
+        if (_connection != null)
+        {
+            _connection.Open();
+            return true;
+        }
+        else
+            return false;
+    }
+
+    //TODO create track loading
+    public bool Load_Track(out Track _track, int _index = -1)
+    {
+        _track = new Track();
+
+        if (Connect_TrackDb() == false)
+        {
+            Debug.LogWarning("Track data couldn't be reached...");
+            return false;
+        }
+
+        Initiate_OpTimer();
+
+        _command = _connection.CreateCommand();
+        _command.CommandText = "SELECT last_insert_rowid();";
+        int SIZE = int.Parse(_command.ExecuteScalar().ToString());
+
+        int index = (_index == -1) ? Random.Range(1, SIZE) : _index;
+
+        _command.CommandText = "SELECT * FROM Tracks WHERE ID = " + index;
+
+        IDataReader reader = _command.ExecuteReader();
+
+        while (reader.Read())
+        {
+            _track.trackName = reader.GetString(1);
+            _track.country = reader.GetString(2);
+            _track.length = float.Parse(reader.GetString(3), CultureInfo.InvariantCulture);
+            _track.laps = reader.GetInt32(4);
+            _track.type = (TrackType)reader.GetInt32(5);
+            _track.curve = reader.GetString(6).Convert_StringToTrack();
+        }
+
+        Print_OpTimer("Load_Track()");
+
+        reader.Close();
+        CloseConnection();
+
+        return true;
+    }
+
+    #endregion // TRACK_DB_METHODS
+
+
+
     private void CloseConnection()
     {
-        _connection.Close();
+        if (_connection != null)
+            _connection.Close();
 
         _connection = null;
     }

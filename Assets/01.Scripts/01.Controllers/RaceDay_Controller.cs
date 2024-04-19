@@ -8,17 +8,23 @@ public class RaceDay_Controller : MonoBehaviour
 
     public RaceCar_Struct[] carSpritesArray;
 
+    private Track track;
+
+
     void Start()
     {
+        //DEBUG This needs to call the track that is beeing raced on
+        DBConnector.Instance.Load_Track(out track, 1);
+
         Debug_PrepareRacersStats();
 
 
         //Show Layout
-        raceDayHelper.PrepareRaceDayInfo(ref carSpritesArray);
+        raceDayHelper.PrepareRaceDayInfo(ref carSpritesArray, ref track);
 
 
         //Position the cars
-        BezierPoint[] trackAnchorPoints_Array = raceDayHelper.trackGenerator.TrackLayout.GetAnchorPoints();
+        BezierPoint[] trackAnchorPoints_Array = track.curve.GetAnchorPoints();
         BezierPoint p1 = trackAnchorPoints_Array[trackAnchorPoints_Array.Length - 1];
         BezierPoint p2 = trackAnchorPoints_Array[0];
         for (int i = 0; i < carSpritesArray.Length; i++)
@@ -99,13 +105,13 @@ public class RaceDay_Controller : MonoBehaviour
         int laps = 0;
         float newTrackPosition;
 
-
+        //DEBUG
         while (laps < 10)
         {
             for (int i = 0; i < carSpritesArray.Length; i++)
             {
                 newTrackPosition = carSpritesArray[i].trackPosition += 0.0001f * carSpritesArray[i].driver.GetGeneralPerformance();      //Change due to driver speed, stamina, and car attributes
-                carSpritesArray[i].transform.position = raceDayHelper.trackGenerator.TrackLayout.GetPointAt(newTrackPosition % 1f);
+                carSpritesArray[i].transform.position = track.curve.GetPointAt(newTrackPosition % 1f);
                 carSpritesArray[i].trackPosition = newTrackPosition;
             }
             //FIXME: this needs to be a set timer for the updates; Can be changed to speed up the simulation

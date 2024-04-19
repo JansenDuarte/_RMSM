@@ -44,5 +44,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f609e97f46684ff4c894fffa068a3885, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GameDb_Url: GameDataBase.db
-  NpcDataDb_Url: NpcData.db
+  GameDb_url: GameDataBase.db
+  NpcDataDb_url: NpcData.db
+  TracksDb_url: Tracks.db

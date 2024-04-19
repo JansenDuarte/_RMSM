@@ -30,9 +30,9 @@ public class BezierPointEditor : Editor
 
 		serializedObject.Update();
 
-		BezierPoint.HandleStyle newHandleType = (BezierPoint.HandleStyle)EditorGUILayout.EnumPopup("Handle Type", (BezierPoint.HandleStyle)handleTypeProp.intValue);
+		HandleStyle newHandleType = (HandleStyle)EditorGUILayout.EnumPopup("Handle Type", (HandleStyle)handleTypeProp.intValue);
 
-		if (newHandleType != (BezierPoint.HandleStyle)handleTypeProp.intValue)
+		if (newHandleType != (HandleStyle)handleTypeProp.intValue)
 		{
 			handleTypeProp.intValue = (int)newHandleType;
 

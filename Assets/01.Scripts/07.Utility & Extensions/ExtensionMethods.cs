@@ -307,12 +307,100 @@ namespace ExtensionMethods
 
 
         /// <summary>
-        /// Retur value with leading zero
+        /// Parse the curve to a string
+        /// </summary>
+        /// <param name="_curve"></param>
+        /// <returns></returns>
+        public static string Convert_TrackToString(this BezierCurve _curve)
+        {
+            BezierPoint[] points = _curve.GetAnchorPoints();
+            string retValue = string.Empty;
+            int style;
+
+            for (int i = 0; i < _curve.pointCount; i++)
+            {
+                //{0} => point local position
+                //{1} => handle1 local position
+                //{2} => handle2 local position
+                //{3} => handle style converted to int
+                //!! Some data might varie between saves, but this is the full layout
+
+                style = (int)points[i].handleStyle;
+                switch (points[i].handleStyle)
+                {
+                    case HandleStyle.Connected:
+                        retValue += string.Format("{0}*{1}*{2};", points[i].localPosition, points[i].handle1, style);
+                        break;
+                    case HandleStyle.Broken:
+                        retValue += string.Format("{0}*{1}*{2}*{3};", points[i].localPosition, points[i].handle1, points[i].handle2, style);
+                        break;
+                    case HandleStyle.None:
+                        retValue += string.Format("{0}*{1};", points[i].localPosition, style);
+                        break;
+                }
+            }
+
+            Debug.Log(retValue);
+            return retValue;
+        }
+
+        public static BezierCurve Convert_StringToTrack(this string _value)
+        {
+            BezierCurve returnCurve = new GameObject("Track").AddComponent<BezierCurve>();
+
+            if (_value == string.Empty)
+                return returnCurve;
+
+            char[] trimmer = { '(', ')', '*', ';' };
+            string[] points = _value.Split(';');    //Split is leaving a trailing "" in the array
+            string[] pointInfo;
+            string[] pos;
+
+            for (int i = 0; i < points.Length - 1; i++)
+            {
+                BezierPoint curveFeeder = new GameObject("Point" + i).AddComponent<BezierPoint>();
+                curveFeeder.curve = returnCurve;
+
+                pointInfo = points[i].Split('*');
+                for (int j = 0; j < pointInfo.Length - 1; j++)
+                {
+                    pointInfo[j] = pointInfo[j].Trim(trimmer);
+                }
+
+                HandleStyle style = (HandleStyle)int.Parse(pointInfo[pointInfo.Length - 1]);
+                curveFeeder.handleStyle = style;
+
+                pos = pointInfo[0].Split(',');
+                curveFeeder.localPosition = new Vector3(float.Parse(pos[0], CultureInfo.InvariantCulture), float.Parse(pos[1], CultureInfo.InvariantCulture), float.Parse(pos[2], CultureInfo.InvariantCulture));
+
+                switch (style)
+                {
+                    case HandleStyle.Connected:
+                        pos = pointInfo[1].Split(',');
+                        curveFeeder.handle1 = new Vector3(float.Parse(pos[0], CultureInfo.InvariantCulture), float.Parse(pos[1], CultureInfo.InvariantCulture), float.Parse(pos[2], CultureInfo.InvariantCulture));
+                        break;
+                    case HandleStyle.Broken:
+                        pos = pointInfo[1].Split(',');
+                        curveFeeder.handle1 = new Vector3(float.Parse(pos[0], CultureInfo.InvariantCulture), float.Parse(pos[1], CultureInfo.InvariantCulture), float.Parse(pos[2], CultureInfo.InvariantCulture));
+                        pos = pointInfo[2].Split(',');
+                        curveFeeder.handle2 = new Vector3(float.Parse(pos[0], CultureInfo.InvariantCulture), float.Parse(pos[1], CultureInfo.InvariantCulture), float.Parse(pos[2], CultureInfo.InvariantCulture));
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+
+            return returnCurve;
+        }
+      
+        /// Return value with leading zero
         /// </summary>
         /// <param name="_value"></param>
         /// <returns></returns>
         public static string FormatIntoDoubleDigits(this int _value)
         { return (_value < 10) ? string.Format("0{0}", _value) : _value.ToString(); }
+
 
 
         /// <summary>
@@ -327,8 +415,8 @@ namespace ExtensionMethods
             if (!_s.Contains("RGBA"))
                 return c;
 
-            char[] aux = { 'R', 'G', 'B', 'A', '(', ')' };
-            _s = _s.Trim(aux);
+            char[] trimmer = { 'R', 'G', 'B', 'A', '(', ')' };
+            _s = _s.Trim(trimmer);
 
             string[] colors = _s.Split(',');
 
