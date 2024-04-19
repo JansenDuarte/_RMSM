@@ -71,10 +71,28 @@ public class BezierCurveEditor : Editor
 		}
 
 		//Modifications made by Jansen Duarte
+		EditorGUILayout.Space(10f);
+
+		EditorGUILayout.BeginFoldoutHeaderGroup(true, "DataBase");
+
+		if (GUILayout.Button("Randomize Track"))
+		{
+			BezierPoint[] tempArray = curve.GetAnchorPoints();
+			for (int i = tempArray.Length - 1; i > 0; i--)
+			{
+				curve.RemovePoint(tempArray[i]);
+			}
+			curve.Randomize_Track();
+		}
+
 		trackType = EditorGUILayout.Popup("Track Type", trackType, trackOptions);
 
 		if (GUILayout.Button("Export Curve"))
 			TrackSaver.Save_Track(ExM.Convert_TrackToString(curve), (TrackType)trackType, curve.length);
+
+		EditorGUILayout.EndFoldoutHeaderGroup();
+
+
 
 		if (GUI.changed)
 		{
@@ -134,7 +152,7 @@ public class BezierCurveEditor : Editor
 		EditorGUI.indentLevel++;
 		EditorGUI.indentLevel++;
 
-		int newType = (int)((object)EditorGUILayout.EnumPopup("Handle Type", (BezierPoint.HandleStyle)handleStyleProp.enumValueIndex));
+		int newType = (int)((object)EditorGUILayout.EnumPopup("Handle Type", (HandleStyle)handleStyleProp.enumValueIndex));
 
 		if (newType != handleStyleProp.enumValueIndex)
 		{
@@ -221,7 +239,7 @@ public class BezierCurveEditor : Editor
 			point.transform.position = newPosition;
 		}
 
-		if (point.handleStyle != BezierPoint.HandleStyle.None)
+		if (point.handleStyle != HandleStyle.None)
 		{
 			Handles.color = Color.cyan;
 			Vector3 newGlobal1 = Handles.FreeMoveHandle(point.globalHandle1, point.transform.rotation, HandleUtility.GetHandleSize(point.globalHandle1) * 0.075f, Vector3.zero, Handles.CircleHandleCap);
@@ -229,7 +247,7 @@ public class BezierCurveEditor : Editor
 			{
 				Undo.RegisterCompleteObjectUndo(point, "Move Handle");
 				point.globalHandle1 = newGlobal1;
-				if (point.handleStyle == BezierPoint.HandleStyle.Connected) point.globalHandle2 = -(newGlobal1 - point.position) + point.position;
+				if (point.handleStyle == HandleStyle.Connected) point.globalHandle2 = -(newGlobal1 - point.position) + point.position;
 			}
 
 			Vector3 newGlobal2 = Handles.FreeMoveHandle(point.globalHandle2, point.transform.rotation, HandleUtility.GetHandleSize(point.globalHandle2) * 0.075f, Vector3.zero, Handles.CircleHandleCap);
@@ -237,7 +255,7 @@ public class BezierCurveEditor : Editor
 			{
 				Undo.RegisterCompleteObjectUndo(point, "Move Handle");
 				point.globalHandle2 = newGlobal2;
-				if (point.handleStyle == BezierPoint.HandleStyle.Connected) point.globalHandle1 = -(newGlobal2 - point.position) + point.position;
+				if (point.handleStyle == HandleStyle.Connected) point.globalHandle1 = -(newGlobal2 - point.position) + point.position;
 			}
 
 			Handles.color = Color.yellow;
@@ -262,19 +280,19 @@ public class BezierCurveEditor : Editor
 		BezierCurve curve = curveObject.AddComponent<BezierCurve>();
 
 		BezierPoint p1 = curve.AddPointAt(Vector3.forward * 0.5f);
-		p1.handleStyle = BezierPoint.HandleStyle.Connected;
+		p1.handleStyle = HandleStyle.Connected;
 		p1.handle1 = new Vector3(-0.28f, 0, 0);
 
 		BezierPoint p2 = curve.AddPointAt(Vector3.right * 0.5f);
-		p2.handleStyle = BezierPoint.HandleStyle.Connected;
+		p2.handleStyle = HandleStyle.Connected;
 		p2.handle1 = new Vector3(0, 0, 0.28f);
 
 		BezierPoint p3 = curve.AddPointAt(-Vector3.forward * 0.5f);
-		p3.handleStyle = BezierPoint.HandleStyle.Connected;
+		p3.handleStyle = HandleStyle.Connected;
 		p3.handle1 = new Vector3(0.28f, 0, 0);
 
 		BezierPoint p4 = curve.AddPointAt(-Vector3.right * 0.5f);
-		p4.handleStyle = BezierPoint.HandleStyle.Connected;
+		p4.handleStyle = HandleStyle.Connected;
 		p4.handle1 = new Vector3(0, 0, -0.28f);
 
 		curve.close = true;

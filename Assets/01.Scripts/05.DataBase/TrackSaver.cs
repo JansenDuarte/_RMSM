@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Mono.Data.Sqlite;
 using System.Data;
 using UnityEngine;
+using ExtensionMethods;
 
 
 
@@ -79,10 +80,9 @@ public static class TrackSaver
 
         Debug.Log(string.Format("{0} {1} ; {2} ; {3}km ; {4} ; {5}", prefix, sufix, country, _length.ToString(), laps.ToString(), _type.ToString()));
 
-        //TODO create save command
         _command.CommandText = string.Format("INSERT INTO Tracks (Name, Country, Length, Laps, Type, Curve)" +
         " VALUES (\"{0}\", \"{1}\", \"{2}\", {3}, \"{4}\", \"{5}\")",
-        prefix + " " + sufix, country, _length, laps, _type.ToString(), _track);
+        prefix + " " + sufix, country, _length, laps, (int)_type, _track);
 
         _command.ExecuteNonQuery();
 
@@ -203,5 +203,175 @@ public static class TrackSaver
             _connection.Close();
         _connection = null;
     }
+
+
+
+
+
+
+    #region UTILITIES
+
+    private const int MIN_POINT_AMMOUNT = 4;
+    private const int QUADRANT_AMMOUNT = 4;
+
+    private const float POINT_POS_LIMIT = 5f;
+
+    public static void Randomize_Track(this BezierCurve _curve)
+    {
+        GenerateTrackLayout(ref _curve);
+    }
+
+    private static void GenerateTrackLayout(ref BezierCurve _curve, int _pointLimit = 12)
+    {
+        int pointAmmount = Random.Range(MIN_POINT_AMMOUNT, _pointLimit + 1);
+
+        BezierPoint[] points = Generate_Points(ref _curve, pointAmmount);
+        Position_Points(ref points);
+
+        float turnSharpness;
+        float handleMax = 1f;
+
+        _curve.close = true;
+
+        for (int i = 0; i < pointAmmount; i++)
+        {
+            points[i].curve = _curve;
+
+            //I don't know the exact behaviour of this
+            if (i == 0)
+                turnSharpness = Vector3.Distance(points[pointAmmount - 1].localPosition, points[i].localPosition) / POINT_POS_LIMIT;
+            else
+                turnSharpness = Vector3.Distance(points[i - 1].localPosition, points[i].localPosition) / POINT_POS_LIMIT;
+
+
+            //This is doing nothing! handleMin & max is never set!
+            //points[i].handle2 = new Vector3(Random.Range(turnSharpness * handleMin_X, turnSharpness * handlMax_X), Random.Range(turnSharpness * handleMin_Y, turnSharpness * handleMax_Y), 0f);
+            if (i - 1 < 0)
+                points[i].handle2 = Find_Handle_Pos(turnSharpness, handleMax, points[pointAmmount - 1].localPosition, points[i].localPosition, points[(i + 1) % pointAmmount].localPosition);
+            else
+                points[i].handle2 = Find_Handle_Pos(turnSharpness, handleMax, points[i - 1].localPosition, points[i].localPosition, points[(i + 1) % pointAmmount].localPosition);
+
+        }
+
+    }
+
+    private static Vector3 Find_Handle_Pos(float _turnSharpness, float _maxValue, Vector3 _pastPoint, Vector3 _presentPoint, Vector3 _futurePoint)
+    {
+        Vector3 p = Vector3.zero;
+
+        if (_turnSharpness > POINT_POS_LIMIT / 10f)
+        {
+            //Direction from current point TO next point
+            Vector3 d = _presentPoint.Direction(_futurePoint);
+            //Vector perpendicular between direction and current position
+            p = Vector3.Cross(d, _presentPoint);
+            //Vector perpendicular between current point and next point
+            p = Vector3.Cross(d, p).normalized * -1f;
+            // Debug.Log("Calculating based on future point");
+        }
+        else
+        {
+            //Direction from current point TO next point
+            Vector3 d = _presentPoint.Direction(_pastPoint);
+            //Vector perpendicular between direction and current position
+            p = Vector3.Cross(d, _presentPoint);
+            //Vector perpendicular between current point and next point
+            p = Vector3.Cross(d, p).normalized;
+            // Debug.Log("Calculating based on past point");
+        }
+        //the position might be inverted by some other factor, don't know it yet
+        return p * _turnSharpness;
+    }
+
+    private static BezierPoint[] Generate_Points(ref BezierCurve _curve, int _pointAmmount)
+    {
+        BezierPoint[] retValue = new BezierPoint[_pointAmmount];
+
+        for (int i = 0; i < _pointAmmount; i++)
+        {
+            BezierPoint point = _curve.AddPointAt(Vector3.zero);
+            retValue[i] = point;
+        }
+
+        return retValue;
+    }
+
+    private static void Position_Points(ref BezierPoint[] _points)
+    {
+        Vector2 pos;
+
+        //pointPerQuadrant => how many points should be place in each quadrant
+        //rem => how many quadrants need to be visited again
+        int pointPerQuadrant = System.Math.DivRem(_points.Length, QUADRANT_AMMOUNT, out int rem);
+        int index = 0;
+
+
+        for (int i = 0; i < QUADRANT_AMMOUNT; i++)
+        {
+            switch (i % QUADRANT_AMMOUNT)
+            {
+                case 0:
+                    //Quadrante 1
+                    for (int j = 0; j < pointPerQuadrant; j++)
+                    {
+                        pos = ExM.RandomVector2(POINT_POS_LIMIT, false);
+                        _points[index].localPosition = new Vector3(pos.x, pos.y, 0f);
+                        index++;
+                    }
+                    if (rem > 0)
+                    {
+                        pos = ExM.RandomVector2(POINT_POS_LIMIT, false);
+                        _points[index].localPosition = new Vector3(pos.x, pos.y, 0f);
+                        index++;
+                        rem--;
+                    }
+                    break;
+                case 1:
+                    //Quadrante 2
+                    for (int j = 0; j < pointPerQuadrant; j++)
+                    {
+                        pos = ExM.RandomVector2(POINT_POS_LIMIT, false);
+                        _points[index].localPosition = new Vector3(pos.x, -pos.y, 0f);
+                        index++;
+                    }
+                    if (rem > 0)
+                    {
+                        pos = ExM.RandomVector2(POINT_POS_LIMIT, false);
+                        _points[index].localPosition = new Vector3(pos.x, -pos.y, 0f);
+                        index++;
+                        rem--;
+                    }
+                    break;
+                case 2:
+                    //Quadrante 3
+                    for (int j = 0; j < pointPerQuadrant; j++)
+                    {
+                        pos = ExM.RandomVector2(POINT_POS_LIMIT, false);
+                        _points[index].localPosition = new Vector3(-pos.x, -pos.y, 0f);
+                        index++;
+                    }
+                    if (rem > 0)
+                    {
+                        pos = ExM.RandomVector2(POINT_POS_LIMIT, false);
+                        _points[index].localPosition = new Vector3(-pos.x, -pos.y, 0f);
+                        index++;
+                        rem--;
+                    }
+                    break;
+                case 3:
+                    //Quadrante 4
+                    for (int j = 0; j < pointPerQuadrant; j++)
+                    {
+                        pos = ExM.RandomVector2(POINT_POS_LIMIT, false);
+                        _points[index].localPosition = new Vector3(-pos.x, pos.y, 0f);
+                        index++;
+                    }
+                    break;
+            }
+        }
+    }
+
+    #endregion // UTILITIES
+
 
 }

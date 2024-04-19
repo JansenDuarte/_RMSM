@@ -40,14 +40,14 @@ public class RaceDayHelper : MonoBehaviour
 
 
     //FIXME: This is all fucked! Needs to be fixed ASAP
-    public void PrepareRaceDayInfo(ref RaceCar_Struct[] _competitorCarsArray)
+    public void PrepareRaceDayInfo(ref RaceCar_Struct[] _competitorCarsArray, ref Track _trackInfo)
     {
-        ShowTrackLayout(trackGenerator.TrackLayout);
+        ShowTrackLayout(_trackInfo.curve);
 
-        trackEventName.text = "Event Name";
-        trackName.text = "Track Name";
-        trackCountry.text = "Track Country";
-        trackLaps.text = "Track Laps";
+        trackEventName.text = _trackInfo.trackName;
+        trackName.text = _trackInfo.trackName;
+        trackCountry.text = _trackInfo.country;
+        trackLaps.text = _trackInfo.laps.ToString();
         trackWeather.text = TrackGenerator.GenerateWeather();
 
         competitorsArray[0].competitor_Name.text = _competitorCarsArray[0].driver.name;

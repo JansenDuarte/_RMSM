@@ -1,5 +1,7 @@
+using ExtensionMethods;
 using Mono.Data.Sqlite;
 using System.Data;
+using System.Globalization;
 using UnityEngine;
 
 
@@ -629,9 +631,44 @@ public class DBConnector : MonoBehaviour
     }
 
     //TODO create track loading
-    public void Load_Track()
+    public bool Load_Track(out Track _track, int _index = -1)
     {
+        _track = new Track();
 
+        if (Connect_TrackDb() == false)
+        {
+            Debug.LogWarning("Track data couldn't be reached...");
+            return false;
+        }
+
+        Initiate_OpTimer();
+
+        _command = _connection.CreateCommand();
+        _command.CommandText = "SELECT last_insert_rowid();";
+        int SIZE = int.Parse(_command.ExecuteScalar().ToString());
+
+        int index = (_index == -1) ? Random.Range(1, SIZE) : _index;
+
+        _command.CommandText = "SELECT * FROM Tracks WHERE ID = " + index;
+
+        IDataReader reader = _command.ExecuteReader();
+
+        while (reader.Read())
+        {
+            _track.trackName = reader.GetString(1);
+            _track.country = reader.GetString(2);
+            _track.length = float.Parse(reader.GetString(3), CultureInfo.InvariantCulture);
+            _track.laps = reader.GetInt32(4);
+            _track.type = (TrackType)reader.GetInt32(5);
+            _track.curve = reader.GetString(6).Convert_StringToTrack();
+        }
+
+        Print_OpTimer("Load_Track()");
+
+        reader.Close();
+        CloseConnection();
+
+        return true;
     }
 
     #endregion // TRACK_DB_METHODS
