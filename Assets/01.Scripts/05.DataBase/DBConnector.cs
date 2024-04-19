@@ -434,8 +434,6 @@ public class DBConnector : MonoBehaviour
 
         _connection = new SqliteConnection(NpcDataDb_url);
 
-        //Debug.Log(NpcDataDb_Url);
-
         if (_connection != null)
         {
             _connection.Open();
@@ -487,7 +485,6 @@ public class DBConnector : MonoBehaviour
             }
 
             reader.Close();
-            //Debug.Log(string.Format("First fetch result: ID {0} Name {1} Sex {2}", rng, layout.Name, layout.Sex));
 
             rng = Random.Range(1, NAMES_SIZE);
 
@@ -501,7 +498,6 @@ public class DBConnector : MonoBehaviour
             }
 
             reader.Close();
-            //Debug.Log(string.Format("Second fetch result: ID {0} Full Name {1}", rng, layout.Name));
 
             rng = Random.Range(1, COUNTRIES_SIZE);
 
@@ -515,9 +511,8 @@ public class DBConnector : MonoBehaviour
             }
 
             reader.Close();
-            //Debug.Log(string.Format("Country fetch result: ID {0} Country of origin: {1}", rng, layout.Country));
 
-            layout.age = Random.Range(18, 51);
+            layout.age = Random.Range(MIN_GEN_NPC_AGE, MAX_GEN_NPC_AGE);
 
             CloseConnection();
 
@@ -543,8 +538,6 @@ public class DBConnector : MonoBehaviour
         }
         else
         {
-
-
             for (int i = 0; i < _structArray.Length; i++)
             {
                 int rng = Random.Range(1, NAMES_SIZE);
@@ -559,17 +552,15 @@ public class DBConnector : MonoBehaviour
                 {
                     _structArray[i].name = reader.GetString(1);
 
-                    if (reader.GetString(2) == "mf")
+                    if (reader.GetString(2) != "mf")
+                        _structArray[i].sex = reader.GetString(2);
+                    else
                     {
-                        int sex_rng = Random.Range(0, 2);
-
-                        if (sex_rng == 0)
+                        if (Random.Range(0, 2) == 0)
                             _structArray[i].sex = "m";
                         else
                             _structArray[i].sex = "f";
                     }
-                    else
-                        _structArray[i].sex = reader.GetString(2);
                 }
 
                 reader.Close();

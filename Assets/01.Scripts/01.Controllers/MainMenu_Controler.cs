@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class MainMenu_Controler : MonoBehaviour
 {
-    [SerializeField] SaveSlot_Struct[] mainMenuSaveSlots;
-
-    [SerializeField] GameObject deleteWarning_Panel;
-    [SerializeField] Animator sceneSwitcher;
+    [SerializeField] private SaveSlot[] mainMenuSaveSlots;
+    [SerializeField] private GameObject deleteWarning_Panel;
+    [SerializeField] private Animator sceneSwitcher;
+    private int indexSelectedForDeletion = -1;
 
     public void FillUsedSaveSlots(Saved_Game_Struct[] _saved_Games)
     {
@@ -22,9 +22,9 @@ public class MainMenu_Controler : MonoBehaviour
         for (int i = 0; i < mainMenuSaveSlots.Length; i++)
         {
             if (_saved_Games[i].Team_Name != null && _saved_Games[i].Team_Name != "")
-                mainMenuSaveSlots[i].SetSlotAsFilled(_saved_Games[i].Team_Name, _saved_Games[i].Car_Number.ToString(), _saved_Games[i].Car_Color, _saved_Games[i].Money);
+                mainMenuSaveSlots[i].Set_SlotAsFilled(_saved_Games[i].Team_Name, _saved_Games[i].Car_Number.ToString(), _saved_Games[i].Car_Color, _saved_Games[i].Money);
             else
-                mainMenuSaveSlots[i].ChangeSlotName("empty");
+                mainMenuSaveSlots[i].Change_SlotName("empty");
         }
     }
 
@@ -32,7 +32,7 @@ public class MainMenu_Controler : MonoBehaviour
     {
         for (int i = 0; i < mainMenuSaveSlots.Length; i++)
         {
-            mainMenuSaveSlots[i].ChangeSlotName("empty");
+            mainMenuSaveSlots[i].Change_SlotName("empty");
         }
     }
 
@@ -50,7 +50,7 @@ public class MainMenu_Controler : MonoBehaviour
     {
         GameManager.Instance.SelectedSaveSlot = _slotIndex;
 
-        //TODO: play animation and sounds of new game
+        //TODO play animation and sounds of new game
 
         GameManager.Instance.LoadScene_Async((int)SceneCodex.TUTORIAL);
     }
@@ -61,11 +61,10 @@ public class MainMenu_Controler : MonoBehaviour
         indexSelectedForDeletion = _slotIndex;
     }
 
-    int indexSelectedForDeletion = -1;
 
     public void Delete_At_Slotindex()
     {
-        mainMenuSaveSlots[indexSelectedForDeletion - 1].ChangeSlotName("empty");
+        mainMenuSaveSlots[indexSelectedForDeletion - 1].Change_SlotName("empty");
 
         GameManager.Instance.DeleteSavedGame(indexSelectedForDeletion);
     }

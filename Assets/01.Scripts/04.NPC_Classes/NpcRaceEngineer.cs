@@ -26,7 +26,7 @@ public class NpcRaceEngineer : NpcLayout
 
         List<int> list = new();
         list.AddRange(values);
-        int listIndex = -1;
+        int listIndex;
 
         for (int i = 0; i < values.Length; i++)
         {
@@ -46,5 +46,7 @@ public class NpcRaceEngineer : NpcLayout
 
 
     #endregion
+
+    //TODO      See if there's need to make a performance calculator for the race engineer
 
 }
