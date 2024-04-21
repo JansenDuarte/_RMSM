@@ -47,3 +47,4 @@ MonoBehaviour:
   gameDate_Text: {fileID: 0}
   teamName_Text: {fileID: 0}
   money_Text: {fileID: 0}
+  teamMembers_pivot: {fileID: 0}

@@ -21,7 +21,7 @@ public class NpcDriver : NpcLayout
         country = _struct.country;
         sex = _struct.sex;
 
-        int[] values = Return_Skills_BasedOn_ContractValue(_contractValue);
+        int[] values = Generate_SkillsByContractValue(_contractValue);
 
         List<int> list = new();
         list.AddRange(values);

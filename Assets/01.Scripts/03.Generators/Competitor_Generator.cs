@@ -10,21 +10,26 @@ public static class Competitor_Generator
         NpcDriver npcDriver;
         NpcStruct[] layout = new NpcStruct[_ammount];
         GameManager.Instance.Generate_NPC_InBulk(ref layout);
+        int[] skills;
 
         for (int i = 0; i < _ammount; i++)
         {
-            npcDriver = new();
-            npcDriver.name = layout[i].name;
-            npcDriver.country = layout[i].country;
-            npcDriver.sex = layout[i].sex;
-            npcDriver.age = layout[i].age;
+            npcDriver = new()
+            {
+                name = layout[i].name,
+                country = layout[i].country,
+                sex = layout[i].sex,
+                age = layout[i].age,
 
-            //Debuging
-            npcDriver.carNumber = Random.Range(0, 100);
-            npcDriver.skills[0].VALUE = Random.Range(1, 11) * _difficulty;
-            npcDriver.skills[0].VALUE = Random.Range(1, 11) * _difficulty;
-            npcDriver.skills[0].VALUE = Random.Range(1, 11) * _difficulty;
-            npcDriver.skills[0].VALUE = Random.Range(1, 11) * _difficulty;
+                //Debuging
+                carNumber = Random.Range(0, 100)
+            };
+
+            skills = npcDriver.Generate_SkillsByContractValue(Random.Range(10, 16) * _difficulty);
+            for (int j = 0; j < npcDriver.skills.Length; j++)
+            {
+                npcDriver.skills[j].VALUE = skills[j];
+            }
             //Debuging//
 
             competitorList.Add(npcDriver);

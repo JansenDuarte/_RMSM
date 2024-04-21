@@ -6,9 +6,13 @@ public class RaceDay_Controller : MonoBehaviour
 {
     public RaceDayHelper raceDayHelper;
 
-    public RaceCar_Struct[] carSpritesArray;
+    public RaceCar[] cars;
 
     private Track track;
+
+    private const int COMPETITOR_AMMOUNT = 7;
+
+    public const float GRID_DIFF_FACTOR = 0.01f;
 
 
     void Start()
@@ -16,22 +20,19 @@ public class RaceDay_Controller : MonoBehaviour
         //DEBUG This needs to call the track that is beeing raced on
         DBConnector.Instance.Load_Track(out track, 1);
 
-        Debug_PrepareRacersStats();
-
+        PrepareRacersStats();
 
         //Show Layout
-        raceDayHelper.PrepareRaceDayInfo(ref carSpritesArray, ref track);
+        raceDayHelper.PrepareRaceDayInfo(ref cars, ref track);
 
 
         //Position the cars
-        BezierPoint[] trackAnchorPoints_Array = track.curve.GetAnchorPoints();
-        BezierPoint p1 = trackAnchorPoints_Array[trackAnchorPoints_Array.Length - 1];
-        BezierPoint p2 = trackAnchorPoints_Array[0];
-        for (int i = 0; i < carSpritesArray.Length; i++)
+        for (int i = 0; i < cars.Length; i++)
         {
-            float gridPosition = 1f - (0.08f * i);
-            carSpritesArray[i].trackPosition = gridPosition;
-            carSpritesArray[i].transform.position = BezierCurve.GetPoint(p1, p2, gridPosition);
+            float gridPosition = 1f - (GRID_DIFF_FACTOR * i);
+            cars[i].startingEventPosition = i + 1;  //setting the grid starting position
+            cars[i].trackPositionPerCent = gridPosition;
+            cars[i].transform.position = track.curve.GetPointAt(gridPosition);
         }
 
         //Simulate Race
@@ -43,16 +44,16 @@ public class RaceDay_Controller : MonoBehaviour
         //End Raceday
     }
 
-    private void Debug_PrepareRacersStats()
+    private void PrepareRacersStats()
     {
-        //NpcDriver[] _auxArray = Competitor_Generator.GenerateCompetitors(7, 1).ToArray();
+        NpcDriver[] competitors = Competitor_Generator.GenerateCompetitors(COMPETITOR_AMMOUNT, 1).ToArray();
 
-        carSpritesArray[0].driver = PlayerManager.Instance.Driver;
+        cars[0].driver = PlayerManager.Instance.Driver;
 
-        //for (int i = 1; i < _auxArray.Length; i++)
-        //{
-        //    carSpritesArray[i].driver = _auxArray[i];
-        //}
+        for (int i = 0; i < competitors.Length; i++)
+        {
+            cars[i + 1].driver = competitors[i];
+        }
     }
 
     private IEnumerator RaceStart_MiniGame()
@@ -102,21 +103,19 @@ public class RaceDay_Controller : MonoBehaviour
 
     private IEnumerator SimulateRace()
     {
-        int laps = 0;
+        int laps = 1;
         float newTrackPosition;
 
         //DEBUG
-        while (laps < 10)
+        while (laps <= track.laps)
         {
-            for (int i = 0; i < carSpritesArray.Length; i++)
+            for (int i = 0; i < cars.Length; i++)
             {
-                newTrackPosition = carSpritesArray[i].trackPosition += 0.0001f * carSpritesArray[i].driver.GetGeneralPerformance();      //Change due to driver speed, stamina, and car attributes
-                carSpritesArray[i].transform.position = track.curve.GetPointAt(newTrackPosition % 1f);
-                carSpritesArray[i].trackPosition = newTrackPosition;
+                newTrackPosition = cars[i].Drive();
+                cars[i].transform.position = track.curve.GetPointAt(newTrackPosition);
             }
-            //FIXME: this needs to be a set timer for the updates; Can be changed to speed up the simulation
-            yield return new WaitForFixedUpdate();
-            yield return new WaitForFixedUpdate();
+            //FIXME: this is not the right way to do it
+            for (int i = 0; i < GameManager.Instance.simulationSpeed; i++) { yield return new WaitForEndOfFrame(); }
 
             //Check overtake opportunities for all cars (?)
 

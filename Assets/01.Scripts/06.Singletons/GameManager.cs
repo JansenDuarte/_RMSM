@@ -63,6 +63,10 @@ public class GameManager : MonoBehaviour
     Manager_Controler manager_Controler;
 
 
+    //TODO: this can be changed by the player in the races
+    public int simulationSpeed = 1;
+
+
     private void ScreenConfigurations()
     {
         Application.targetFrameRate = 30;
@@ -184,7 +188,7 @@ public class GameManager : MonoBehaviour
         Debug.Log((Time.realtimeSinceStartupAsDouble - timebefore).ToString());
     }
 
-    public void Load(int _selectedSlot)
+    public void LoadGame(int _selectedSlot)
     {
         PlayerManager.Instance.SetTeamData(
             m_savedGames[_selectedSlot - 1].Team_Name,
@@ -219,6 +223,11 @@ public class GameManager : MonoBehaviour
     public void LoadScene(int _sceneIndex)
     {
         SceneManager.LoadScene(_sceneIndex);
+    }
+
+    public void LoadScene(SceneCodex _sceneName)
+    {
+        SceneManager.LoadScene((int)_sceneName);
     }
 
     public bool LoadScene_Async(int _sceneIndex, float _haltBeforeSwitching = 0f)

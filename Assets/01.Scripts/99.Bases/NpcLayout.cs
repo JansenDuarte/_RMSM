@@ -2,6 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public struct NpcStruct
+{
+    public string name;
+    public string sex;
+    public string country;
+    public int age;
+}
+
+public enum Moral
+{
+    AWFUL = 0,
+    BAD = 1,
+    OK = 2,
+    GOOD = 3,
+    GREAT = 4
+}
+
 public abstract class NpcLayout
 {
     #region CONSTANTS
@@ -26,7 +43,10 @@ public abstract class NpcLayout
 
     public int level = 1;
     public int xp = 0;
-    public int moral;           //Affects all other behaviours;
+    public int moralValue;           //Affects all other behaviours;
+
+    private Moral moral;
+    public Moral Moral { get { return moral; } }
 
     public int potencial;
     public int contractValue;
@@ -49,7 +69,7 @@ public abstract class NpcLayout
     /// </summary>
     /// <param name="_contractValue">contract value of the NPC</param>
     /// <returns></returns>
-    public int[] Return_Skills_BasedOn_ContractValue(int _contractValue)
+    public int[] Generate_SkillsByContractValue(int _contractValue)
     {
         int[] skills = { _contractValue, _contractValue, _contractValue, _contractValue };   //shittiest way; all values are equal;
 
@@ -70,11 +90,9 @@ public abstract class NpcLayout
         //values cannot be higher than 100
         for (int i = 0; i < skills.Length; i++)
         {
+            //cut the value below 100
             if (skills[i] > 100)
-            {
-                //cut the value below 100
                 skills[i] = 100;
-            }
         }
 
         return skills;
@@ -96,9 +114,7 @@ public abstract class NpcLayout
             float chance = Mathf.Pow(100f, age) / 25f;       //Function found by plotting the data; This gives a good curve
 
             if (Random.Range(0f, 1f) <= chance)
-            {
                 return true;
-            }
         }
 
         return false;
@@ -127,11 +143,11 @@ public abstract class NpcLayout
     }
 
 
-    //FIXME: this needs to be factored
+    //FIXME: this needs to be refactored
     public void EffectMoral(int _effect)
     {
-        int _prevMoral = moral;
-        moral += _effect;
+        int _prevMoral = moralValue;
+        moralValue += _effect;
 
         int[] _lowerLimits = new int[] { 19, 39, 59, 79 };
         int[] _upperLimits = new int[] { 80, 60, 40, 20 };
@@ -139,23 +155,21 @@ public abstract class NpcLayout
         //Verify if the moral passes through a threshold
         if (_effect > 0)
         {
-            if (CheckThreshold(_prevMoral, moral, _lowerLimits))
-            {
-                //Increase the moral treshold
-            }
+            //HACK this might become a problem
+            if (CheckThreshold(_prevMoral, moralValue, _lowerLimits))
+                moral += 1;
         }
         else
         {
-            if (CheckThreshold(_prevMoral, moral, _upperLimits))
-            {
-                //Decrease the moral treshold
-            }
+            //HACK this might become a problem
+            if (CheckThreshold(_prevMoral, moralValue, _upperLimits))
+                moral -= 1;
         }
 
     }
 
 
-    //FIXME: this needs to be factored
+    //FIXME: this needs to be refactored
     /// <summary>
     /// Verifies if any of the thresholds have been surpassed
     /// </summary>
@@ -188,20 +202,4 @@ public abstract class NpcLayout
 
         return false;
     }
-}
-
-
-
-
-
-
-
-
-
-public struct NpcStruct
-{
-    public string name;
-    public string sex;
-    public string country;
-    public int age;
 }

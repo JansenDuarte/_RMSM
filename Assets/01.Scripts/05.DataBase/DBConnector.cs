@@ -121,8 +121,8 @@ public class DBConnector : MonoBehaviour
                 );
         }
 
+        reader.Close();
         Print_OpTimer("Get_SavedGames()");
-
         CloseConnection();
 
         return _returnValue;
@@ -152,7 +152,7 @@ public class DBConnector : MonoBehaviour
             _team.engineer.country,
             _team.engineer.level,
             _team.engineer.xp,
-            _team.engineer.moral,
+            _team.engineer.moralValue,
             _team.engineer.potencial,
             _team.engineer.skills[0].VALUE,
             _team.engineer.skills[1].VALUE,
@@ -173,7 +173,7 @@ public class DBConnector : MonoBehaviour
             _team.driver.country,
             _team.driver.level,
             _team.driver.xp,
-            _team.driver.moral,
+            _team.driver.moralValue,
             _team.driver.potencial,
             _team.driver.skills[0].VALUE,
             _team.driver.skills[1].VALUE,
@@ -194,7 +194,7 @@ public class DBConnector : MonoBehaviour
             _team.leader.country,
             _team.leader.level,
             _team.leader.xp,
-            _team.leader.moral,
+            _team.leader.moralValue,
             _team.leader.potencial,
             _team.leader.skills[0].VALUE,
             _team.leader.skills[1].VALUE,
@@ -216,7 +216,7 @@ public class DBConnector : MonoBehaviour
                 _team.crewMembers[i].country,
                 _team.crewMembers[i].level,
                 _team.crewMembers[i].xp,
-                _team.crewMembers[i].moral,
+                _team.crewMembers[i].moralValue,
                 _team.crewMembers[i].potencial,
                 _team.crewMembers[i].skills[0].VALUE,
                 _team.crewMembers[i].skills[1].VALUE,
@@ -228,7 +228,7 @@ public class DBConnector : MonoBehaviour
         }
         //!!Pit Crew save!!
 
-        int lastInsertedID = 0;
+        int lastInsertedID;
         _command.CommandText = "SELECT last_insert_rowid();";
         lastInsertedID = int.Parse(_command.ExecuteScalar().ToString());
 
@@ -322,7 +322,7 @@ public class DBConnector : MonoBehaviour
                     ts.engineer.country = reader.GetString(4);
                     ts.engineer.level = reader.GetInt32(5);
                     ts.engineer.xp = reader.GetInt32(6);
-                    ts.engineer.moral = reader.GetInt32(7);
+                    ts.engineer.moralValue = reader.GetInt32(7);
                     ts.engineer.potencial = reader.GetInt32(8);
                     ts.engineer.skills[0].VALUE = reader.GetInt32(9);
                     ts.engineer.skills[1].VALUE = reader.GetInt32(10);
@@ -339,7 +339,7 @@ public class DBConnector : MonoBehaviour
                     ts.driver.country = reader.GetString(4);
                     ts.driver.level = reader.GetInt32(5);
                     ts.driver.xp = reader.GetInt32(6);
-                    ts.driver.moral = reader.GetInt32(7);
+                    ts.driver.moralValue = reader.GetInt32(7);
                     ts.driver.potencial = reader.GetInt32(8);
                     ts.driver.skills[0].VALUE = reader.GetInt32(9);
                     ts.driver.skills[1].VALUE = reader.GetInt32(10);
@@ -356,7 +356,7 @@ public class DBConnector : MonoBehaviour
                     ts.leader.country = reader.GetString(4);
                     ts.leader.level = reader.GetInt32(5);
                     ts.leader.xp = reader.GetInt32(6);
-                    ts.leader.moral = reader.GetInt32(7);
+                    ts.leader.moralValue = reader.GetInt32(7);
                     ts.leader.potencial = reader.GetInt32(8);
                     ts.leader.skills[0].VALUE = reader.GetInt32(9);
                     ts.leader.skills[1].VALUE = reader.GetInt32(10);
@@ -373,7 +373,7 @@ public class DBConnector : MonoBehaviour
                     ts.crewMembers[crewIndex].country = reader.GetString(4);
                     ts.crewMembers[crewIndex].level = reader.GetInt32(5);
                     ts.crewMembers[crewIndex].xp = reader.GetInt32(6);
-                    ts.crewMembers[crewIndex].moral = reader.GetInt32(7);
+                    ts.crewMembers[crewIndex].moralValue = reader.GetInt32(7);
                     ts.crewMembers[crewIndex].potencial = reader.GetInt32(8);
                     ts.crewMembers[crewIndex].skills[0].VALUE = reader.GetInt32(9);
                     ts.crewMembers[crewIndex].skills[1].VALUE = reader.GetInt32(10);
@@ -387,7 +387,7 @@ public class DBConnector : MonoBehaviour
         }
 
         Print_OpTimer("LoadTeamByString()");
-
+        reader.Close();
         CloseConnection();
 
         return ts;
@@ -429,12 +429,7 @@ public class DBConnector : MonoBehaviour
 
     private bool Connect_NpcDataDb()
     {
-        if (_connection != null)
-            _connection.Close();
-
         _connection = new SqliteConnection(NpcDataDb_url);
-
-        //Debug.Log(NpcDataDb_Url);
 
         if (_connection != null)
         {
@@ -487,7 +482,6 @@ public class DBConnector : MonoBehaviour
             }
 
             reader.Close();
-            //Debug.Log(string.Format("First fetch result: ID {0} Name {1} Sex {2}", rng, layout.Name, layout.Sex));
 
             rng = Random.Range(1, NAMES_SIZE);
 
@@ -501,7 +495,6 @@ public class DBConnector : MonoBehaviour
             }
 
             reader.Close();
-            //Debug.Log(string.Format("Second fetch result: ID {0} Full Name {1}", rng, layout.Name));
 
             rng = Random.Range(1, COUNTRIES_SIZE);
 
@@ -515,7 +508,6 @@ public class DBConnector : MonoBehaviour
             }
 
             reader.Close();
-            //Debug.Log(string.Format("Country fetch result: ID {0} Country of origin: {1}", rng, layout.Country));
 
             layout.age = Random.Range(18, 51);
 
@@ -543,8 +535,6 @@ public class DBConnector : MonoBehaviour
         }
         else
         {
-
-
             for (int i = 0; i < _structArray.Length; i++)
             {
                 int rng = Random.Range(1, NAMES_SIZE);
@@ -630,7 +620,6 @@ public class DBConnector : MonoBehaviour
             return false;
     }
 
-    //TODO create track loading
     public bool Load_Track(out Track _track, int _index = -1)
     {
         _track = new Track();
@@ -662,6 +651,9 @@ public class DBConnector : MonoBehaviour
             _track.type = (TrackType)reader.GetInt32(5);
             _track.curve = reader.GetString(6).Convert_StringToTrack();
         }
+
+        if (_track.type == TrackType.CIRCUIT || _track.type == TrackType.OVAL)
+            _track.curve.close = true;
 
         Print_OpTimer("Load_Track()");
 

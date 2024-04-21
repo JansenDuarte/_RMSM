@@ -43,7 +43,7 @@ public class MainMenu_Controler : MonoBehaviour
 
         //TODO play animation and sound of load game
 
-        GameManager.Instance.Load(_slotIndex);
+        GameManager.Instance.LoadGame(_slotIndex);
     }
 
     public void StartNewGame_At_SlotIndex(int _slotIndex)

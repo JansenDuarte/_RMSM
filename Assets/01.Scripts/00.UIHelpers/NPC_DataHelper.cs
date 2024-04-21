@@ -9,7 +9,7 @@ public class NPC_DataHelper : MonoBehaviour
 {
     private void Awake() { buttonBehaviour.enabled = IsSelectable; }
 
-    private void ShowNpcCard(NpcLayout _npc)
+    private void Feed_CardInfo(NpcLayout _npc)
     {
         npc_name.text = _npc.name.ToUpper();
         npc_sex.text = _npc.sex.ToUpper();
@@ -31,25 +31,25 @@ public class NPC_DataHelper : MonoBehaviour
     public void ShowNpcCard(ref NpcRaceEngineer _engineer)
     {
         NpcLayout l = _engineer;
-        ShowNpcCard(l);
+        Feed_CardInfo(l);
     }
 
     public void ShowNpcCard(ref NpcDriver _driver)
     {
         NpcLayout l = _driver;
-        ShowNpcCard(l);
+        Feed_CardInfo(l);
     }
 
     public void ShowNpcCard(ref NpcPitCrewLeader _crewLeader)
     {
         NpcLayout l = _crewLeader;
-        ShowNpcCard(l);
+        Feed_CardInfo(l);
     }
 
     public void ShowNpcCard(ref NpcPitCrewMember _crewMember)
     {
         NpcLayout l = _crewMember;
-        ShowNpcCard(l);
+        Feed_CardInfo(l);
     }
 
 
