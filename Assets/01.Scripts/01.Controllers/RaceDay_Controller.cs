@@ -56,6 +56,7 @@ public class RaceDay_Controller : MonoBehaviour
         }
     }
 
+    //FIXME:    The race doesn't start until the player releases the button!
     private IEnumerator RaceStart_MiniGame()
     {
         bool didFalseStart = false;
@@ -96,6 +97,7 @@ public class RaceDay_Controller : MonoBehaviour
 
         //show results
 
+        //FIXME:    this should happen even if the player does not release the button
         StartCoroutine(SimulateRace());
 
         yield break;
@@ -105,6 +107,7 @@ public class RaceDay_Controller : MonoBehaviour
     {
         int laps = 1;
         float newTrackPosition;
+        Vector3 targetPosition;
 
         //DEBUG
         while (laps <= track.laps)
@@ -112,7 +115,9 @@ public class RaceDay_Controller : MonoBehaviour
             for (int i = 0; i < cars.Length; i++)
             {
                 newTrackPosition = cars[i].Drive();
-                cars[i].transform.position = track.curve.GetPointAt(newTrackPosition);
+                targetPosition = track.curve.GetPointAt(newTrackPosition);
+                cars[i].transform.Rotate(cars[i].transform.forward, Vector3.Angle(cars[i].transform.localPosition, targetPosition));
+                cars[i].transform.position = targetPosition;
             }
             //FIXME: this is not the right way to do it
             for (int i = 0; i < GameManager.Instance.simulationSpeed; i++) { yield return new WaitForEndOfFrame(); }

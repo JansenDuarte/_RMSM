@@ -143,60 +143,45 @@ public abstract class NpcLayout
     }
 
 
-    //FIXME: this needs to be refactored
     public void EffectMoral(int _effect)
     {
-        int _prevMoral = moralValue;
+        int prevMoral = moralValue;
         moralValue += _effect;
 
-        int[] _lowerLimits = new int[] { 19, 39, 59, 79 };
-        int[] _upperLimits = new int[] { 80, 60, 40, 20 };
+        if (Check_ThresholdAndChangeMoral(prevMoral, _effect))
+        {
+            //TODO: trigger moral change!
+        }
 
-        //Verify if the moral passes through a threshold
+        //Block it from going over 100 and under 0
         if (_effect > 0)
-        {
-            //HACK this might become a problem
-            if (CheckThreshold(_prevMoral, moralValue, _lowerLimits))
-                moral += 1;
-        }
+            moralValue = (moralValue > 100) ? 100 : moralValue;
         else
-        {
-            //HACK this might become a problem
-            if (CheckThreshold(_prevMoral, moralValue, _upperLimits))
-                moral -= 1;
-        }
-
+            moralValue = (moralValue < 0) ? 0 : moralValue;
     }
 
 
-    //FIXME: this needs to be refactored
     /// <summary>
-    /// Verifies if any of the thresholds have been surpassed
+    /// Verifies if any of the thresholds have been surpassed and changes the 'moral' enum
     /// </summary>
-    /// <param name="_previousValue"> Previous value, before the change </param>
-    /// <param name="_currentValue"> Current value, already changed </param>
-    /// <param name="_limit"> Array of the limits to be tested </param>
+    /// <param name="_previousValue"> Value before the change </param>
+    /// <param name="_variation"></param>
     /// <returns></returns>
-    private bool CheckThreshold(int _previousValue, int _currentValue, int[] _limit)
+    private bool Check_ThresholdAndChangeMoral(int _previousValue, int _variation)
     {
-        if (_previousValue - _currentValue > 0)
+        int[] limits = new int[] { 20, 40, 60, 80 };    //Thresholds based on 5 separations of the Moral values
+
+        for (int i = 0; i < limits.Length; i++)
         {
-            for (int i = 0; i < _limit.Length; i++)
+            if (_previousValue < limits[i] && _previousValue + _variation > limits[i])
             {
-                if (_previousValue <= _limit[i] && _currentValue > _limit[i])
-                {
-                    return true;
-                }
+                moral += 1;
+                return true;
             }
-        }
-        else
-        {
-            for (int i = 0; i < _limit.Length; i++)
+            else if (_previousValue > limits[i] && _previousValue + _variation < limits[i])
             {
-                if (_previousValue >= _limit[i] && _currentValue < _limit[i])
-                {
-                    return true;
-                }
+                moral -= 1;
+                return true;
             }
         }
 

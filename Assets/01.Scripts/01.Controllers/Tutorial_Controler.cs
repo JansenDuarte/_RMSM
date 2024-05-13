@@ -6,6 +6,7 @@ using TMPro;
 
 public class Tutorial_Controler : MonoBehaviour
 {
+
     [Header("Scene references")]
     [SerializeField] TMP_InputField teamName_Input;
     [SerializeField] TMP_InputField teamNumber_Input;
@@ -46,8 +47,8 @@ public class Tutorial_Controler : MonoBehaviour
     private int selected_pitCrewLeader = -1;
     private int selected_driver = -1;
 
-    private const int MIN_INIT_CONTRACT_VALUE = 10;
-    private const int MAX_INIT_CONTRACT_VALUE = 16;
+    private const int MIN_INITIAL_CONTRACT_VALUE = 10;
+    private const int MAX_INITIAL_CONTRACT_VALUE = 16;
 
     private const int INITIAL_CASH = 10;
 
@@ -85,7 +86,7 @@ public class Tutorial_Controler : MonoBehaviour
 
         for (int i = 0; i < raceEngineers.Length; i++)
         {
-            raceEngineers[i] = new NpcRaceEngineer(npcsGenerated[i], Random.Range(MIN_INIT_CONTRACT_VALUE, MAX_INIT_CONTRACT_VALUE));
+            raceEngineers[i] = new NpcRaceEngineer(npcsGenerated[i], Random.Range(MIN_INITIAL_CONTRACT_VALUE, MAX_INITIAL_CONTRACT_VALUE));
             raceManager_DataHelper[i].ShowNpcCard(ref raceEngineers[i]);
         }
     }
@@ -110,7 +111,7 @@ public class Tutorial_Controler : MonoBehaviour
 
         for (int i = 0; i < drivers.Length; i++)
         {
-            drivers[i] = new NpcDriver(npcsGenerated[i + 3], Random.Range(MIN_INIT_CONTRACT_VALUE, MAX_INIT_CONTRACT_VALUE));
+            drivers[i] = new NpcDriver(npcsGenerated[i + 3], Random.Range(MIN_INITIAL_CONTRACT_VALUE, MAX_INITIAL_CONTRACT_VALUE));
             driver_DataHelper[i].ShowNpcCard(ref drivers[i]);
         }
     }
@@ -133,7 +134,7 @@ public class Tutorial_Controler : MonoBehaviour
     {
         for (int i = 0; i < pitCrewLeaders.Length; i++)
         {
-            pitCrewLeaders[i] = new NpcPitCrewLeader(npcsGenerated[i + 6], Random.Range(MIN_INIT_CONTRACT_VALUE, MAX_INIT_CONTRACT_VALUE));
+            pitCrewLeaders[i] = new NpcPitCrewLeader(npcsGenerated[i + 6], Random.Range(MIN_INITIAL_CONTRACT_VALUE, MAX_INITIAL_CONTRACT_VALUE));
             pitCrewLeader_DataHelper[i].ShowNpcCard(ref pitCrewLeaders[i]);
         }
     }
@@ -151,7 +152,7 @@ public class Tutorial_Controler : MonoBehaviour
 
         for (int i = 0; i < pitCrewMembers.Length; i++)
         {
-            pitCrewMembers[i] = new NpcPitCrewMember(npcsGenerated[i + 9], Random.Range(MIN_INIT_CONTRACT_VALUE, MAX_INIT_CONTRACT_VALUE));
+            pitCrewMembers[i] = new NpcPitCrewMember(npcsGenerated[i + 9], Random.Range(MIN_INITIAL_CONTRACT_VALUE, MAX_INITIAL_CONTRACT_VALUE));
         }
         pitCrewLeaders[selected_pitCrewLeader].pitCrew = pitCrewMembers;
 
