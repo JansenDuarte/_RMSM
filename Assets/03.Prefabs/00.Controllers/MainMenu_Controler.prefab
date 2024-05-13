@@ -45,9 +45,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69a6a99efe7625f4ca3c85717844b704, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainMenuSaveSlots: []
+  mainMenuSaveSlots:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   deleteWarning_Panel: {fileID: 0}
-  sceneSwitcher: {fileID: 0}
+  sceneSwitcher: {fileID: 4206951564607241128}
 --- !u!95 &4206951564607241128
 Animator:
   serializedVersion: 5
