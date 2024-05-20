@@ -12,7 +12,8 @@ public class RaceDay_Controller : MonoBehaviour
 
     private const int COMPETITOR_AMMOUNT = 7;
 
-    public const float GRID_DIFF_FACTOR = 0.01f;
+    public const float GRID_DIFF_FACTOR = 0.015f;
+    public const float DISTANCE_CONVERSION_FACTOR = 100f;
 
 
     void Start()
@@ -29,9 +30,11 @@ public class RaceDay_Controller : MonoBehaviour
         //Position the cars
         for (int i = 0; i < cars.Length; i++)
         {
+            //FIXME: some of the cars are starting on top of eachother
             float gridPosition = 1f - (GRID_DIFF_FACTOR * i);
-            cars[i].startingEventPosition = i + 1;  //setting the grid starting position
-            cars[i].trackPositionPerCent = gridPosition;
+            cars[i].startingGridPosition = i + 1;  //setting the grid starting position
+            cars[i].gridPosition = i + 1;
+            cars[i].trackPositionPerCent = gridPosition * DISTANCE_CONVERSION_FACTOR;
             cars[i].transform.position = track.curve.GetPointAt(gridPosition);
         }
 
@@ -114,17 +117,41 @@ public class RaceDay_Controller : MonoBehaviour
         {
             for (int i = 0; i < cars.Length; i++)
             {
-                newTrackPosition = cars[i].Drive();
+                newTrackPosition = cars[i].Drive() / DISTANCE_CONVERSION_FACTOR;
                 targetPosition = track.curve.GetPointAt(newTrackPosition);
-                cars[i].transform.Rotate(cars[i].transform.forward, Vector3.Angle(cars[i].transform.localPosition, targetPosition));
                 cars[i].transform.position = targetPosition;
+                // cars[i].transform.Rotate(cars[i].transform.forward, Vector3.Angle(cars[i].transform.up, targetPosition - cars[i].transform.position));
+            }
+
+            //Check overtake opportunities for all cars
+            Change_GridPosition();
+            Sort_ByGridPosition();
+
+            //Lap count based on car in first position
+            if (Check_LapCompleted(laps))
+                laps++;
+
+            //FIXME: this is not the right way to do it
+            for (int i = 0; i < GameManager.Instance.simulationSpeed; i++) { yield return new WaitForEndOfFrame(); }
+        }
+
+        EndEvent();
+
+        //TODO: this could be its own coroutine, defining the comemoration lap and entry into the pit lane for all cars
+        while (!AllCarsFinished())
+        {
+            for (int i = 0; i < cars.Length; i++)
+            {
+                if (!cars[i].raceCompleted)
+                {
+                    newTrackPosition = cars[i].Drive() / DISTANCE_CONVERSION_FACTOR;
+                    targetPosition = track.curve.GetPointAt(newTrackPosition);
+                    cars[i].transform.position = targetPosition;
+                    // cars[i].transform.Rotate(cars[i].transform.forward, Vector3.Angle(cars[i].transform.up, targetPosition - cars[i].transform.position));
+                }
             }
             //FIXME: this is not the right way to do it
             for (int i = 0; i < GameManager.Instance.simulationSpeed; i++) { yield return new WaitForEndOfFrame(); }
-
-            //Check overtake opportunities for all cars (?)
-
-            //Lap count based on a collider && car in first position
         }
 
         //Race ended
@@ -133,6 +160,81 @@ public class RaceDay_Controller : MonoBehaviour
         Show_EndRace_Info();
 
         yield break;
+    }
+
+    private void EndEvent()
+    {
+        for (int i = 0; i < cars.Length; i++)
+        { cars[i].checkeredFlag = true; }
+    }
+
+    private bool AllCarsFinished()
+    {
+        for (int i = 0; i < cars.Length; i++)
+        {
+            if (!cars[i].raceCompleted)
+                return false;
+        }
+
+        return true;
+    }
+
+    private void Change_GridPosition()
+    {
+        int carInFrontIndex;
+        // int carBehindIndex;
+
+        for (int i = 0; i < cars.Length; i++)
+        {
+            carInFrontIndex = i - 1;
+            // carBehindIndex = i + 1;
+
+            //check position gained
+            if (carInFrontIndex >= 0)
+            {
+                if (cars[i].trackPositionPerCent > cars[carInFrontIndex].trackPositionPerCent &&
+                cars[i].currentLap == cars[carInFrontIndex].currentLap)
+                {
+                    cars[i].gridPosition--;
+                    cars[carInFrontIndex].gridPosition++;
+                    raceDayHelper.Show_GridChanges(i, carInFrontIndex);
+                }
+            }
+
+            // //check position lost
+            // if (carBehindIndex < cars.Length)
+            // {
+            //     if (cars[i].trackPositionPerCent < cars[carBehindIndex].trackPositionPerCent &&
+            //     cars[i].currentLap == cars[carBehindIndex].currentLap)
+            //     {
+            //         cars[i].gridPosition++;
+            //         cars[carBehindIndex].gridPosition--;
+            //     }
+            // }
+        }
+    }
+
+    private void Sort_ByGridPosition()
+    {
+        RaceCar[] sorted = new RaceCar[COMPETITOR_AMMOUNT + 1];
+
+        for (int i = 0; i < cars.Length; i++)
+        {
+            sorted[cars[i].gridPosition - 1] = cars[i];
+        }
+
+        for (int i = 0; i < cars.Length; i++)
+        {
+            cars[i] = sorted[i];
+        }
+    }
+
+    private bool Check_LapCompleted(int _eventLap)
+    {
+        if (cars[0].currentLap > _eventLap)
+            return true;
+
+        return false;
     }
 
     private void Overtake_MiniGame()

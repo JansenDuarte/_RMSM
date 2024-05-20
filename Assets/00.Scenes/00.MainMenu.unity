@@ -2797,6 +2797,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: BackgroundGradient
       objectReference: {fileID: 0}
+    - target: {fileID: 8420946267498239237, guid: 7afa8f044bee59e49a0d83d3b08f5357, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7afa8f044bee59e49a0d83d3b08f5357, type: 3}
 --- !u!224 &766978230 stripped
@@ -3463,7 +3467,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!114 &1045395843
 MonoBehaviour:

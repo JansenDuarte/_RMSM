@@ -7,8 +7,6 @@ public class MainMenu_Controler : MonoBehaviour
     [SerializeField] SaveSlot_Struct[] mainMenuSaveSlots;
 
     [SerializeField] Canvas deleteWarning_Panel;
-    [SerializeField] Animator sceneSwitcher;
-
     public void FillUsedSaveSlots(Saved_Game_Struct[] _saved_Games)
     {
         if (_saved_Games == null)
@@ -41,16 +39,12 @@ public class MainMenu_Controler : MonoBehaviour
     {
         GameManager.Instance.SelectedSaveSlot = _slotIndex;
 
-        //TODO play animation and sound of load game
-
         GameManager.Instance.LoadGame(_slotIndex);
     }
 
     public void UI_StartNewGame_At_SlotIndex(int _slotIndex)
     {
         GameManager.Instance.SelectedSaveSlot = _slotIndex;
-
-        //TODO: play animation and sounds of new game
 
         GameManager.Instance.LoadScene_Async((int)SceneCodex.TUTORIAL);
     }

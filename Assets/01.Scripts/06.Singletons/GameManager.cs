@@ -69,7 +69,7 @@ public class GameManager : MonoBehaviour
 
     private void ScreenConfigurations()
     {
-        Application.targetFrameRate = 30;
+        Application.targetFrameRate = 60;
         Screen.autorotateToPortrait = false;
         Screen.autorotateToPortraitUpsideDown = false;
         Screen.sleepTimeout = 0;
@@ -104,6 +104,7 @@ public class GameManager : MonoBehaviour
     {
         if (PlayerPrefs.HasKey(PlayerPrefKeys.FIRST_TIME_TUTORIALS))
         {
+            //FIXME: Sometimes, AudioManager is slower and doesnt set its 'instance'
             AudioManager.Instance.BGM_Volume = PlayerPrefs.GetInt(PlayerPrefKeys.BGM_VOLUME);
             AudioManager.Instance.SFX_Volume = PlayerPrefs.GetInt(PlayerPrefKeys.SFX_VOLUME);
             p_prefered_Unit = (Units)PlayerPrefs.GetInt(PlayerPrefKeys.PREFERED_UNITS);
@@ -204,7 +205,7 @@ public class GameManager : MonoBehaviour
 
         PlayerManager.Instance.LoadTeam(DbInstance.LoadTeamByString(m_savedGames[_selectedSlot - 1].Team_Members));
 
-        LoadScene(2);
+        LoadScene_Async((int)SceneCodex.MANAGER);
     }
 
     public void DeleteSavedGame(int _selectedSlot)
@@ -218,6 +219,8 @@ public class GameManager : MonoBehaviour
 
     #region Scene Management
 
+    [SerializeField] Animator sceneSwitcher;
+
     Coroutine Load_AsyncCO = null;
 
     public void LoadScene(int _sceneIndex)
@@ -230,7 +233,7 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene((int)_sceneName);
     }
 
-    public bool LoadScene_Async(int _sceneIndex, float _haltBeforeSwitching = 0f)
+    public bool LoadScene_Async(int _sceneIndex, float _haltBeforeSwitching = 1f)
     {
         if (Load_AsyncCO != null)
             return false;
@@ -242,6 +245,8 @@ public class GameManager : MonoBehaviour
 
     IEnumerator WaitAndLoad(int _sceneIndex, float _haltBeforeSwitching)
     {
+        sceneSwitcher.SetTrigger("Out");
+
         AsyncOperation load = SceneManager.LoadSceneAsync(_sceneIndex, LoadSceneMode.Single);
         load.allowSceneActivation = false;
 
@@ -258,6 +263,8 @@ public class GameManager : MonoBehaviour
             yield return new WaitForSeconds(_haltBeforeSwitching - timer);
 
         load.allowSceneActivation = true;
+
+        sceneSwitcher.SetTrigger("In");
 
         Load_AsyncCO = null;
         yield break;

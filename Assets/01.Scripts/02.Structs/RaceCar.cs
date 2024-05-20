@@ -5,15 +5,20 @@ using UnityEngine;
 
 public class RaceCar : MonoBehaviour
 {
-    private const float PERFORMANCE_FACTOR = 0.0001f;
+    private const float PERFORMANCE_FACTOR = 0.005f;
+    private const float PERCENT = 100f;
 
     public SpriteRenderer sprite;
     public NpcDriver driver;
 
     public float trackPositionPerCent;
 
-    public int startingEventPosition;
-    public int eventPosition;
+    public int startingGridPosition;
+    public int gridPosition;
+    public int currentLap = 0;
+
+    public bool checkeredFlag = false;  //has the event ended?
+    public bool raceCompleted = false;
 
 
     //Just for my memory's sake:
@@ -23,7 +28,14 @@ public class RaceCar : MonoBehaviour
     public float Drive()
     {
         trackPositionPerCent += PERFORMANCE_FACTOR * driver.GetGeneralPerformance();
-        trackPositionPerCent %= 1f;
+        if (trackPositionPerCent > PERCENT)
+        {
+            trackPositionPerCent -= PERCENT;
+            if (!checkeredFlag)
+                currentLap++;
+            else
+                raceCompleted = true;
+        }
         return trackPositionPerCent;
     }
 

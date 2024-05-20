@@ -11,6 +11,7 @@ public class Tutorial_Controler : MonoBehaviour
     [SerializeField] TMP_InputField teamName_Input;
     [SerializeField] TMP_InputField teamNumber_Input;
     [SerializeField] Image teamColor_Img;
+    [SerializeField] Canvas colorPicker_Canvas;
     [SerializeField] GameObject nameYourTeam_Pivot;
     [SerializeField] GameObject pickRaceEngineer_Pivot;
     [SerializeField] GameObject raceEngineerDescription_Pivot;
@@ -18,11 +19,11 @@ public class Tutorial_Controler : MonoBehaviour
     [SerializeField] GameObject driverDescription_Pivot;
     [SerializeField] GameObject pickPitCrewLeader_Pivot;
     [SerializeField] GameObject pitCrewLeaderDescription_Pivot;
-    [SerializeField] Animator endTutorialAnimator;
+    [SerializeField] ColorPicker colorPicker;
 
 
-    [Header("Warning panel")]
-    [SerializeField] GameObject warningPanel;
+    [Header("Warning Canvas")]
+    [SerializeField] Canvas warningCanvas;
     [SerializeField] TextMeshProUGUI warningText;
     [SerializeField][Range(1f, 5f)] float warningTimer;
 
@@ -107,8 +108,6 @@ public class Tutorial_Controler : MonoBehaviour
 
     public void UI_RaceEngineer_Description_NextButtonClicked()
     {
-
-
         for (int i = 0; i < drivers.Length; i++)
         {
             drivers[i] = new NpcDriver(npcsGenerated[i + 3], Random.Range(MIN_INITIAL_CONTRACT_VALUE, MAX_INITIAL_CONTRACT_VALUE));
@@ -163,10 +162,6 @@ public class Tutorial_Controler : MonoBehaviour
     {
         PlayerManager.Instance.PrepareDataAndSave();
 
-        //TODO: wait animation; call load scene
-
-
-
         GameManager.Instance.LoadScene_Async((int)SceneCodex.MANAGER);
     }
 
@@ -193,6 +188,14 @@ public class Tutorial_Controler : MonoBehaviour
     }
 
 
+    public void UI_OpenColorPicker() { colorPicker_Canvas.enabled = true; }
+
+    public void UI_ConfirmColorChange()
+    {
+        teamColor_Img.color = colorPicker.colorExposer.color;
+        colorPicker_Canvas.enabled = false;
+    }
+
 
     public void UI_WarningPanelForceClose()
     {
@@ -204,11 +207,11 @@ public class Tutorial_Controler : MonoBehaviour
     {
         warningText.color = _msgColor;
         warningText.text = _msg;
-        warningPanel.SetActive(true);
+        warningCanvas.enabled = true;
 
         yield return new WaitForSeconds(warningTimer + _aditionalWait);
 
-        warningPanel.SetActive(false);
+        warningCanvas.enabled = false;
 
         yield break;
     }

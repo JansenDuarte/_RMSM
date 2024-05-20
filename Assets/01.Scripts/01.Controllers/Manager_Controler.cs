@@ -35,6 +35,6 @@ public class Manager_Controler : MonoBehaviour
 
     public void UI_DEBUG_GoToRaceTest()
     {
-        GameManager.Instance.LoadScene(SceneCodex.RACE_DAY);
+        GameManager.Instance.LoadScene_Async((int)SceneCodex.RACE_DAY);
     }
 }

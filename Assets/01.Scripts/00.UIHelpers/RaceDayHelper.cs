@@ -70,6 +70,15 @@ public class RaceDayHelper : MonoBehaviour
         }
     }
 
+    public void Show_GridChanges(int _gainedPosIndex, int _lostPosIndex)
+    {
+        StartCoroutine(racersInfo[_gainedPosIndex].GainedPosition());
+        StartCoroutine(racersInfo[_lostPosIndex].LostPosition());
+        racersInfo[_gainedPosIndex].transform.SetSiblingIndex(_lostPosIndex);
+        racersInfo[_lostPosIndex].transform.SetSiblingIndex(_gainedPosIndex);
+        (racersInfo[_gainedPosIndex], racersInfo[_lostPosIndex]) = (racersInfo[_lostPosIndex], racersInfo[_gainedPosIndex]);
+    }
+
 
 
     private void ShowTrackLayout(BezierPoint[] _points)
