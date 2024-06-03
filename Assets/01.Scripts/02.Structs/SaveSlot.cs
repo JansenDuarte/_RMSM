@@ -1,20 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using ExtensionMethods;
 
-public class SaveSlot_Struct : MonoBehaviour
+public class SaveSlot : MonoBehaviour
 {
-    [SerializeField] TextMeshProUGUI teamName_text;
-    [SerializeField] TextMeshProUGUI teamNumber_text;
-    [SerializeField] TextMeshProUGUI money_text;
-
-    public GameObject selectSlot_pivot;
-    public GameObject loadSlot_pivot;
-
-
-    public void ChangeSlotName(string _teamName, bool _showOnlyName = true)
+    public void Change_SlotName(string _teamName, bool _showOnlyName = true)
     {
         if (_showOnlyName)
         {
@@ -26,18 +16,17 @@ public class SaveSlot_Struct : MonoBehaviour
         teamName_text.text = _teamName;
     }
 
-    public void SetSlotAsFilled(string _teamName, string _teamNumber, string _teamColor, int _money)
+    public void Set_SlotAsFilled(string _teamName, string _teamNumber, string _teamColor, int _money)
     {
         teamName_text.text = _teamName;
         teamNumber_text.text = _teamNumber;
         teamNumber_text.color = _teamColor.StringToColor();
         money_text.text = _money.ToString();
 
-
         ChangeVisibleButtons(true);
     }
 
-    public void ChangeVisibleButtons(bool _isSlotUsed)
+    private void ChangeVisibleButtons(bool _isSlotUsed)
     {
         if (_isSlotUsed)
         {
@@ -50,4 +39,16 @@ public class SaveSlot_Struct : MonoBehaviour
             loadSlot_pivot.SetActive(false);
         }
     }
+
+
+    #region VARIABLES
+
+    [SerializeField] private TextMeshProUGUI teamName_text;
+    [SerializeField] private TextMeshProUGUI teamNumber_text;
+    [SerializeField] private TextMeshProUGUI money_text;
+
+    [SerializeField] private GameObject selectSlot_pivot;
+    [SerializeField] private GameObject loadSlot_pivot;
+
+    #endregion // VARIABLES
 }

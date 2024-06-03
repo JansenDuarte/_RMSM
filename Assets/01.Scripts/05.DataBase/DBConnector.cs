@@ -509,7 +509,7 @@ public class DBConnector : MonoBehaviour
 
             reader.Close();
 
-            layout.age = Random.Range(18, 51);
+            layout.age = Random.Range(MIN_GEN_NPC_AGE, MAX_GEN_NPC_AGE);
 
             CloseConnection();
 
@@ -549,17 +549,15 @@ public class DBConnector : MonoBehaviour
                 {
                     _structArray[i].name = reader.GetString(1);
 
-                    if (reader.GetString(2) == "mf")
+                    if (reader.GetString(2) != "mf")
+                        _structArray[i].sex = reader.GetString(2);
+                    else
                     {
-                        int sex_rng = Random.Range(0, 2);
-
-                        if (sex_rng == 0)
+                        if (Random.Range(0, 2) == 0)
                             _structArray[i].sex = "m";
                         else
                             _structArray[i].sex = "f";
                     }
-                    else
-                        _structArray[i].sex = reader.GetString(2);
                 }
 
                 reader.Close();

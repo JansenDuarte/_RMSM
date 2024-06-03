@@ -406,6 +406,14 @@ namespace ExtensionMethods
 
             return returnCurve;
         }
+      
+        /// Return value with leading zero
+        /// </summary>
+        /// <param name="_value"></param>
+        /// <returns></returns>
+        public static string FormatIntoDoubleDigits(this int _value)
+        { return (_value < 10) ? string.Format("0{0}", _value) : _value.ToString(); }
+
 
 
         /// <summary>

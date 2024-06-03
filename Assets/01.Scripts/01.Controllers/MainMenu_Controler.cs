@@ -7,6 +7,9 @@ public class MainMenu_Controler : MonoBehaviour
     [SerializeField] SaveSlot_Struct[] mainMenuSaveSlots;
 
     [SerializeField] Canvas deleteWarning_Panel;
+
+    private int indexSelectedForDeletion = -1;
+
     public void FillUsedSaveSlots(Saved_Game_Struct[] _saved_Games)
     {
         if (_saved_Games == null)
@@ -20,9 +23,9 @@ public class MainMenu_Controler : MonoBehaviour
         for (int i = 0; i < mainMenuSaveSlots.Length; i++)
         {
             if (_saved_Games[i].Team_Name != null && _saved_Games[i].Team_Name != "")
-                mainMenuSaveSlots[i].SetSlotAsFilled(_saved_Games[i].Team_Name, _saved_Games[i].Car_Number.ToString(), _saved_Games[i].Car_Color, _saved_Games[i].Money);
+                mainMenuSaveSlots[i].Set_SlotAsFilled(_saved_Games[i].Team_Name, _saved_Games[i].Car_Number.ToString(), _saved_Games[i].Car_Color, _saved_Games[i].Money);
             else
-                mainMenuSaveSlots[i].ChangeSlotName("empty");
+                mainMenuSaveSlots[i].Change_SlotName("empty");
         }
     }
 
@@ -30,7 +33,7 @@ public class MainMenu_Controler : MonoBehaviour
     {
         for (int i = 0; i < mainMenuSaveSlots.Length; i++)
         {
-            mainMenuSaveSlots[i].ChangeSlotName("empty");
+            mainMenuSaveSlots[i].Change_SlotName("empty");
         }
     }
 
@@ -55,11 +58,10 @@ public class MainMenu_Controler : MonoBehaviour
         indexSelectedForDeletion = _slotIndex;
     }
 
-    int indexSelectedForDeletion = -1;
 
     public void UI_Delete_At_Slotindex()
     {
-        mainMenuSaveSlots[indexSelectedForDeletion - 1].ChangeSlotName("empty");
+        mainMenuSaveSlots[indexSelectedForDeletion - 1].Change_SlotName("empty");
 
         GameManager.Instance.DeleteSavedGame(indexSelectedForDeletion);
     }

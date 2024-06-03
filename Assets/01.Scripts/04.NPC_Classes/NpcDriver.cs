@@ -7,6 +7,8 @@ public class NpcDriver : NpcLayout
 {
     public int carNumber;
 
+    public const int VARIATION_FACTOR = 2;
+
 
     #region CONSTRUCTORS
 
@@ -54,33 +56,27 @@ public class NpcDriver : NpcLayout
     {
         int performance;
 
-        //Ploted function; Defines a good gradient to the variations
-        int variationGradient = Mathf.CeilToInt(((-Mathf.Pow(skills[(int)DRIVER_SKILLS.CONSISTENCY].VALUE, 2f) / 100) + 100) / 10);
+        int consistencyVariation;
 
-        float consistencyVariation;
+        //TAGED     This is the calculation that relates to a good graph for the variation of performance
+        int variationGradient = Mathf.CeilToInt((-(skills[(int)DRIVER_SKILLS.CONSISTENCY].VALUE * skills[(int)DRIVER_SKILLS.CONSISTENCY].VALUE) / 1000) + 100);
 
         //Consistency; The closer to 100, smaller the variations;
-        if (Random.Range(0, 100) > skills[(int)DRIVER_SKILLS.CONSISTENCY].VALUE)
-        {
-            //  Driver was not consistent in this lap;
-            //  Variation is big;
 
-            consistencyVariation = Random.Range(-variationGradient * 2, variationGradient * 2);
-        }
+        //  Driver was not consistent in this lap;
+        if (Random.Range(LOWER_SKILL_LIMIT, UPPER_SKILL_LIMIT + 1) > skills[(int)DRIVER_SKILLS.CONSISTENCY].VALUE)
+            consistencyVariation = Random.Range(-variationGradient * VARIATION_FACTOR, variationGradient * VARIATION_FACTOR);
+
+        //  Driver was consistent in this lap;
         else
-        {
-            //  Driver was consistent in this lap;
-            //  Variation is small;
-
             consistencyVariation = Random.Range(-variationGradient, variationGradient);
-        }
 
         // Determine performance:
-        performance = (int)(skills[(int)DRIVER_SKILLS.SPEED].VALUE + (((100 - skills[(int)DRIVER_SKILLS.STAMINA].VALUE) / 10) + consistencyVariation));
+        performance = skills[(int)DRIVER_SKILLS.SPEED].VALUE + ((100 - skills[(int)DRIVER_SKILLS.STAMINA].VALUE) / 10) + consistencyVariation;
 
-        // Debug.Log(string.Format("Performance Calculations:\n" +
-        //     "speed : {0}\n stamina : {1}\n consistency : {2}\n consistency variation : {3}\n consistency gradient : {4}\n performance : {5}",
-        //     skills[(int)DRIVER_SKILLS.SPEED].VALUE, skills[(int)DRIVER_SKILLS.STAMINA].VALUE, skills[(int)DRIVER_SKILLS.CONSISTENCY].VALUE, consistencyVariation, variationGradient, performance));
+        Debug.Log(string.Format("Performance Calculations:\n" +
+            "speed : {0}\n stamina : {1}\n consistency : {2}\n consistency variation : {3}\n consistency gradient : {4}\n performance : {5}",
+            skills[(int)DRIVER_SKILLS.SPEED].VALUE, skills[(int)DRIVER_SKILLS.STAMINA].VALUE, skills[(int)DRIVER_SKILLS.CONSISTENCY].VALUE, consistencyVariation, variationGradient, performance));
 
         return performance;
     }

@@ -24,7 +24,7 @@ public class NpcPitCrewMember : NpcLayout
 
         List<int> list = new();
         list.AddRange(values);
-        int listIndex = -1;
+        int listIndex;
 
         for (int i = 0; i < values.Length; i++)
         {
@@ -41,6 +41,8 @@ public class NpcPitCrewMember : NpcLayout
         skills[(int)PIT_MEMBER_SKILLS.TEAM_WORK].NAME = "TEAM WORK";
         skills[(int)PIT_MEMBER_SKILLS.STAMINA].NAME = "STAMINA";
     }
+
+    //TODO      Make the performance calculator for the crew members
 
     #endregion
 }
