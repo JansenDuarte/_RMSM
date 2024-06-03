@@ -17,7 +17,7 @@ public class Manager_Controler : MonoBehaviour
     private void Start()
     {
         //Initial setup
-        gameDate_Text.text = string.Format("week {0}/ {1}/ {2}", GameManager.Instance.gameDate.Week, GameManager.Instance.gameDate.Month.ToString(), GameManager.Instance.gameDate.Year);
+        gameDate_Text.text = string.Format("week {0}/ {1}/ {2}", GameManager.Instance.GameDate.Week, GameManager.Instance.GameDate.Month.ToString(), GameManager.Instance.GameDate.Year);
 
         teamName_Text.text = PlayerManager.Instance.TeamName;
         teamName_Text.color = PlayerManager.Instance.TeamColor;

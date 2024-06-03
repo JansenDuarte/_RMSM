@@ -56,7 +56,7 @@ public class Tutorial_Controler : MonoBehaviour
 
     private void Start()
     {
-        GameManager.Instance.Generate_NPC_InBulk(ref npcsGenerated);
+        GameManager.Instance.NpcGenerateInBulk(ref npcsGenerated);
     }
 
 

@@ -132,7 +132,7 @@ public class RaceDay_Controller : MonoBehaviour
                 laps++;
 
             //FIXME: this is not the right way to do it
-            for (int i = 0; i < GameManager.Instance.simulationSpeed; i++) { yield return new WaitForEndOfFrame(); }
+            for (int i = 0; i < GameManager.Instance.SimulationSpeed; i++) { yield return new WaitForEndOfFrame(); }
         }
 
         EndEvent();
@@ -151,7 +151,7 @@ public class RaceDay_Controller : MonoBehaviour
                 }
             }
             //FIXME: this is not the right way to do it
-            for (int i = 0; i < GameManager.Instance.simulationSpeed; i++) { yield return new WaitForEndOfFrame(); }
+            for (int i = 0; i < GameManager.Instance.SimulationSpeed; i++) { yield return new WaitForEndOfFrame(); }
         }
 
         //Race ended

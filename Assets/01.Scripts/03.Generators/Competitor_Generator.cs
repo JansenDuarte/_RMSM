@@ -9,7 +9,7 @@ public static class Competitor_Generator
 
         NpcDriver npcDriver;
         NpcStruct[] layout = new NpcStruct[_ammount];
-        GameManager.Instance.Generate_NPC_InBulk(ref layout);
+        GameManager.Instance.NpcGenerateInBulk(ref layout);
         int[] skills;
 
         for (int i = 0; i < _ammount; i++)
