@@ -292,6 +292,19 @@ namespace ExtensionMethods
 
         #region STRING_EXTENSIONS
 
+        /// <summary>
+        /// Adds a leading zero if applicable
+        /// </summary>
+        /// <param name="_num"></param>
+        /// <returns></returns>
+        public static string Format_AddLeadingZero(this int _num)
+        {
+            if (_num < 10)
+                return string.Format("0{0}", _num);
+            else
+                return _num.ToString();
+        }
+
         public static int[] StringIntoIndexes(this string _s)
         {
             string[] c = _s.Split(',');
@@ -429,6 +442,9 @@ namespace ExtensionMethods
         }
 
         #endregion // STRING_EXTENSIONS
+
+
+
 
 
 

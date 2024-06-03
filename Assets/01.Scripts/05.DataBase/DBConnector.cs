@@ -121,8 +121,8 @@ public class DBConnector : MonoBehaviour
                 );
         }
 
+        reader.Close();
         Print_OpTimer("Get_SavedGames()");
-
         CloseConnection();
 
         return _returnValue;
@@ -146,18 +146,18 @@ public class DBConnector : MonoBehaviour
 
         _command.CommandText = string.Format("INSERT INTO Team_Members (Name, Sex, Age, Country, Level, Experience, Moral, Potential, Skill_1, Skill_2, Skill_3, Skill_4) " +
             "VALUES (\"{0}\", \"{1}\", {2}, \"{3}\", {4}, {5}, {6}, {7}, {8}, {9}, {10}, {11})",
-            _team.engineer.name.ToUpper(),
-            _team.engineer.sex,
-            _team.engineer.age,
-            _team.engineer.country,
-            _team.engineer.level,
-            _team.engineer.xp,
-            _team.engineer.moral,
-            _team.engineer.potencial,
-            _team.engineer.skills[0].VALUE,
-            _team.engineer.skills[1].VALUE,
-            _team.engineer.skills[2].VALUE,
-            _team.engineer.skills[3].VALUE);
+            _team.Engineer.name.ToUpper(),
+            _team.Engineer.sex,
+            _team.Engineer.age,
+            _team.Engineer.country,
+            _team.Engineer.level,
+            _team.Engineer.xp,
+            _team.Engineer.moralValue,
+            _team.Engineer.potencial,
+            _team.Engineer.skills[0].VALUE,
+            _team.Engineer.skills[1].VALUE,
+            _team.Engineer.skills[2].VALUE,
+            _team.Engineer.skills[3].VALUE);
 
         _command.ExecuteNonQuery();
 
@@ -167,18 +167,18 @@ public class DBConnector : MonoBehaviour
 
         _command.CommandText = string.Format("INSERT INTO Team_Members (Name, Sex, Age, Country, Level, Experience, Moral, Potential, Skill_1, Skill_2, Skill_3, Skill_4) " +
             "VALUES (\"{0}\", \"{1}\", {2}, \"{3}\", {4}, {5}, {6}, {7}, {8}, {9}, {10}, {11})",
-            _team.driver.name.ToUpper(),
-            _team.driver.sex,
-            _team.driver.age,
-            _team.driver.country,
-            _team.driver.level,
-            _team.driver.xp,
-            _team.driver.moral,
-            _team.driver.potencial,
-            _team.driver.skills[0].VALUE,
-            _team.driver.skills[1].VALUE,
-            _team.driver.skills[2].VALUE,
-            _team.driver.skills[3].VALUE);
+            _team.Driver.name.ToUpper(),
+            _team.Driver.sex,
+            _team.Driver.age,
+            _team.Driver.country,
+            _team.Driver.level,
+            _team.Driver.xp,
+            _team.Driver.moralValue,
+            _team.Driver.potencial,
+            _team.Driver.skills[0].VALUE,
+            _team.Driver.skills[1].VALUE,
+            _team.Driver.skills[2].VALUE,
+            _team.Driver.skills[3].VALUE);
 
         _command.ExecuteNonQuery();
 
@@ -188,57 +188,57 @@ public class DBConnector : MonoBehaviour
 
         _command.CommandText = string.Format("INSERT INTO Team_Members (Name, Sex, Age, Country, Level, Experience, Moral, Potential, Skill_1, Skill_2, Skill_3, Skill_4) " +
             "VALUES (\"{0}\", \"{1}\", {2}, \"{3}\", {4}, {5}, {6}, {7}, {8}, {9}, {10}, {11})",
-            _team.leader.name.ToUpper(),
-            _team.leader.sex,
-            _team.leader.age,
-            _team.leader.country,
-            _team.leader.level,
-            _team.leader.xp,
-            _team.leader.moral,
-            _team.leader.potencial,
-            _team.leader.skills[0].VALUE,
-            _team.leader.skills[1].VALUE,
-            _team.leader.skills[2].VALUE,
-            _team.leader.skills[3].VALUE);
+            _team.CrewLeader.name.ToUpper(),
+            _team.CrewLeader.sex,
+            _team.CrewLeader.age,
+            _team.CrewLeader.country,
+            _team.CrewLeader.level,
+            _team.CrewLeader.xp,
+            _team.CrewLeader.moralValue,
+            _team.CrewLeader.potencial,
+            _team.CrewLeader.skills[0].VALUE,
+            _team.CrewLeader.skills[1].VALUE,
+            _team.CrewLeader.skills[2].VALUE,
+            _team.CrewLeader.skills[3].VALUE);
 
         _command.ExecuteNonQuery();
 
         //!!Pit Crew Leader save!!
 
         //Pit Crew save
-        for (int i = 0; i < _team.crewMembers.Length; i++)
+        for (int i = 0; i < _team.CrewMembers.Length; i++)
         {
             _command.CommandText = string.Format("INSERT INTO Team_Members (Name, Sex, Age, Country, Level, Experience, Moral, Potential, Skill_1, Skill_2, Skill_3, Skill_4) " +
                 "VALUES (\"{0}\", \"{1}\", {2}, \"{3}\", {4}, {5}, {6}, {7}, {8}, {9}, {10}, {11})",
-                _team.crewMembers[i].name.ToUpper(),
-                _team.crewMembers[i].sex,
-                _team.crewMembers[i].age,
-                _team.crewMembers[i].country,
-                _team.crewMembers[i].level,
-                _team.crewMembers[i].xp,
-                _team.crewMembers[i].moral,
-                _team.crewMembers[i].potencial,
-                _team.crewMembers[i].skills[0].VALUE,
-                _team.crewMembers[i].skills[1].VALUE,
-                _team.crewMembers[i].skills[2].VALUE,
-                _team.crewMembers[i].skills[3].VALUE);
+                _team.CrewMembers[i].name.ToUpper(),
+                _team.CrewMembers[i].sex,
+                _team.CrewMembers[i].age,
+                _team.CrewMembers[i].country,
+                _team.CrewMembers[i].level,
+                _team.CrewMembers[i].xp,
+                _team.CrewMembers[i].moralValue,
+                _team.CrewMembers[i].potencial,
+                _team.CrewMembers[i].skills[0].VALUE,
+                _team.CrewMembers[i].skills[1].VALUE,
+                _team.CrewMembers[i].skills[2].VALUE,
+                _team.CrewMembers[i].skills[3].VALUE);
 
             _command.ExecuteNonQuery();
 
         }
         //!!Pit Crew save!!
 
-        int lastInsertedID = 0;
+        int lastInsertedID;
         _command.CommandText = "SELECT last_insert_rowid();";
         lastInsertedID = int.Parse(_command.ExecuteScalar().ToString());
 
-        _team.engineer.dbId = lastInsertedID - 6;
-        _team.driver.dbId = lastInsertedID - 5;
-        _team.leader.dbId = lastInsertedID - 4;
-        _team.crewMembers[0].dbId = lastInsertedID - 3;
-        _team.crewMembers[1].dbId = lastInsertedID - 2;
-        _team.crewMembers[2].dbId = lastInsertedID - 1;
-        _team.crewMembers[3].dbId = lastInsertedID;
+        _team.Engineer.dbId = lastInsertedID - 6;
+        _team.Driver.dbId = lastInsertedID - 5;
+        _team.CrewLeader.dbId = lastInsertedID - 4;
+        _team.CrewMembers[0].dbId = lastInsertedID - 3;
+        _team.CrewMembers[1].dbId = lastInsertedID - 2;
+        _team.CrewMembers[2].dbId = lastInsertedID - 1;
+        _team.CrewMembers[3].dbId = lastInsertedID;
 
         Print_OpTimer("SaveNewTeam()");
 
@@ -306,7 +306,7 @@ public class DBConnector : MonoBehaviour
         int readIndex = 0;
         int crewIndex = 0;
 
-        ts.crewMembers = new NpcPitCrewMember[4];
+        ts.CrewMembers = new NpcPitCrewMember[4];
 
         while (reader.Read())
         {
@@ -314,71 +314,71 @@ public class DBConnector : MonoBehaviour
             {
                 //Race Enineer
                 case 0:
-                    ts.engineer = new();
-                    ts.engineer.dbId = reader.GetInt32(0);
-                    ts.engineer.name = reader.GetString(1);
-                    ts.engineer.sex = reader.GetString(2);
-                    ts.engineer.age = reader.GetInt32(3);
-                    ts.engineer.country = reader.GetString(4);
-                    ts.engineer.level = reader.GetInt32(5);
-                    ts.engineer.xp = reader.GetInt32(6);
-                    ts.engineer.moral = reader.GetInt32(7);
-                    ts.engineer.potencial = reader.GetInt32(8);
-                    ts.engineer.skills[0].VALUE = reader.GetInt32(9);
-                    ts.engineer.skills[1].VALUE = reader.GetInt32(10);
-                    ts.engineer.skills[2].VALUE = reader.GetInt32(11);
-                    ts.engineer.skills[3].VALUE = reader.GetInt32(12);
+                    ts.Engineer = new();
+                    ts.Engineer.dbId = reader.GetInt32(0);
+                    ts.Engineer.name = reader.GetString(1);
+                    ts.Engineer.sex = reader.GetString(2);
+                    ts.Engineer.age = reader.GetInt32(3);
+                    ts.Engineer.country = reader.GetString(4);
+                    ts.Engineer.level = reader.GetInt32(5);
+                    ts.Engineer.xp = reader.GetInt32(6);
+                    ts.Engineer.moralValue = reader.GetInt32(7);
+                    ts.Engineer.potencial = reader.GetInt32(8);
+                    ts.Engineer.skills[0].VALUE = reader.GetInt32(9);
+                    ts.Engineer.skills[1].VALUE = reader.GetInt32(10);
+                    ts.Engineer.skills[2].VALUE = reader.GetInt32(11);
+                    ts.Engineer.skills[3].VALUE = reader.GetInt32(12);
                     break;
                 //Driver
                 case 1:
-                    ts.driver = new();
-                    ts.driver.dbId = reader.GetInt32(0);
-                    ts.driver.name = reader.GetString(1);
-                    ts.driver.sex = reader.GetString(2);
-                    ts.driver.age = reader.GetInt32(3);
-                    ts.driver.country = reader.GetString(4);
-                    ts.driver.level = reader.GetInt32(5);
-                    ts.driver.xp = reader.GetInt32(6);
-                    ts.driver.moral = reader.GetInt32(7);
-                    ts.driver.potencial = reader.GetInt32(8);
-                    ts.driver.skills[0].VALUE = reader.GetInt32(9);
-                    ts.driver.skills[1].VALUE = reader.GetInt32(10);
-                    ts.driver.skills[2].VALUE = reader.GetInt32(11);
-                    ts.driver.skills[3].VALUE = reader.GetInt32(12);
+                    ts.Driver = new();
+                    ts.Driver.dbId = reader.GetInt32(0);
+                    ts.Driver.name = reader.GetString(1);
+                    ts.Driver.sex = reader.GetString(2);
+                    ts.Driver.age = reader.GetInt32(3);
+                    ts.Driver.country = reader.GetString(4);
+                    ts.Driver.level = reader.GetInt32(5);
+                    ts.Driver.xp = reader.GetInt32(6);
+                    ts.Driver.moralValue = reader.GetInt32(7);
+                    ts.Driver.potencial = reader.GetInt32(8);
+                    ts.Driver.skills[0].VALUE = reader.GetInt32(9);
+                    ts.Driver.skills[1].VALUE = reader.GetInt32(10);
+                    ts.Driver.skills[2].VALUE = reader.GetInt32(11);
+                    ts.Driver.skills[3].VALUE = reader.GetInt32(12);
                     break;
                 //Pit Crew Leader
                 case 2:
-                    ts.leader = new();
-                    ts.leader.dbId = reader.GetInt32(0);
-                    ts.leader.name = reader.GetString(1);
-                    ts.leader.sex = reader.GetString(2);
-                    ts.leader.age = reader.GetInt32(3);
-                    ts.leader.country = reader.GetString(4);
-                    ts.leader.level = reader.GetInt32(5);
-                    ts.leader.xp = reader.GetInt32(6);
-                    ts.leader.moral = reader.GetInt32(7);
-                    ts.leader.potencial = reader.GetInt32(8);
-                    ts.leader.skills[0].VALUE = reader.GetInt32(9);
-                    ts.leader.skills[1].VALUE = reader.GetInt32(10);
-                    ts.leader.skills[2].VALUE = reader.GetInt32(11);
-                    ts.leader.skills[3].VALUE = reader.GetInt32(12);
+                    ts.CrewLeader = new();
+                    ts.CrewLeader.dbId = reader.GetInt32(0);
+                    ts.CrewLeader.name = reader.GetString(1);
+                    ts.CrewLeader.sex = reader.GetString(2);
+                    ts.CrewLeader.age = reader.GetInt32(3);
+                    ts.CrewLeader.country = reader.GetString(4);
+                    ts.CrewLeader.level = reader.GetInt32(5);
+                    ts.CrewLeader.xp = reader.GetInt32(6);
+                    ts.CrewLeader.moralValue = reader.GetInt32(7);
+                    ts.CrewLeader.potencial = reader.GetInt32(8);
+                    ts.CrewLeader.skills[0].VALUE = reader.GetInt32(9);
+                    ts.CrewLeader.skills[1].VALUE = reader.GetInt32(10);
+                    ts.CrewLeader.skills[2].VALUE = reader.GetInt32(11);
+                    ts.CrewLeader.skills[3].VALUE = reader.GetInt32(12);
                     break;
                 //Pit Crew Members
                 default:
-                    ts.crewMembers[crewIndex] = new();
-                    ts.crewMembers[crewIndex].dbId = reader.GetInt32(0);
-                    ts.crewMembers[crewIndex].name = reader.GetString(1);
-                    ts.crewMembers[crewIndex].sex = reader.GetString(2);
-                    ts.crewMembers[crewIndex].age = reader.GetInt32(3);
-                    ts.crewMembers[crewIndex].country = reader.GetString(4);
-                    ts.crewMembers[crewIndex].level = reader.GetInt32(5);
-                    ts.crewMembers[crewIndex].xp = reader.GetInt32(6);
-                    ts.crewMembers[crewIndex].moral = reader.GetInt32(7);
-                    ts.crewMembers[crewIndex].potencial = reader.GetInt32(8);
-                    ts.crewMembers[crewIndex].skills[0].VALUE = reader.GetInt32(9);
-                    ts.crewMembers[crewIndex].skills[1].VALUE = reader.GetInt32(10);
-                    ts.crewMembers[crewIndex].skills[2].VALUE = reader.GetInt32(11);
-                    ts.crewMembers[crewIndex].skills[3].VALUE = reader.GetInt32(12);
+                    ts.CrewMembers[crewIndex] = new();
+                    ts.CrewMembers[crewIndex].dbId = reader.GetInt32(0);
+                    ts.CrewMembers[crewIndex].name = reader.GetString(1);
+                    ts.CrewMembers[crewIndex].sex = reader.GetString(2);
+                    ts.CrewMembers[crewIndex].age = reader.GetInt32(3);
+                    ts.CrewMembers[crewIndex].country = reader.GetString(4);
+                    ts.CrewMembers[crewIndex].level = reader.GetInt32(5);
+                    ts.CrewMembers[crewIndex].xp = reader.GetInt32(6);
+                    ts.CrewMembers[crewIndex].moralValue = reader.GetInt32(7);
+                    ts.CrewMembers[crewIndex].potencial = reader.GetInt32(8);
+                    ts.CrewMembers[crewIndex].skills[0].VALUE = reader.GetInt32(9);
+                    ts.CrewMembers[crewIndex].skills[1].VALUE = reader.GetInt32(10);
+                    ts.CrewMembers[crewIndex].skills[2].VALUE = reader.GetInt32(11);
+                    ts.CrewMembers[crewIndex].skills[3].VALUE = reader.GetInt32(12);
                     crewIndex++;
                     break;
             }
@@ -387,7 +387,7 @@ public class DBConnector : MonoBehaviour
         }
 
         Print_OpTimer("LoadTeamByString()");
-
+        reader.Close();
         CloseConnection();
 
         return ts;
@@ -429,9 +429,6 @@ public class DBConnector : MonoBehaviour
 
     private bool Connect_NpcDataDb()
     {
-        if (_connection != null)
-            _connection.Close();
-
         _connection = new SqliteConnection(NpcDataDb_url);
 
         if (_connection != null)
@@ -621,7 +618,6 @@ public class DBConnector : MonoBehaviour
             return false;
     }
 
-    //TODO create track loading
     public bool Load_Track(out Track _track, int _index = -1)
     {
         _track = new Track();
@@ -653,6 +649,9 @@ public class DBConnector : MonoBehaviour
             _track.type = (TrackType)reader.GetInt32(5);
             _track.curve = reader.GetString(6).Convert_StringToTrack();
         }
+
+        if (_track.type == TrackType.CIRCUIT || _track.type == TrackType.OVAL)
+            _track.curve.close = true;
 
         Print_OpTimer("Load_Track()");
 

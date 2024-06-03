@@ -226,6 +226,58 @@ MonoBehaviour:
   competitor_Name: {fileID: 1565900852}
   competitor_CarNumber_AndColor: {fileID: 1501013070}
   changedPositionIndicator: {fileID: 912854775}
+  indicators:
+  - {fileID: 21300000, guid: d4780dc1205c7c7478c970d8c61d24e8, type: 3}
+  - {fileID: 21300000, guid: d7094718bdac022428dd29244922d06b, type: 3}
+  - {fileID: 0}
+--- !u!1 &45714842
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 45714844}
+  - component: {fileID: 45714843}
+  m_Layer: 0
+  m_Name: Point 9
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &45714843
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 45714842}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1dff893e341592e438963ea8cbceb377, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _curve: {fileID: 881487991}
+  handleStyle: 0
+  _handle1: {x: 0.34798267, y: -1.0568924, z: -0}
+  _handle2: {x: -0.34798267, y: 1.0568924, z: 0}
+--- !u!4 &45714844
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 45714842}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -3.5237324, y: 1.5151284, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 881487992}
+  m_RootOrder: 82
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &49506178
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -523,6 +575,54 @@ MonoBehaviour:
   handleStyle: 0
   _handle1: {x: -0.033951283, y: 0.2232609, z: 0}
   _handle2: {x: 0.033951283, y: -0.2232609, z: -0}
+--- !u!1 &151029746
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 151029748}
+  - component: {fileID: 151029747}
+  m_Layer: 0
+  m_Name: Point 10
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &151029747
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 151029746}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1dff893e341592e438963ea8cbceb377, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _curve: {fileID: 881487991}
+  handleStyle: 0
+  _handle1: {x: -0.35254073, y: 0.49012613, z: -0}
+  _handle2: {x: 0.35254073, y: -0.49012613, z: 0}
+--- !u!4 &151029748
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 151029746}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -2.3048232, y: 1.9164553, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 881487992}
+  m_RootOrder: 83
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &175376455
 GameObject:
   m_ObjectHideFlags: 0
@@ -578,7 +678,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 0}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -1014,7 +1114,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -64.7835, y: -51.8269}
+  m_SizeDelta: {x: -42.5433, y: -29.2307}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &259336634
 MonoBehaviour:
@@ -1045,8 +1145,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4281479730
-  m_fontColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -1063,7 +1163,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36.5
+  m_fontSize: 41.3
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -1212,14 +1312,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0}
-  m_RaycastTarget: 1
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 9ea72647c24be493ba6f15a9cd2a24ae, type: 3}
+  m_Sprite: {fileID: 0}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1597,8 +1697,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 389456308}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.743, y: 0, z: -1}
-  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_LocalPosition: {x: 0.743, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 1824878738}
@@ -1625,13 +1725,25 @@ MonoBehaviour:
     age: 0
     level: 0
     xp: 0
-    moral: 0
+    moralValue: 0
     potencial: 0
     contractValue: 0
+    skills:
+    - NAME: STAMINA
+      VALUE: 0
+    - NAME: SPEED
+      VALUE: 0
+    - NAME: TECHNIQUE
+      VALUE: 0
+    - NAME: CONSISTENCY
+      VALUE: 0
     carNumber: 0
-  trackPosition: 0
-  startingEventPosition: 0
-  eventPosition: 0
+  trackPositionPerCent: 0
+  startingGridPosition: 0
+  gridPosition: 0
+  currentLap: 0
+  checkeredFlag: 0
+  raceCompleted: 0
 --- !u!212 &389456311
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1987,14 +2099,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0}
-  m_RaycastTarget: 1
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 9ea72647c24be493ba6f15a9cd2a24ae, type: 3}
+  m_Sprite: {fileID: 0}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2134,8 +2246,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 468728185}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.184, y: 0, z: -1}
-  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_LocalPosition: {x: 1.184, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 1824878738}
@@ -2162,13 +2274,25 @@ MonoBehaviour:
     age: 0
     level: 0
     xp: 0
-    moral: 0
+    moralValue: 0
     potencial: 0
     contractValue: 0
+    skills:
+    - NAME: STAMINA
+      VALUE: 0
+    - NAME: SPEED
+      VALUE: 0
+    - NAME: TECHNIQUE
+      VALUE: 0
+    - NAME: CONSISTENCY
+      VALUE: 0
     carNumber: 0
-  trackPosition: 0
-  startingEventPosition: 0
-  eventPosition: 0
+  trackPositionPerCent: 0
+  startingGridPosition: 0
+  gridPosition: 0
+  currentLap: 0
+  checkeredFlag: 0
+  raceCompleted: 0
 --- !u!212 &468728188
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2549,6 +2673,54 @@ Transform:
   m_Father: {fileID: 881487992}
   m_RootOrder: 71
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &561882739
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 561882741}
+  - component: {fileID: 561882740}
+  m_Layer: 0
+  m_Name: Point 5
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &561882740
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 561882739}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1dff893e341592e438963ea8cbceb377, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _curve: {fileID: 881487991}
+  handleStyle: 0
+  _handle1: {x: -0.3357445, y: 0.7865553, z: 0}
+  _handle2: {x: 0.3357445, y: -0.7865553, z: -0}
+--- !u!4 &561882741
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 561882739}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 4.308786, y: -0.7392731, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 881487992}
+  m_RootOrder: 78
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &562882352
 GameObject:
   m_ObjectHideFlags: 0
@@ -2657,7 +2829,7 @@ GameObject:
   - component: {fileID: 577017707}
   - component: {fileID: 577017706}
   m_Layer: 0
-  m_Name: Closed Sprite Shape
+  m_Name: Track_Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2679,8 +2851,8 @@ MonoBehaviour:
     m_IsOpenEnded: 1
     m_ControlPoints:
     - position: {x: -3.0061123, y: -1.4539188, z: 0}
-      leftTangent: {x: 0.10461705, y: -0.5256631, z: -0}
-      rightTangent: {x: -0.18840218, y: 0.94665325, z: 0}
+      leftTangent: {x: 0.1044023, y: -0.52570415, z: 0}
+      rightTangent: {x: -0.13123631, y: 0.66082394, z: 0}
       mode: 1
       height: 0.1
       bevelCutoff: 0
@@ -2689,8 +2861,8 @@ MonoBehaviour:
       corner: 1
       m_CornerMode: 2
     - position: {x: -1.426268, y: -0.13545078, z: 0}
-      leftTangent: {x: -0.45115185, y: 0.3841164, z: 0}
-      rightTangent: {x: 0.52204776, y: -0.44447803, z: 0}
+      leftTangent: {x: -0.72818625, y: 0.32255316, z: 0}
+      rightTangent: {x: 0.6268867, y: -0.2776821, z: 0}
       mode: 1
       height: 0.1
       bevelCutoff: 0
@@ -2770,8 +2942,8 @@ SpriteShapeRenderer:
   - {fileID: 21300000, guid: 608e61deb05c54660bebf5a4dd2ee02d, type: 3}
   - {fileID: 21300000, guid: 608e61deb05c54660bebf5a4dd2ee02d, type: 3}
   m_LocalAABB:
-    m_Center: {x: -2.2336574, y: -0.72395813, z: 0}
-    m_Extent: {x: 0.8398029, y: 0.7397202, z: 0}
+    m_Center: {x: -2.236485, y: -0.7428624, z: 0}
+    m_Extent: {x: 0.8304671, y: 0.7207959, z: 0}
 --- !u!4 &577017708
 Transform:
   m_ObjectHideFlags: 0
@@ -2786,7 +2958,7 @@ Transform:
   m_Children:
   - {fileID: 1824878738}
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &594033527
 GameObject:
@@ -2971,13 +3143,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 0.392}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 21300000, guid: 92acfcae4351ae54fb2de9782f372bb6, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2986,7 +3158,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
+  m_PixelsPerUnitMultiplier: 0.1
 --- !u!222 &609907066
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3171,6 +3343,10 @@ MonoBehaviour:
   competitor_Name: {fileID: 1530901865}
   competitor_CarNumber_AndColor: {fileID: 794779713}
   changedPositionIndicator: {fileID: 279509358}
+  indicators:
+  - {fileID: 21300000, guid: d4780dc1205c7c7478c970d8c61d24e8, type: 3}
+  - {fileID: 21300000, guid: d7094718bdac022428dd29244922d06b, type: 3}
+  - {fileID: 0}
 --- !u!1 &706264382
 GameObject:
   m_ObjectHideFlags: 0
@@ -3534,14 +3710,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0}
-  m_RaycastTarget: 1
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 9ea72647c24be493ba6f15a9cd2a24ae, type: 3}
+  m_Sprite: {fileID: 0}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -3872,6 +4048,54 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 794779710}
   m_CullTransparentMesh: 1
+--- !u!1 &798279087
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 798279089}
+  - component: {fileID: 798279088}
+  m_Layer: 0
+  m_Name: Point 2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &798279088
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 798279087}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1dff893e341592e438963ea8cbceb377, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _curve: {fileID: 881487991}
+  handleStyle: 0
+  _handle1: {x: 0.3512447, y: 0.41119838, z: 0}
+  _handle2: {x: -0.3512447, y: -0.41119838, z: -0}
+--- !u!4 &798279089
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 798279087}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 3.4716582, y: 2.3981497, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 881487992}
+  m_RootOrder: 75
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &800018076
 GameObject:
   m_ObjectHideFlags: 0
@@ -4101,6 +4325,54 @@ MonoBehaviour:
   handleStyle: 0
   _handle1: {x: 1.0580909, y: 1.2109449, z: 0}
   _handle2: {x: -1.0580909, y: -1.2109449, z: -0}
+--- !u!1 &857675401
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 857675403}
+  - component: {fileID: 857675402}
+  m_Layer: 0
+  m_Name: Point 4
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &857675402
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 857675401}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1dff893e341592e438963ea8cbceb377, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _curve: {fileID: 881487991}
+  handleStyle: 0
+  _handle1: {x: -0.17104006, y: 0.6542949, z: -0}
+  _handle2: {x: 0.17104006, y: -0.6542949, z: 0}
+--- !u!4 &857675403
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 857675401}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 2.68528, y: -0.43862325, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 881487992}
+  m_RootOrder: 77
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &861469301
 GameObject:
   m_ObjectHideFlags: 0
@@ -4169,7 +4441,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 21300000, guid: 92acfcae4351ae54fb2de9782f372bb6, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -4178,7 +4450,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
+  m_PixelsPerUnitMultiplier: 0.1
 --- !u!222 &861469304
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4388,7 +4660,7 @@ GameObject:
   - component: {fileID: 881487992}
   - component: {fileID: 881487991}
   m_Layer: 0
-  m_Name: BezierCurve
+  m_Name: CurveTool_Exporter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4411,18 +4683,16 @@ MonoBehaviour:
   _close: 1
   points:
   - {fileID: 1467830333}
-  - {fileID: 2089767006}
-  - {fileID: 1578174865}
-  - {fileID: 1137502219}
-  - {fileID: 924662283}
-  - {fileID: 2106320610}
-  - {fileID: 1846442443}
-  - {fileID: 464384259}
-  - {fileID: 1533159382}
-  - {fileID: 405894383}
-  - {fileID: 524111217}
-  - {fileID: 81300218}
-  - {fileID: 1523791982}
+  - {fileID: 1662431249}
+  - {fileID: 798279088}
+  - {fileID: 1899386019}
+  - {fileID: 857675402}
+  - {fileID: 561882740}
+  - {fileID: 1877353289}
+  - {fileID: 1658062840}
+  - {fileID: 882166930}
+  - {fileID: 45714843}
+  - {fileID: 151029747}
 --- !u!4 &881487992
 Transform:
   m_ObjectHideFlags: 0
@@ -4509,8 +4779,66 @@ Transform:
   - {fileID: 524111218}
   - {fileID: 81300219}
   - {fileID: 1523791983}
+  - {fileID: 1662431250}
+  - {fileID: 798279089}
+  - {fileID: 1899386020}
+  - {fileID: 857675403}
+  - {fileID: 561882741}
+  - {fileID: 1877353290}
+  - {fileID: 1658062841}
+  - {fileID: 882166931}
+  - {fileID: 45714844}
+  - {fileID: 151029748}
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 11
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &882166929
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 882166931}
+  - component: {fileID: 882166930}
+  m_Layer: 0
+  m_Name: Point 8
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &882166930
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 882166929}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1dff893e341592e438963ea8cbceb377, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _curve: {fileID: 881487991}
+  handleStyle: 0
+  _handle1: {x: -1.1131582, y: -0.101578236, z: -0}
+  _handle2: {x: 1.1131582, y: 0.101578236, z: 0}
+--- !u!4 &882166931
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 882166929}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -5.694372, y: -2.239491, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 881487992}
+  m_RootOrder: 81
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &909595738
 GameObject:
@@ -4611,14 +4939,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0}
-  m_RaycastTarget: 1
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 9ea72647c24be493ba6f15a9cd2a24ae, type: 3}
+  m_Sprite: {fileID: 0}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -4787,6 +5115,10 @@ MonoBehaviour:
   competitor_Name: {fileID: 2111684259}
   competitor_CarNumber_AndColor: {fileID: 2064213769}
   changedPositionIndicator: {fileID: 453053697}
+  indicators:
+  - {fileID: 21300000, guid: d4780dc1205c7c7478c970d8c61d24e8, type: 3}
+  - {fileID: 21300000, guid: d7094718bdac022428dd29244922d06b, type: 3}
+  - {fileID: 0}
 --- !u!1 &929358781
 GameObject:
   m_ObjectHideFlags: 0
@@ -4842,6 +5174,10 @@ MonoBehaviour:
   competitor_Name: {fileID: 485258295}
   competitor_CarNumber_AndColor: {fileID: 1599864094}
   changedPositionIndicator: {fileID: 1247473951}
+  indicators:
+  - {fileID: 21300000, guid: d4780dc1205c7c7478c970d8c61d24e8, type: 3}
+  - {fileID: 21300000, guid: d7094718bdac022428dd29244922d06b, type: 3}
+  - {fileID: 0}
 --- !u!114 &974407813 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6091932068852893667, guid: cb12bff9f0b529f4dad34f6719e655b9, type: 3}
@@ -5216,8 +5552,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   raceDayHelper: {fileID: 1291637020}
-  carSpritesArray:
+  cars:
   - {fileID: 1401080020}
+  - {fileID: 1417062791}
+  - {fileID: 1314355913}
+  - {fileID: 389456310}
+  - {fileID: 1826230252}
+  - {fileID: 468728187}
+  - {fileID: 1202966886}
+  - {fileID: 2062560483}
 --- !u!1 &1137502218
 GameObject:
   m_ObjectHideFlags: 0
@@ -5273,6 +5616,50 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1302440057464145172, guid: 8112740bc0b835f4da7b3e8bb95d2259, type: 3}
+      propertyPath: m_teamName
+      value: Test
+      objectReference: {fileID: 0}
+    - target: {fileID: 1302440057464145172, guid: 8112740bc0b835f4da7b3e8bb95d2259, type: 3}
+      propertyPath: driver.name
+      value: Bob Burnquist
+      objectReference: {fileID: 0}
+    - target: {fileID: 1302440057464145172, guid: 8112740bc0b835f4da7b3e8bb95d2259, type: 3}
+      propertyPath: m_teamNumber
+      value: 69
+      objectReference: {fileID: 0}
+    - target: {fileID: 1302440057464145172, guid: 8112740bc0b835f4da7b3e8bb95d2259, type: 3}
+      propertyPath: m_teamColor.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1302440057464145172, guid: 8112740bc0b835f4da7b3e8bb95d2259, type: 3}
+      propertyPath: m_teamColor.b
+      value: 0.5152211
+      objectReference: {fileID: 0}
+    - target: {fileID: 1302440057464145172, guid: 8112740bc0b835f4da7b3e8bb95d2259, type: 3}
+      propertyPath: m_teamColor.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1302440057464145172, guid: 8112740bc0b835f4da7b3e8bb95d2259, type: 3}
+      propertyPath: m_teamColor.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1302440057464145172, guid: 8112740bc0b835f4da7b3e8bb95d2259, type: 3}
+      propertyPath: driver.skills.Array.data[0].VALUE
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1302440057464145172, guid: 8112740bc0b835f4da7b3e8bb95d2259, type: 3}
+      propertyPath: driver.skills.Array.data[1].VALUE
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1302440057464145172, guid: 8112740bc0b835f4da7b3e8bb95d2259, type: 3}
+      propertyPath: driver.skills.Array.data[2].VALUE
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1302440057464145172, guid: 8112740bc0b835f4da7b3e8bb95d2259, type: 3}
+      propertyPath: driver.skills.Array.data[3].VALUE
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 1302440057464145173, guid: 8112740bc0b835f4da7b3e8bb95d2259, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -5426,6 +5813,10 @@ MonoBehaviour:
   competitor_Name: {fileID: 1437213088}
   competitor_CarNumber_AndColor: {fileID: 706264385}
   changedPositionIndicator: {fileID: 715861591}
+  indicators:
+  - {fileID: 21300000, guid: d4780dc1205c7c7478c970d8c61d24e8, type: 3}
+  - {fileID: 21300000, guid: d7094718bdac022428dd29244922d06b, type: 3}
+  - {fileID: 0}
 --- !u!1 &1177981992
 GameObject:
   m_ObjectHideFlags: 0
@@ -5481,6 +5872,10 @@ MonoBehaviour:
   competitor_Name: {fileID: 1802763514}
   competitor_CarNumber_AndColor: {fileID: 408216455}
   changedPositionIndicator: {fileID: 2095404465}
+  indicators:
+  - {fileID: 21300000, guid: d4780dc1205c7c7478c970d8c61d24e8, type: 3}
+  - {fileID: 21300000, guid: d7094718bdac022428dd29244922d06b, type: 3}
+  - {fileID: 0}
 --- !u!1 &1187028631
 GameObject:
   m_ObjectHideFlags: 0
@@ -5713,8 +6108,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1202966884}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.381, y: 0, z: -1}
-  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_LocalPosition: {x: 1.381, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 1824878738}
@@ -5741,13 +6136,25 @@ MonoBehaviour:
     age: 0
     level: 0
     xp: 0
-    moral: 0
+    moralValue: 0
     potencial: 0
     contractValue: 0
+    skills:
+    - NAME: STAMINA
+      VALUE: 0
+    - NAME: SPEED
+      VALUE: 0
+    - NAME: TECHNIQUE
+      VALUE: 0
+    - NAME: CONSISTENCY
+      VALUE: 0
     carNumber: 0
-  trackPosition: 0
-  startingEventPosition: 0
-  eventPosition: 0
+  trackPositionPerCent: 0
+  startingGridPosition: 0
+  gridPosition: 0
+  currentLap: 0
+  checkeredFlag: 0
+  raceCompleted: 0
 --- !u!212 &1202966887
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -6055,14 +6462,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0}
-  m_RaycastTarget: 1
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 9ea72647c24be493ba6f15a9cd2a24ae, type: 3}
+  m_Sprite: {fileID: 0}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -6162,7 +6569,7 @@ MonoBehaviour:
   trackCountry: {fileID: 1187028633}
   trackLaps: {fileID: 1873443166}
   trackWeather: {fileID: 1794309980}
-  competitorsArray:
+  racersInfo:
   - {fileID: 929276375}
   - {fileID: 1914562207}
   - {fileID: 693825023}
@@ -6226,8 +6633,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1314355911}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.499, y: 0, z: -1}
-  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_LocalPosition: {x: 0.499, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 1824878738}
@@ -6254,13 +6661,25 @@ MonoBehaviour:
     age: 0
     level: 0
     xp: 0
-    moral: 0
+    moralValue: 0
     potencial: 0
     contractValue: 0
+    skills:
+    - NAME: STAMINA
+      VALUE: 0
+    - NAME: SPEED
+      VALUE: 0
+    - NAME: TECHNIQUE
+      VALUE: 0
+    - NAME: CONSISTENCY
+      VALUE: 0
     carNumber: 0
-  trackPosition: 0
-  startingEventPosition: 0
-  eventPosition: 0
+  trackPositionPerCent: 0
+  startingGridPosition: 0
+  gridPosition: 0
+  currentLap: 0
+  checkeredFlag: 0
+  raceCompleted: 0
 --- !u!212 &1314355914
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -6487,8 +6906,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1401080017}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -1}
-  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 1824878738}
@@ -6515,13 +6934,25 @@ MonoBehaviour:
     age: 0
     level: 0
     xp: 0
-    moral: 0
+    moralValue: 0
     potencial: 0
     contractValue: 0
+    skills:
+    - NAME: STAMINA
+      VALUE: 0
+    - NAME: SPEED
+      VALUE: 0
+    - NAME: TECHNIQUE
+      VALUE: 0
+    - NAME: CONSISTENCY
+      VALUE: 0
     carNumber: 0
-  trackPosition: 0
-  startingEventPosition: 0
-  eventPosition: 0
+  trackPositionPerCent: 0
+  startingGridPosition: 0
+  gridPosition: 0
+  currentLap: 0
+  checkeredFlag: 0
+  raceCompleted: 0
 --- !u!1 &1414743518
 GameObject:
   m_ObjectHideFlags: 0
@@ -6644,8 +7075,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1417062789}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.251, y: 0, z: -1}
-  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_LocalPosition: {x: 0.251, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 1824878738}
@@ -6672,13 +7103,25 @@ MonoBehaviour:
     age: 0
     level: 0
     xp: 0
-    moral: 0
+    moralValue: 0
     potencial: 0
     contractValue: 0
+    skills:
+    - NAME: STAMINA
+      VALUE: 0
+    - NAME: SPEED
+      VALUE: 0
+    - NAME: TECHNIQUE
+      VALUE: 0
+    - NAME: CONSISTENCY
+      VALUE: 0
     carNumber: 0
-  trackPosition: 0
-  startingEventPosition: 0
-  eventPosition: 0
+  trackPositionPerCent: 0
+  startingGridPosition: 0
+  gridPosition: 0
+  currentLap: 0
+  checkeredFlag: 0
+  raceCompleted: 0
 --- !u!212 &1417062792
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -6966,8 +7409,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _curve: {fileID: 881487991}
   handleStyle: 0
-  _handle1: {x: -0.53416467, y: 0.5567806, z: -0}
-  _handle2: {x: 0.53416467, y: -0.5567806, z: 0}
+  _handle1: {x: -0.6557825, y: -0.3148105, z: -0}
+  _handle2: {x: 0.6557825, y: 0.3148105, z: 0}
 --- !u!4 &1467830334
 Transform:
   m_ObjectHideFlags: 0
@@ -7470,6 +7913,10 @@ MonoBehaviour:
   competitor_Name: {fileID: 1212249765}
   competitor_CarNumber_AndColor: {fileID: 1713267023}
   changedPositionIndicator: {fileID: 2141057318}
+  indicators:
+  - {fileID: 21300000, guid: d4780dc1205c7c7478c970d8c61d24e8, type: 3}
+  - {fileID: 21300000, guid: d7094718bdac022428dd29244922d06b, type: 3}
+  - {fileID: 0}
 --- !u!1 &1530901862
 GameObject:
   m_ObjectHideFlags: 0
@@ -8082,6 +8529,102 @@ MonoBehaviour:
   handleStyle: 0
   _handle1: {x: 2.1420107, y: -0.80687237, z: 0}
   _handle2: {x: -2.1420107, y: 0.80687237, z: -0}
+--- !u!1 &1658062839
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1658062841}
+  - component: {fileID: 1658062840}
+  m_Layer: 0
+  m_Name: Point 7
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1658062840
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1658062839}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1dff893e341592e438963ea8cbceb377, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _curve: {fileID: 881487991}
+  handleStyle: 0
+  _handle1: {x: 1.2499124, y: 1.3859415, z: 0}
+  _handle2: {x: -1.2499124, y: -1.3859415, z: -0}
+--- !u!4 &1658062841
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1658062839}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -1.6540205, y: -3.48669, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 881487992}
+  m_RootOrder: 80
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1662431248
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1662431250}
+  - component: {fileID: 1662431249}
+  m_Layer: 0
+  m_Name: Point 1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1662431249
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1662431248}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1dff893e341592e438963ea8cbceb377, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _curve: {fileID: 881487991}
+  handleStyle: 0
+  _handle1: {x: -1.0121808, y: 0.0601182, z: -0}
+  _handle2: {x: 1.0121808, y: -0.0601182, z: 0}
+--- !u!4 &1662431250
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1662431248}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 3.2592015, y: 3.475175, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 881487992}
+  m_RootOrder: 74
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1703543235
 GameObject:
   m_ObjectHideFlags: 0
@@ -9054,8 +9597,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1826230250}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.943, y: 0, z: -1}
-  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_LocalPosition: {x: 0.943, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 1824878738}
@@ -9082,13 +9625,25 @@ MonoBehaviour:
     age: 0
     level: 0
     xp: 0
-    moral: 0
+    moralValue: 0
     potencial: 0
     contractValue: 0
+    skills:
+    - NAME: STAMINA
+      VALUE: 0
+    - NAME: SPEED
+      VALUE: 0
+    - NAME: TECHNIQUE
+      VALUE: 0
+    - NAME: CONSISTENCY
+      VALUE: 0
     carNumber: 0
-  trackPosition: 0
-  startingEventPosition: 0
-  eventPosition: 0
+  trackPositionPerCent: 0
+  startingGridPosition: 0
+  gridPosition: 0
+  currentLap: 0
+  checkeredFlag: 0
+  raceCompleted: 0
 --- !u!212 &1826230253
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -9395,6 +9950,102 @@ MonoBehaviour:
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
   m_LayoutPriority: 0
+--- !u!1 &1877353288
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1877353290}
+  - component: {fileID: 1877353289}
+  m_Layer: 0
+  m_Name: Point 6
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1877353289
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1877353288}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1dff893e341592e438963ea8cbceb377, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _curve: {fileID: 881487991}
+  handleStyle: 0
+  _handle1: {x: 0.26368237, y: -0.58159506, z: -0}
+  _handle2: {x: -0.26368237, y: 0.58159506, z: 0}
+--- !u!4 &1877353290
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1877353288}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 3.243848, y: -2.3961723, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 881487992}
+  m_RootOrder: 79
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1899386018
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1899386020}
+  - component: {fileID: 1899386019}
+  m_Layer: 0
+  m_Name: Point 3
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1899386019
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1899386018}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1dff893e341592e438963ea8cbceb377, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _curve: {fileID: 881487991}
+  handleStyle: 0
+  _handle1: {x: 0.35998535, y: 0.4323312, z: 0}
+  _handle2: {x: -0.35998535, y: -0.4323312, z: -0}
+--- !u!4 &1899386020
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1899386018}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 4.323433, y: 0.35565317, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 881487992}
+  m_RootOrder: 76
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1914562205
 GameObject:
   m_ObjectHideFlags: 0
@@ -9450,6 +10101,10 @@ MonoBehaviour:
   competitor_Name: {fileID: 215406594}
   competitor_CarNumber_AndColor: {fileID: 711246675}
   changedPositionIndicator: {fileID: 2129531429}
+  indicators:
+  - {fileID: 21300000, guid: d4780dc1205c7c7478c970d8c61d24e8, type: 3}
+  - {fileID: 21300000, guid: d7094718bdac022428dd29244922d06b, type: 3}
+  - {fileID: 0}
 --- !u!1 &1917040205
 GameObject:
   m_ObjectHideFlags: 0
@@ -9614,7 +10269,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 21300000, guid: 92acfcae4351ae54fb2de9782f372bb6, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -9623,7 +10278,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
+  m_PixelsPerUnitMultiplier: 0.1
 --- !u!222 &1999034990
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -10102,8 +10757,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2062560481}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.56, y: 0, z: -1}
-  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_LocalPosition: {x: 1.56, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 1824878738}
@@ -10130,13 +10785,25 @@ MonoBehaviour:
     age: 0
     level: 0
     xp: 0
-    moral: 0
+    moralValue: 0
     potencial: 0
     contractValue: 0
+    skills:
+    - NAME: STAMINA
+      VALUE: 0
+    - NAME: SPEED
+      VALUE: 0
+    - NAME: TECHNIQUE
+      VALUE: 0
+    - NAME: CONSISTENCY
+      VALUE: 0
     carNumber: 0
-  trackPosition: 0
-  startingEventPosition: 0
-  eventPosition: 0
+  trackPositionPerCent: 0
+  startingGridPosition: 0
+  gridPosition: 0
+  currentLap: 0
+  checkeredFlag: 0
+  raceCompleted: 0
 --- !u!212 &2062560484
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -10444,14 +11111,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0}
-  m_RaycastTarget: 1
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 9ea72647c24be493ba6f15a9cd2a24ae, type: 3}
+  m_Sprite: {fileID: 0}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -10868,14 +11535,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0}
-  m_RaycastTarget: 1
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 9ea72647c24be493ba6f15a9cd2a24ae, type: 3}
+  m_Sprite: {fileID: 0}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -10944,14 +11611,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0}
-  m_RaycastTarget: 1
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 9ea72647c24be493ba6f15a9cd2a24ae, type: 3}
+  m_Sprite: {fileID: 0}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

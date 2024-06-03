@@ -29,7 +29,7 @@ public class OptionsPanelHelper : MonoBehaviour
         SFX_Slider.SetValueWithoutNotify(AudioManager.Instance.SFX_Volume);
         SFX_Value.text = AudioManager.Instance.SFX_Volume.ToString();
 
-        Units_BtnText.text = GetUnitString(GameManager.Instance.Prefered_Unit);
+        Units_BtnText.text = GetUnitString(GameManager.Instance.PreferedUnit);
         Debug.Log("<b>Options Panel Helper</b> - Finished initial options set up");
     }
 
@@ -51,7 +51,7 @@ public class OptionsPanelHelper : MonoBehaviour
     {
         GameManager.Instance.ChangePreferedUnits();
 
-        Units_BtnText.text = GetUnitString(GameManager.Instance.Prefered_Unit);
+        Units_BtnText.text = GetUnitString(GameManager.Instance.PreferedUnit);
     }
 
 

@@ -6,9 +6,14 @@ public class RaceDay_Controller : MonoBehaviour
 {
     public RaceDayHelper raceDayHelper;
 
-    public RaceCar_Struct[] carSpritesArray;
+    public RaceCar[] cars;
 
     private Track track;
+
+    private const int COMPETITOR_AMMOUNT = 7;
+
+    public const float GRID_DIFF_FACTOR = 0.015f;
+    public const float DISTANCE_CONVERSION_FACTOR = 100f;
 
 
     void Start()
@@ -16,22 +21,21 @@ public class RaceDay_Controller : MonoBehaviour
         //DEBUG This needs to call the track that is beeing raced on
         DBConnector.Instance.Load_Track(out track, 1);
 
-        Debug_PrepareRacersStats();
-
+        PrepareRacersStats();
 
         //Show Layout
-        raceDayHelper.PrepareRaceDayInfo(ref carSpritesArray, ref track);
+        raceDayHelper.PrepareRaceDayInfo(ref cars, ref track);
 
 
         //Position the cars
-        BezierPoint[] trackAnchorPoints_Array = track.curve.GetAnchorPoints();
-        BezierPoint p1 = trackAnchorPoints_Array[trackAnchorPoints_Array.Length - 1];
-        BezierPoint p2 = trackAnchorPoints_Array[0];
-        for (int i = 0; i < carSpritesArray.Length; i++)
+        for (int i = 0; i < cars.Length; i++)
         {
-            float gridPosition = 1f - (0.08f * i);
-            carSpritesArray[i].trackPosition = gridPosition;
-            carSpritesArray[i].transform.position = BezierCurve.GetPoint(p1, p2, gridPosition);
+            //FIXME: some of the cars are starting on top of eachother
+            float gridPosition = 1f - (GRID_DIFF_FACTOR * i);
+            cars[i].startingGridPosition = i + 1;  //setting the grid starting position
+            cars[i].gridPosition = i + 1;
+            cars[i].trackPositionPerCent = gridPosition * DISTANCE_CONVERSION_FACTOR;
+            cars[i].transform.position = track.curve.GetPointAt(gridPosition);
         }
 
         //Simulate Race
@@ -43,18 +47,19 @@ public class RaceDay_Controller : MonoBehaviour
         //End Raceday
     }
 
-    private void Debug_PrepareRacersStats()
+    private void PrepareRacersStats()
     {
-        //NpcDriver[] _auxArray = Competitor_Generator.GenerateCompetitors(7, 1).ToArray();
+        NpcDriver[] competitors = Competitor_Generator.GenerateCompetitors(COMPETITOR_AMMOUNT, 1).ToArray();
 
-        carSpritesArray[0].driver = PlayerManager.Instance.Driver;
+        cars[0].driver = PlayerManager.Instance.Driver;
 
-        //for (int i = 1; i < _auxArray.Length; i++)
-        //{
-        //    carSpritesArray[i].driver = _auxArray[i];
-        //}
+        for (int i = 0; i < competitors.Length; i++)
+        {
+            cars[i + 1].driver = competitors[i];
+        }
     }
 
+    //FIXME:    The race doesn't start until the player releases the button!
     private IEnumerator RaceStart_MiniGame()
     {
         bool didFalseStart = false;
@@ -95,6 +100,7 @@ public class RaceDay_Controller : MonoBehaviour
 
         //show results
 
+        //FIXME:    this should happen even if the player does not release the button
         StartCoroutine(SimulateRace());
 
         yield break;
@@ -102,25 +108,50 @@ public class RaceDay_Controller : MonoBehaviour
 
     private IEnumerator SimulateRace()
     {
-        int laps = 0;
+        int laps = 1;
         float newTrackPosition;
+        Vector3 targetPosition;
 
         //DEBUG
-        while (laps < 10)
+        while (laps <= track.laps)
         {
-            for (int i = 0; i < carSpritesArray.Length; i++)
+            for (int i = 0; i < cars.Length; i++)
             {
-                newTrackPosition = carSpritesArray[i].trackPosition += 0.0001f * carSpritesArray[i].driver.GetGeneralPerformance();      //Change due to driver speed, stamina, and car attributes
-                carSpritesArray[i].transform.position = track.curve.GetPointAt(newTrackPosition % 1f);
-                carSpritesArray[i].trackPosition = newTrackPosition;
+                newTrackPosition = cars[i].Drive() / DISTANCE_CONVERSION_FACTOR;
+                targetPosition = track.curve.GetPointAt(newTrackPosition);
+                cars[i].transform.position = targetPosition;
+                // cars[i].transform.Rotate(cars[i].transform.forward, Vector3.Angle(cars[i].transform.up, targetPosition - cars[i].transform.position));
             }
-            //FIXME: this needs to be a set timer for the updates; Can be changed to speed up the simulation
-            yield return new WaitForFixedUpdate();
-            yield return new WaitForFixedUpdate();
 
-            //Check overtake opportunities for all cars (?)
+            //Check overtake opportunities for all cars
+            Change_GridPosition();
+            Sort_ByGridPosition();
 
-            //Lap count based on a collider && car in first position
+            //Lap count based on car in first position
+            if (Check_LapCompleted(laps))
+                laps++;
+
+            //FIXME: this is not the right way to do it
+            for (int i = 0; i < GameManager.Instance.SimulationSpeed; i++) { yield return new WaitForEndOfFrame(); }
+        }
+
+        EndEvent();
+
+        //TODO: this could be its own coroutine, defining the comemoration lap and entry into the pit lane for all cars
+        while (!AllCarsFinished())
+        {
+            for (int i = 0; i < cars.Length; i++)
+            {
+                if (!cars[i].raceCompleted)
+                {
+                    newTrackPosition = cars[i].Drive() / DISTANCE_CONVERSION_FACTOR;
+                    targetPosition = track.curve.GetPointAt(newTrackPosition);
+                    cars[i].transform.position = targetPosition;
+                    // cars[i].transform.Rotate(cars[i].transform.forward, Vector3.Angle(cars[i].transform.up, targetPosition - cars[i].transform.position));
+                }
+            }
+            //FIXME: this is not the right way to do it
+            for (int i = 0; i < GameManager.Instance.SimulationSpeed; i++) { yield return new WaitForEndOfFrame(); }
         }
 
         //Race ended
@@ -129,6 +160,81 @@ public class RaceDay_Controller : MonoBehaviour
         Show_EndRace_Info();
 
         yield break;
+    }
+
+    private void EndEvent()
+    {
+        for (int i = 0; i < cars.Length; i++)
+        { cars[i].checkeredFlag = true; }
+    }
+
+    private bool AllCarsFinished()
+    {
+        for (int i = 0; i < cars.Length; i++)
+        {
+            if (!cars[i].raceCompleted)
+                return false;
+        }
+
+        return true;
+    }
+
+    private void Change_GridPosition()
+    {
+        int carInFrontIndex;
+        // int carBehindIndex;
+
+        for (int i = 0; i < cars.Length; i++)
+        {
+            carInFrontIndex = i - 1;
+            // carBehindIndex = i + 1;
+
+            //check position gained
+            if (carInFrontIndex >= 0)
+            {
+                if (cars[i].trackPositionPerCent > cars[carInFrontIndex].trackPositionPerCent &&
+                cars[i].currentLap == cars[carInFrontIndex].currentLap)
+                {
+                    cars[i].gridPosition--;
+                    cars[carInFrontIndex].gridPosition++;
+                    raceDayHelper.Show_GridChanges(i, carInFrontIndex);
+                }
+            }
+
+            // //check position lost
+            // if (carBehindIndex < cars.Length)
+            // {
+            //     if (cars[i].trackPositionPerCent < cars[carBehindIndex].trackPositionPerCent &&
+            //     cars[i].currentLap == cars[carBehindIndex].currentLap)
+            //     {
+            //         cars[i].gridPosition++;
+            //         cars[carBehindIndex].gridPosition--;
+            //     }
+            // }
+        }
+    }
+
+    private void Sort_ByGridPosition()
+    {
+        RaceCar[] sorted = new RaceCar[COMPETITOR_AMMOUNT + 1];
+
+        for (int i = 0; i < cars.Length; i++)
+        {
+            sorted[cars[i].gridPosition - 1] = cars[i];
+        }
+
+        for (int i = 0; i < cars.Length; i++)
+        {
+            cars[i] = sorted[i];
+        }
+    }
+
+    private bool Check_LapCompleted(int _eventLap)
+    {
+        if (cars[0].currentLap > _eventLap)
+            return true;
+
+        return false;
     }
 
     private void Overtake_MiniGame()

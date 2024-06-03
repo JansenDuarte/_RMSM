@@ -7,13 +7,13 @@ using ExtensionMethods;
 public class GameManager : MonoBehaviour
 {
     #region SIMPLE_SINGLETON
-    private static GameManager m_instance;
-    public static GameManager Instance { get { return m_instance; } }
+    private static GameManager s_instance;
+    public static GameManager Instance { get { return s_instance; } }
     private void Awake()
     {
-        if (m_instance == null)
+        if (s_instance == null)
         {
-            m_instance = this;
+            s_instance = this;
             ScreenConfigurations();
             VerifyAndSetPlayerPrefs();
             SceneManager.sceneLoaded += ActiveSceneChanged;
@@ -29,43 +29,47 @@ public class GameManager : MonoBehaviour
 
 
 
-    #region Initial_Configurations
+    #region INITIAL_CONFIGURATIONS
 
-    public GameDate_Struct gameDate = new GameDate_Struct(1, Months.JAN, 1973); //Game initial date
+    public GameDate_Struct GameDate = new GameDate_Struct(1, Months.JAN, 1973); //Game initial date
 
     public DBConnector DbInstance = null;
 
-    private Units p_prefered_Unit;
+    private Units m_preferedUnit;
 
-    public Units Prefered_Unit
+    public Units PreferedUnit
     {
         get
         {
-            return p_prefered_Unit;
+            return m_preferedUnit;
         }
     }
 
-    private bool p_firstTimeTutorials;
+    private bool m_firstTimeTutorials;
 
     public bool FirstTimeTutorials  //TODO: Usar essa informação para o tutorial da primeira corrida
     {
         get
         {
-            return p_firstTimeTutorials;
+            return m_firstTimeTutorials;
         }
     }
 
 
     Saved_Game_Struct[] m_savedGames;
 
-    MainMenu_Controler mainMenu_Controler;
-    Tutorial_Controler tutorial_Controler;
-    Manager_Controler manager_Controler;
+    MainMenu_Controler m_mainMenuControler;
+    Tutorial_Controler m_tutorialControler;
+    Manager_Controler m_managerControler;
+
+
+    //TODO: this can be changed by the player in the races
+    public int SimulationSpeed = 1;
 
 
     private void ScreenConfigurations()
     {
-        Application.targetFrameRate = 30;
+        Application.targetFrameRate = 60;
         Screen.autorotateToPortrait = false;
         Screen.autorotateToPortraitUpsideDown = false;
         Screen.sleepTimeout = 0;
@@ -79,19 +83,19 @@ public class GameManager : MonoBehaviour
         {
             //  00.MainMenu
             case 0:
-                mainMenu_Controler = FindObjectOfType<MainMenu_Controler>();
+                m_mainMenuControler = FindObjectOfType<MainMenu_Controler>();
                 m_savedGames = DbInstance.Get_SavedGames();
-                mainMenu_Controler.FillUsedSaveSlots(m_savedGames);
+                m_mainMenuControler.FillUsedSaveSlots(m_savedGames);
                 break;
 
             //  01.Tutorial
             case 1:
-                tutorial_Controler = FindObjectOfType<Tutorial_Controler>();
+                m_tutorialControler = FindObjectOfType<Tutorial_Controler>();
                 break;
 
             //  02.Manager
             case 2:
-                manager_Controler = FindObjectOfType<Manager_Controler>();
+                m_managerControler = FindObjectOfType<Manager_Controler>();
                 break;
         }
     }
@@ -100,10 +104,11 @@ public class GameManager : MonoBehaviour
     {
         if (PlayerPrefs.HasKey(PlayerPrefKeys.FIRST_TIME_TUTORIALS))
         {
+            //FIXME: Sometimes, AudioManager is slower and doesnt set its 'instance'
             AudioManager.Instance.BGM_Volume = PlayerPrefs.GetInt(PlayerPrefKeys.BGM_VOLUME);
             AudioManager.Instance.SFX_Volume = PlayerPrefs.GetInt(PlayerPrefKeys.SFX_VOLUME);
-            p_prefered_Unit = (Units)PlayerPrefs.GetInt(PlayerPrefKeys.PREFERED_UNITS);
-            p_firstTimeTutorials = PlayerPrefs.GetInt(PlayerPrefKeys.FIRST_TIME_TUTORIALS) == 0;
+            m_preferedUnit = (Units)PlayerPrefs.GetInt(PlayerPrefKeys.PREFERED_UNITS);
+            m_firstTimeTutorials = PlayerPrefs.GetInt(PlayerPrefKeys.FIRST_TIME_TUTORIALS) == 0;
 
             Debug.Log("<b>Game Manager</b> - Player Prefs Loaded!");
         }
@@ -111,7 +116,7 @@ public class GameManager : MonoBehaviour
         {
             AudioManager.Instance.BGM_Volume = 100;
             AudioManager.Instance.SFX_Volume = 100;
-            p_prefered_Unit = Units.METRIC;    //Default value = 0 = metric system;
+            m_preferedUnit = Units.METRIC;    //Default value = 0 = metric system;
 
             Debug.Log("<b>Game Manager</b> - No player prefs found! Setting default values");
 
@@ -123,31 +128,31 @@ public class GameManager : MonoBehaviour
     {
         PlayerPrefs.SetInt(PlayerPrefKeys.BGM_VOLUME, AudioManager.Instance.BGM_Volume);
         PlayerPrefs.SetInt(PlayerPrefKeys.SFX_VOLUME, AudioManager.Instance.SFX_Volume);
-        PlayerPrefs.SetInt(PlayerPrefKeys.PREFERED_UNITS, (int)p_prefered_Unit);
+        PlayerPrefs.SetInt(PlayerPrefKeys.PREFERED_UNITS, (int)m_preferedUnit);
         PlayerPrefs.SetInt(PlayerPrefKeys.FIRST_TIME_TUTORIALS, 0);   //treated as a bool; 0 = false, 1 = true;
 
         Debug.Log("<b>Game Manager</b> - Player Prefs Saved!");
     }
 
-    #endregion
+    #endregion //INITIAL_CONFIGURATIONS
 
 
-    #region Save_Slot_Controls
+    #region SAVE_SLOT_CONTROL
 
-    private int p_selectedSaveSlot = -1;
+    private int m_selectedSaveSlot = -1;
 
     public int SelectedSaveSlot
     {
         get
         {
-            return p_selectedSaveSlot;
+            return m_selectedSaveSlot;
         }
         set
         {
             if (value < 1 || value > 3)
                 Debug.LogWarning("<b>Game Manager</b> - Tried to select a game slot out of the acceptable range");
             else
-                p_selectedSaveSlot = value;
+                m_selectedSaveSlot = value;
         }
     }
 
@@ -169,22 +174,22 @@ public class GameManager : MonoBehaviour
 
         //ORDER: Engineer, Driver, PitCrewLeader, PitCrewMember x4
         string formated_teamIDs = string.Format("{0},{1},{2},{3},{4},{5},{6}",
-            _team.engineer.dbId,
-            _team.driver.dbId,
-            _team.leader.dbId,
-            _team.crewMembers[0].dbId,
-            _team.crewMembers[1].dbId,
-            _team.crewMembers[2].dbId,
-            _team.crewMembers[3].dbId);
+            _team.Engineer.dbId,
+            _team.Driver.dbId,
+            _team.CrewLeader.dbId,
+            _team.CrewMembers[0].dbId,
+            _team.CrewMembers[1].dbId,
+            _team.CrewMembers[2].dbId,
+            _team.CrewMembers[3].dbId);
 
         _newGame.Team_Members = formated_teamIDs;
 
-        DbInstance.SaveGame(_newGame, p_selectedSaveSlot);
+        DbInstance.SaveGame(_newGame, m_selectedSaveSlot);
 
         Debug.Log((Time.realtimeSinceStartupAsDouble - timebefore).ToString());
     }
 
-    public void Load(int _selectedSlot)
+    public void LoadGame(int _selectedSlot)
     {
         PlayerManager.Instance.SetTeamData(
             m_savedGames[_selectedSlot - 1].Team_Name,
@@ -194,13 +199,13 @@ public class GameManager : MonoBehaviour
 
         string[] date = m_savedGames[_selectedSlot - 1].Game_Date.Split(':');
 
-        gameDate.Week = int.Parse(date[0]);
-        gameDate.Month = (Months)int.Parse(date[1]);
-        gameDate.Year = int.Parse(date[2]);
+        GameDate.Week = int.Parse(date[0]);
+        GameDate.Month = (Months)int.Parse(date[1]);
+        GameDate.Year = int.Parse(date[2]);
 
         PlayerManager.Instance.LoadTeam(DbInstance.LoadTeamByString(m_savedGames[_selectedSlot - 1].Team_Members));
 
-        LoadScene(2);
+        LoadScene_Async((int)SceneCodex.MANAGER);
     }
 
     public void DeleteSavedGame(int _selectedSlot)
@@ -208,11 +213,13 @@ public class GameManager : MonoBehaviour
         DbInstance.DeleteSavedGameByID(_selectedSlot, m_savedGames[_selectedSlot - 1].Team_Members);
     }
 
-    #endregion
+    #endregion //SAVE_SLOT_CONTROL
 
 
 
-    #region Scene Management
+    #region SCENE_MANAGEMENT
+
+    [SerializeField] Animator sceneSwitcher;
 
     Coroutine Load_AsyncCO = null;
 
@@ -221,7 +228,12 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene(_sceneIndex);
     }
 
-    public bool LoadScene_Async(int _sceneIndex, float _haltBeforeSwitching = 0f)
+    public void LoadScene(SceneCodex _sceneName)
+    {
+        SceneManager.LoadScene((int)_sceneName);
+    }
+
+    public bool LoadScene_Async(int _sceneIndex, float _haltBeforeSwitching = 1f)
     {
         if (Load_AsyncCO != null)
             return false;
@@ -233,6 +245,8 @@ public class GameManager : MonoBehaviour
 
     IEnumerator WaitAndLoad(int _sceneIndex, float _haltBeforeSwitching)
     {
+        sceneSwitcher.SetTrigger("Out");
+
         AsyncOperation load = SceneManager.LoadSceneAsync(_sceneIndex, LoadSceneMode.Single);
         load.allowSceneActivation = false;
 
@@ -250,11 +264,13 @@ public class GameManager : MonoBehaviour
 
         load.allowSceneActivation = true;
 
+        sceneSwitcher.SetTrigger("In");
+
         Load_AsyncCO = null;
         yield break;
     }
 
-    #endregion
+    #endregion //SCENE_MANAGEMENT
 
 
 
@@ -262,20 +278,20 @@ public class GameManager : MonoBehaviour
 
     public void ChangePreferedUnits()
     {
-        p_prefered_Unit = (p_prefered_Unit == Units.METRIC) ? Units.IMPERIAL : Units.METRIC;
+        m_preferedUnit = (m_preferedUnit == Units.METRIC) ? Units.IMPERIAL : Units.METRIC;
     }
 
-    public void Generate_NPC(ref NpcStruct _layout)
+    public void NpcGenerate(ref NpcStruct _layout)
     {
         _layout = DbInstance.GenerateNpc_WithDbData();
     }
 
-    public NpcStruct Generate_NPC()
+    public NpcStruct NpcGenerate()
     {
         return DbInstance.GenerateNpc_WithDbData();
     }
 
-    public bool Generate_NPC_InBulk(ref NpcStruct[] _structArray)
+    public bool NpcGenerateInBulk(ref NpcStruct[] _structArray)
     {
         return DbInstance.GenerateNpc_WithDbData(ref _structArray);
     }

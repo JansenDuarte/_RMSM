@@ -2,6 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public struct NpcStruct
+{
+    public string name;
+    public string sex;
+    public string country;
+    public int age;
+}
+
+public enum Moral
+{
+    AWFUL = 0,
+    BAD = 1,
+    OK = 2,
+    GOOD = 3,
+    GREAT = 4
+}
+
 public abstract class NpcLayout
 {
     #region CONSTANTS
@@ -28,7 +45,10 @@ public abstract class NpcLayout
 
     public int level = 1;
     public int xp = 0;
-    public int moral;           //Affects all other behaviours;
+    public int moralValue;           //Affects all other behaviours;
+
+    private Moral moral;
+    public Moral Moral { get { return moral; } }
 
     public int potencial;
     public int contractValue;
@@ -51,7 +71,7 @@ public abstract class NpcLayout
     /// </summary>
     /// <param name="_contractValue">contract value of the NPC</param>
     /// <returns></returns>
-    public int[] Return_Skills_BasedOn_ContractValue(int _contractValue)
+    public int[] Generate_SkillsByContractValue(int _contractValue)
     {
         int[] skills = { _contractValue, _contractValue, _contractValue, _contractValue };   //shittiest way; all values are equal;
 
@@ -98,9 +118,7 @@ public abstract class NpcLayout
             float chance = Mathf.Pow(100f, age) / 25f;       //Function found by plotting the data; This gives a good curve
 
             if (Random.Range(0f, 1f) <= chance)
-            {
                 return true;
-            }
         }
 
         return false;
@@ -129,81 +147,48 @@ public abstract class NpcLayout
     }
 
 
-    //FIXME: this needs to be factored
     public void EffectMoral(int _effect)
     {
-        int _prevMoral = moral;
-        moral += _effect;
+        int prevMoral = moralValue;
+        moralValue += _effect;
 
-        int[] _lowerLimits = new int[] { 19, 39, 59, 79 };
-        int[] _upperLimits = new int[] { 80, 60, 40, 20 };
+        if (Check_ThresholdAndChangeMoral(prevMoral, _effect))
+        {
+            //TODO: trigger moral change!
+        }
 
-        //Verify if the moral passes through a threshold
+        //Block it from going over 100 and under 0
         if (_effect > 0)
-        {
-            if (CheckThreshold(_prevMoral, moral, _lowerLimits))
-            {
-                //Increase the moral treshold
-            }
-        }
+            moralValue = (moralValue > 100) ? 100 : moralValue;
         else
-        {
-            if (CheckThreshold(_prevMoral, moral, _upperLimits))
-            {
-                //Decrease the moral treshold
-            }
-        }
-
+            moralValue = (moralValue < 0) ? 0 : moralValue;
     }
 
 
-    //FIXME: this needs to be factored
     /// <summary>
-    /// Verifies if any of the thresholds have been surpassed
+    /// Verifies if any of the thresholds have been surpassed and changes the 'moral' enum
     /// </summary>
-    /// <param name="_previousValue"> Previous value, before the change </param>
-    /// <param name="_currentValue"> Current value, already changed </param>
-    /// <param name="_limit"> Array of the limits to be tested </param>
+    /// <param name="_previousValue"> Value before the change </param>
+    /// <param name="_variation"></param>
     /// <returns></returns>
-    private bool CheckThreshold(int _previousValue, int _currentValue, int[] _limit)
+    private bool Check_ThresholdAndChangeMoral(int _previousValue, int _variation)
     {
-        if (_previousValue - _currentValue > 0)
+        int[] limits = new int[] { 20, 40, 60, 80 };    //Thresholds based on 5 separations of the Moral values
+
+        for (int i = 0; i < limits.Length; i++)
         {
-            for (int i = 0; i < _limit.Length; i++)
+            if (_previousValue < limits[i] && _previousValue + _variation > limits[i])
             {
-                if (_previousValue <= _limit[i] && _currentValue > _limit[i])
-                {
-                    return true;
-                }
+                moral += 1;
+                return true;
             }
-        }
-        else
-        {
-            for (int i = 0; i < _limit.Length; i++)
+            else if (_previousValue > limits[i] && _previousValue + _variation < limits[i])
             {
-                if (_previousValue >= _limit[i] && _currentValue < _limit[i])
-                {
-                    return true;
-                }
+                moral -= 1;
+                return true;
             }
         }
 
         return false;
     }
-}
-
-
-
-
-
-
-
-
-
-public struct NpcStruct
-{
-    public string name;
-    public string sex;
-    public string country;
-    public int age;
 }

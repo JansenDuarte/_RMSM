@@ -23,7 +23,7 @@ public class NpcDriver : NpcLayout
         country = _struct.country;
         sex = _struct.sex;
 
-        int[] values = Return_Skills_BasedOn_ContractValue(_contractValue);
+        int[] values = Generate_SkillsByContractValue(_contractValue);
 
         List<int> list = new();
         list.AddRange(values);
@@ -49,13 +49,13 @@ public class NpcDriver : NpcLayout
     #endregion
 
     /// <summary>
-    ///     - General Performance determines how well the driver is going to
-    ///     drive during 1 lap.
+    ///     - General Performance determines if the driver is prone to making mistakes
     /// </summary>
     /// <returns></returns>
     public int GetGeneralPerformance()
     {
         int performance;
+
         int consistencyVariation;
 
         //TAGED     This is the calculation that relates to a good graph for the variation of performance

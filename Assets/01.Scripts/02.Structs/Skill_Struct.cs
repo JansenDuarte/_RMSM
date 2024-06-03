@@ -1,5 +1,5 @@
 
-
+[System.Serializable]
 public struct Skill_Struct
 {
     public string NAME;

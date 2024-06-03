@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class MainMenu_Controler : MonoBehaviour
 {
-    [SerializeField] private SaveSlot[] mainMenuSaveSlots;
-    [SerializeField] private GameObject deleteWarning_Panel;
-    [SerializeField] private Animator sceneSwitcher;
+    [SerializeField] SaveSlot_Struct[] mainMenuSaveSlots;
+
+    [SerializeField] Canvas deleteWarning_Panel;
+
     private int indexSelectedForDeletion = -1;
 
     public void FillUsedSaveSlots(Saved_Game_Struct[] _saved_Games)
@@ -37,32 +38,28 @@ public class MainMenu_Controler : MonoBehaviour
     }
 
 
-    public void LoadGame_At_SlotIndex(int _slotIndex)
+    public void UI_LoadGame_At_SlotIndex(int _slotIndex)
     {
         GameManager.Instance.SelectedSaveSlot = _slotIndex;
 
-        //TODO play animation and sound of load game
-
-        GameManager.Instance.Load(_slotIndex);
+        GameManager.Instance.LoadGame(_slotIndex);
     }
 
-    public void StartNewGame_At_SlotIndex(int _slotIndex)
+    public void UI_StartNewGame_At_SlotIndex(int _slotIndex)
     {
         GameManager.Instance.SelectedSaveSlot = _slotIndex;
-
-        //TODO play animation and sounds of new game
 
         GameManager.Instance.LoadScene_Async((int)SceneCodex.TUTORIAL);
     }
 
-    public void WarnDeletion(int _slotIndex)
+    public void UI_WarnDeletion(int _slotIndex)
     {
-        deleteWarning_Panel.SetActive(true);
+        deleteWarning_Panel.enabled = true;
         indexSelectedForDeletion = _slotIndex;
     }
 
 
-    public void Delete_At_Slotindex()
+    public void UI_Delete_At_Slotindex()
     {
         mainMenuSaveSlots[indexSelectedForDeletion - 1].Change_SlotName("empty");
 

@@ -5,13 +5,13 @@ using UnityEngine;
 public class AudioManager : MonoBehaviour
 {
     #region SIMPLE_SINGLETON
-    private static AudioManager m_instance = null;
-    public static AudioManager Instance { get { return m_instance; } }
+    private static AudioManager s_instance = null;
+    public static AudioManager Instance { get { return s_instance; } }
     private void Awake()
     {
-        if (m_instance == null)
+        if (s_instance == null)
         {
-            m_instance = this;
+            s_instance = this;
             DontDestroyOnLoad(gameObject);
             return;
         }

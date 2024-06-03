@@ -9,7 +9,8 @@ public static class Competitor_Generator
 
         NpcDriver npcDriver;
         NpcStruct[] layout = new NpcStruct[_ammount];
-        GameManager.Instance.Generate_NPC_InBulk(ref layout);
+        GameManager.Instance.NpcGenerateInBulk(ref layout);
+        int[] skills;
 
         for (int i = 0; i < _ammount; i++)
         {
@@ -23,10 +24,11 @@ public static class Competitor_Generator
                 //Debuging
                 carNumber = Random.Range(0, 100)
             };
-            npcDriver.skills[0].VALUE = Random.Range(1, 11) * _difficulty;
-            npcDriver.skills[0].VALUE = Random.Range(1, 11) * _difficulty;
-            npcDriver.skills[0].VALUE = Random.Range(1, 11) * _difficulty;
-            npcDriver.skills[0].VALUE = Random.Range(1, 11) * _difficulty;
+            skills = npcDriver.Generate_SkillsByContractValue(Random.Range(10, 16) * _difficulty);
+            for (int j = 0; j < npcDriver.skills.Length; j++)
+            {
+                npcDriver.skills[j].VALUE = skills[j];
+            }
             //Debuging//
 
             competitorList.Add(npcDriver);

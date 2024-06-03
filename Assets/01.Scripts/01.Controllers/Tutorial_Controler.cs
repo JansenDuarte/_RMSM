@@ -6,10 +6,12 @@ using TMPro;
 
 public class Tutorial_Controler : MonoBehaviour
 {
+
     [Header("Scene references")]
     [SerializeField] TMP_InputField teamName_Input;
     [SerializeField] TMP_InputField teamNumber_Input;
     [SerializeField] Image teamColor_Img;
+    [SerializeField] Canvas colorPicker_Canvas;
     [SerializeField] GameObject nameYourTeam_Pivot;
     [SerializeField] GameObject pickRaceEngineer_Pivot;
     [SerializeField] GameObject raceEngineerDescription_Pivot;
@@ -17,11 +19,11 @@ public class Tutorial_Controler : MonoBehaviour
     [SerializeField] GameObject driverDescription_Pivot;
     [SerializeField] GameObject pickPitCrewLeader_Pivot;
     [SerializeField] GameObject pitCrewLeaderDescription_Pivot;
-    [SerializeField] Animator endTutorialAnimator;
+    [SerializeField] ColorPicker colorPicker;
 
 
-    [Header("Warning panel")]
-    [SerializeField] GameObject warningPanel;
+    [Header("Warning Canvas")]
+    [SerializeField] Canvas warningCanvas;
     [SerializeField] TextMeshProUGUI warningText;
     [SerializeField][Range(1f, 5f)] float warningTimer;
 
@@ -46,15 +48,15 @@ public class Tutorial_Controler : MonoBehaviour
     private int selected_pitCrewLeader = -1;
     private int selected_driver = -1;
 
-    private const int MIN_INIT_CONTRACT_VALUE = 10;
-    private const int MAX_INIT_CONTRACT_VALUE = 16;
+    private const int MIN_INITIAL_CONTRACT_VALUE = 10;
+    private const int MAX_INITIAL_CONTRACT_VALUE = 16;
 
     private const int INITIAL_CASH = 10;
 
 
     private void Start()
     {
-        GameManager.Instance.Generate_NPC_InBulk(ref npcsGenerated);
+        GameManager.Instance.NpcGenerateInBulk(ref npcsGenerated);
     }
 
 
@@ -85,7 +87,7 @@ public class Tutorial_Controler : MonoBehaviour
 
         for (int i = 0; i < raceEngineers.Length; i++)
         {
-            raceEngineers[i] = new NpcRaceEngineer(npcsGenerated[i], Random.Range(MIN_INIT_CONTRACT_VALUE, MAX_INIT_CONTRACT_VALUE));
+            raceEngineers[i] = new NpcRaceEngineer(npcsGenerated[i], Random.Range(MIN_INITIAL_CONTRACT_VALUE, MAX_INITIAL_CONTRACT_VALUE));
             raceManager_DataHelper[i].ShowNpcCard(ref raceEngineers[i]);
         }
     }
@@ -106,11 +108,9 @@ public class Tutorial_Controler : MonoBehaviour
 
     public void UI_RaceEngineer_Description_NextButtonClicked()
     {
-
-
         for (int i = 0; i < drivers.Length; i++)
         {
-            drivers[i] = new NpcDriver(npcsGenerated[i + 3], Random.Range(MIN_INIT_CONTRACT_VALUE, MAX_INIT_CONTRACT_VALUE));
+            drivers[i] = new NpcDriver(npcsGenerated[i + 3], Random.Range(MIN_INITIAL_CONTRACT_VALUE, MAX_INITIAL_CONTRACT_VALUE));
             driver_DataHelper[i].ShowNpcCard(ref drivers[i]);
         }
     }
@@ -133,7 +133,7 @@ public class Tutorial_Controler : MonoBehaviour
     {
         for (int i = 0; i < pitCrewLeaders.Length; i++)
         {
-            pitCrewLeaders[i] = new NpcPitCrewLeader(npcsGenerated[i + 6], Random.Range(MIN_INIT_CONTRACT_VALUE, MAX_INIT_CONTRACT_VALUE));
+            pitCrewLeaders[i] = new NpcPitCrewLeader(npcsGenerated[i + 6], Random.Range(MIN_INITIAL_CONTRACT_VALUE, MAX_INITIAL_CONTRACT_VALUE));
             pitCrewLeader_DataHelper[i].ShowNpcCard(ref pitCrewLeaders[i]);
         }
     }
@@ -151,7 +151,7 @@ public class Tutorial_Controler : MonoBehaviour
 
         for (int i = 0; i < pitCrewMembers.Length; i++)
         {
-            pitCrewMembers[i] = new NpcPitCrewMember(npcsGenerated[i + 9], Random.Range(MIN_INIT_CONTRACT_VALUE, MAX_INIT_CONTRACT_VALUE));
+            pitCrewMembers[i] = new NpcPitCrewMember(npcsGenerated[i + 9], Random.Range(MIN_INITIAL_CONTRACT_VALUE, MAX_INITIAL_CONTRACT_VALUE));
         }
         pitCrewLeaders[selected_pitCrewLeader].pitCrew = pitCrewMembers;
 
@@ -161,10 +161,6 @@ public class Tutorial_Controler : MonoBehaviour
     public void UI_FinishTutorial()
     {
         PlayerManager.Instance.PrepareDataAndSave();
-
-        //TODO: wait animation; call load scene
-
-
 
         GameManager.Instance.LoadScene_Async((int)SceneCodex.MANAGER);
     }
@@ -192,6 +188,14 @@ public class Tutorial_Controler : MonoBehaviour
     }
 
 
+    public void UI_OpenColorPicker() { colorPicker_Canvas.enabled = true; }
+
+    public void UI_ConfirmColorChange()
+    {
+        teamColor_Img.color = colorPicker.colorExposer.color;
+        colorPicker_Canvas.enabled = false;
+    }
+
 
     public void UI_WarningPanelForceClose()
     {
@@ -203,11 +207,11 @@ public class Tutorial_Controler : MonoBehaviour
     {
         warningText.color = _msgColor;
         warningText.text = _msg;
-        warningPanel.SetActive(true);
+        warningCanvas.enabled = true;
 
         yield return new WaitForSeconds(warningTimer + _aditionalWait);
 
-        warningPanel.SetActive(false);
+        warningCanvas.enabled = false;
 
         yield break;
     }
