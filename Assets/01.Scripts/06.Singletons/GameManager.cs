@@ -169,7 +169,6 @@ public class GameManager : MonoBehaviour
     /// <param name="_team"></param>
     public void SaveNewGame(ref Saved_Game_Struct _newGame, ref Team_Struct _team)
     {
-        double timebefore = Time.realtimeSinceStartupAsDouble;
         DbInstance.SaveNewTeam(ref _team);
 
         //ORDER: Engineer, Driver, PitCrewLeader, PitCrewMember x4
@@ -185,8 +184,6 @@ public class GameManager : MonoBehaviour
         _newGame.Team_Members = formated_teamIDs;
 
         DbInstance.SaveGame(_newGame, m_selectedSaveSlot);
-
-        Debug.Log((Time.realtimeSinceStartupAsDouble - timebefore).ToString());
     }
 
     public void LoadGame(int _selectedSlot)

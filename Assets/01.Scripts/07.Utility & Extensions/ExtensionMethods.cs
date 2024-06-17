@@ -10,8 +10,6 @@
 
 namespace ExtensionMethods
 {
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Globalization;
     using UnityEngine;
 
@@ -55,6 +53,7 @@ namespace ExtensionMethods
         }
 
         #endregion // ARRAY_EXTENSIONS
+
 
 
         #region SPRITE_EXTENSION
@@ -267,6 +266,11 @@ namespace ExtensionMethods
             _f = (_f - _oldMin) / (_oldMax - _oldMin) * (_newMax - _newMin) + _newMin;
         }
 
+        public static void GaussianRandom(float _min, float _max)
+        {
+
+        }
+
         #endregion // FLOAT_EXTENTIONS
 
 
@@ -406,7 +410,7 @@ namespace ExtensionMethods
 
             return returnCurve;
         }
-      
+
         /// Return value with leading zero
         /// </summary>
         /// <param name="_value"></param>
@@ -442,7 +446,6 @@ namespace ExtensionMethods
         }
 
         #endregion // STRING_EXTENSIONS
-
 
 
 

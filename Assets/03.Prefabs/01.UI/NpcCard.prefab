@@ -422,8 +422,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_isSelectable: 0
-  buttonBehaviour: {fileID: 3927554236005508121}
-  photoComponents:
+  m_buttonBehaviour: {fileID: 3927554236005508121}
+  m_photoComponents:
   - {fileID: 3872532683876465163}
   - {fileID: 2252192741011852201}
   - {fileID: 3581003458986851863}
@@ -432,42 +432,40 @@ MonoBehaviour:
   - {fileID: 5461302429216429816}
   - {fileID: 992895716903539611}
   - {fileID: 8837912416153099031}
-  npc_countryFlag: {fileID: 296173111507618047}
-  skinTones:
-  - {r: 0.7169812, g: 0.62184095, b: 0.59184766, a: 1}
-  - {r: 0.6037736, g: 0.39675894, b: 0.3446066, a: 1}
-  - {r: 0.6320754, g: 0.39707044, b: 0.30709326, a: 1}
-  - {r: 0.46226418, g: 0.31969443, b: 0.28128338, a: 1}
-  - {r: 0.2735849, g: 0.16472231, b: 0.11227306, a: 1}
-  facialDetails:
+  m_countryFlag: {fileID: 296173111507618047}
+  m_skinTones:
+  - {r: 0.9150943, g: 0.73235697, b: 0.6863207, a: 1}
+  - {r: 0.8207547, g: 0.61660147, b: 0.49167854, a: 1}
+  - {r: 0.6603774, g: 0.42567918, b: 0.36445355, a: 1}
+  - {r: 0.5, g: 0.2848894, b: 0.2287736, a: 1}
+  m_facialDetails:
   - {fileID: 21300000, guid: a38da9ec58618ad419ea46e900620f55, type: 3}
   - {fileID: 21300000, guid: 2c80993f90e5f7e4c84edb5ac23b4c11, type: 3}
   - {fileID: 21300000, guid: 9ea765a322309944a8d54e0bfcbf0f83, type: 3}
-  nosesAndMouths:
+  m_nosesAndMouths:
   - {fileID: 21300000, guid: e2657a7cef6710a4bba2682a835c659d, type: 3}
   - {fileID: 21300000, guid: 062300a8ae203cb4990475d8fb9e6844, type: 3}
   - {fileID: 21300000, guid: 524677375f75d6342859c2d064a9bf34, type: 3}
-  eyesAndBrows:
+  m_eyesAndBrows:
   - {fileID: 21300000, guid: 5a9523138e8685d478bb2bdcc3487148, type: 3}
   - {fileID: 21300000, guid: 55b92b128561ad64ca97289cf4b1127b, type: 3}
   - {fileID: 21300000, guid: cb8dec5dd8b031140b77c03c72b4bf1d, type: 3}
-  hairs:
+  m_hairs:
   - {fileID: 21300000, guid: f434b50c1aebe7f4a81ac03dc74ca3b7, type: 3}
   - {fileID: 21300000, guid: cddeab122607b5b45ab8b4593bb1e44e, type: 3}
   - {fileID: 21300000, guid: 5a199febeee6f3147be84fbe960fc45f, type: 3}
-  facialHairs:
+  m_facialHairs:
   - {fileID: 21300000, guid: aec8abe9e598dc2438ef136fbfe55ff8, type: 3}
   - {fileID: 21300000, guid: b1fe797e6f7458e4197b0a927b74f882, type: 3}
   - {fileID: 21300000, guid: ac8085e4e2ae77d4cb22f4e9b544f975, type: 3}
-  accessories:
+  m_accessories:
   - {fileID: 21300000, guid: e2cf3106825c06b4c9389d85bc2a6ad4, type: 3}
   - {fileID: 21300000, guid: f5874cb46b0c81f4288a8612524922d9, type: 3}
-  npc_name: {fileID: 296173112239601153}
-  npc_country: {fileID: 296173112227361582}
-  npc_sex: {fileID: 296173111646419640}
-  npc_age: {fileID: 296173111406371313}
-  skillsPanel_GO: {fileID: 0}
-  skillBarStructs:
+  m_name: {fileID: 296173112239601153}
+  m_country: {fileID: 296173112227361582}
+  m_sex: {fileID: 296173111646419640}
+  m_age: {fileID: 296173111406371313}
+  m_skillBars:
   - {fileID: 519375108836873408}
   - {fileID: 519375108175399067}
   - {fileID: 519375107596760036}

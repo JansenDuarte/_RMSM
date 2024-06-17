@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -79,5 +78,14 @@ public class NpcDriver : NpcLayout
             skills[(int)DRIVER_SKILLS.SPEED].VALUE, skills[(int)DRIVER_SKILLS.STAMINA].VALUE, skills[(int)DRIVER_SKILLS.CONSISTENCY].VALUE, consistencyVariation, variationGradient, performance));
 
         return performance;
+    }
+
+    public float GetReactionTime()
+    {
+        float retValue = 0f;
+
+        //TODO:     Make the calculation for the random reaction time
+
+        return retValue;
     }
 }

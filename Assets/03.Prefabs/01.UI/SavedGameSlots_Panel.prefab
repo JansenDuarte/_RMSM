@@ -596,7 +596,8 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 632108632308834817, guid: a2c719b91bb37c64fb63043110f4a432, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: a2c719b91bb37c64fb63043110f4a432, type: 3}
 --- !u!224 &2894923126066006305 stripped
 RectTransform:
@@ -766,7 +767,8 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 632108632308834817, guid: a2c719b91bb37c64fb63043110f4a432, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: a2c719b91bb37c64fb63043110f4a432, type: 3}
 --- !u!224 &3387823333865747541 stripped
 RectTransform:
@@ -940,7 +942,8 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 632108632308834817, guid: a2c719b91bb37c64fb63043110f4a432, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: a2c719b91bb37c64fb63043110f4a432, type: 3}
 --- !u!224 &4157084859775067367 stripped
 RectTransform:

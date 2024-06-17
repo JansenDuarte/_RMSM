@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MainMenu_Controler : MonoBehaviour
 {
-    [SerializeField] SaveSlot_Struct[] mainMenuSaveSlots;
+    [SerializeField] SaveSlot[] mainMenuSaveSlots;
 
     [SerializeField] Canvas deleteWarning_Panel;
 

@@ -88,7 +88,7 @@ public class Tutorial_Controler : MonoBehaviour
         for (int i = 0; i < raceEngineers.Length; i++)
         {
             raceEngineers[i] = new NpcRaceEngineer(npcsGenerated[i], Random.Range(MIN_INITIAL_CONTRACT_VALUE, MAX_INITIAL_CONTRACT_VALUE));
-            raceManager_DataHelper[i].ShowNpcCard(ref raceEngineers[i]);
+            raceManager_DataHelper[i].Show_Npc_Card(ref raceEngineers[i]);
         }
     }
 
@@ -111,7 +111,7 @@ public class Tutorial_Controler : MonoBehaviour
         for (int i = 0; i < drivers.Length; i++)
         {
             drivers[i] = new NpcDriver(npcsGenerated[i + 3], Random.Range(MIN_INITIAL_CONTRACT_VALUE, MAX_INITIAL_CONTRACT_VALUE));
-            driver_DataHelper[i].ShowNpcCard(ref drivers[i]);
+            driver_DataHelper[i].Show_Npc_Card(ref drivers[i]);
         }
     }
 
@@ -134,7 +134,7 @@ public class Tutorial_Controler : MonoBehaviour
         for (int i = 0; i < pitCrewLeaders.Length; i++)
         {
             pitCrewLeaders[i] = new NpcPitCrewLeader(npcsGenerated[i + 6], Random.Range(MIN_INITIAL_CONTRACT_VALUE, MAX_INITIAL_CONTRACT_VALUE));
-            pitCrewLeader_DataHelper[i].ShowNpcCard(ref pitCrewLeaders[i]);
+            pitCrewLeader_DataHelper[i].Show_Npc_Card(ref pitCrewLeaders[i]);
         }
     }
 

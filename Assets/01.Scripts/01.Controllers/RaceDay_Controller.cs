@@ -106,22 +106,15 @@ public class RaceDay_Controller : MonoBehaviour
         yield break;
     }
 
+    int laps = 1;
+    float newTrackPosition;
+    Vector3 targetPosition;
     private IEnumerator SimulateRace()
     {
-        int laps = 1;
-        float newTrackPosition;
-        Vector3 targetPosition;
-
         //DEBUG
         while (laps <= track.laps)
         {
-            for (int i = 0; i < cars.Length; i++)
-            {
-                newTrackPosition = cars[i].Drive() / DISTANCE_CONVERSION_FACTOR;
-                targetPosition = track.curve.GetPointAt(newTrackPosition);
-                cars[i].transform.position = targetPosition;
-                // cars[i].transform.Rotate(cars[i].transform.forward, Vector3.Angle(cars[i].transform.up, targetPosition - cars[i].transform.position));
-            }
+            SimulateDriving();
 
             //Check overtake opportunities for all cars
             Change_GridPosition();
@@ -135,38 +128,43 @@ public class RaceDay_Controller : MonoBehaviour
             for (int i = 0; i < GameManager.Instance.SimulationSpeed; i++) { yield return new WaitForEndOfFrame(); }
         }
 
-        EndEvent();
+        StartCoroutine(EndEvent());
 
-        //TODO: this could be its own coroutine, defining the comemoration lap and entry into the pit lane for all cars
+        yield break;
+    }
+
+    private IEnumerator EndEvent()
+    {
+        for (int i = 0; i < cars.Length; i++)
+        { cars[i].checkeredFlag = true; }
+
         while (!AllCarsFinished())
         {
-            for (int i = 0; i < cars.Length; i++)
-            {
-                if (!cars[i].raceCompleted)
-                {
-                    newTrackPosition = cars[i].Drive() / DISTANCE_CONVERSION_FACTOR;
-                    targetPosition = track.curve.GetPointAt(newTrackPosition);
-                    cars[i].transform.position = targetPosition;
-                    // cars[i].transform.Rotate(cars[i].transform.forward, Vector3.Angle(cars[i].transform.up, targetPosition - cars[i].transform.position));
-                }
-            }
+            SimulateDriving();
+
             //FIXME: this is not the right way to do it
             for (int i = 0; i < GameManager.Instance.SimulationSpeed; i++) { yield return new WaitForEndOfFrame(); }
         }
 
-        //Race ended
-
-        //Show race end info
         Show_EndRace_Info();
 
         yield break;
     }
 
-    private void EndEvent()
+    private void SimulateDriving()
     {
         for (int i = 0; i < cars.Length; i++)
-        { cars[i].checkeredFlag = true; }
+        {
+            if (!cars[i].raceCompleted)
+            {
+                newTrackPosition = cars[i].Drive() / DISTANCE_CONVERSION_FACTOR;
+                targetPosition = track.curve.GetPointAt(newTrackPosition);
+                cars[i].transform.position = targetPosition;
+            }
+        }
     }
+
+
 
     private bool AllCarsFinished()
     {
@@ -182,12 +180,10 @@ public class RaceDay_Controller : MonoBehaviour
     private void Change_GridPosition()
     {
         int carInFrontIndex;
-        // int carBehindIndex;
 
         for (int i = 0; i < cars.Length; i++)
         {
             carInFrontIndex = i - 1;
-            // carBehindIndex = i + 1;
 
             //check position gained
             if (carInFrontIndex >= 0)
@@ -200,17 +196,6 @@ public class RaceDay_Controller : MonoBehaviour
                     raceDayHelper.Show_GridChanges(i, carInFrontIndex);
                 }
             }
-
-            // //check position lost
-            // if (carBehindIndex < cars.Length)
-            // {
-            //     if (cars[i].trackPositionPerCent < cars[carBehindIndex].trackPositionPerCent &&
-            //     cars[i].currentLap == cars[carBehindIndex].currentLap)
-            //     {
-            //         cars[i].gridPosition++;
-            //         cars[carBehindIndex].gridPosition--;
-            //     }
-            // }
         }
     }
 
