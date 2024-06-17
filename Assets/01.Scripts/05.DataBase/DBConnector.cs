@@ -637,10 +637,15 @@ public class DBConnector : MonoBehaviour
 
     private static class CommandCodex
     {
-        public static readonly string GAME_URL = "URI=file:" + Application.dataPath + "/99.InternalDataBase/" + "GameDataBase.db";
-        public static readonly string NPC_URL = "URI=file:" + Application.dataPath + "/99.InternalDataBase/" + "NpcData.db";
-        public static readonly string TRACK_URL = "URI=file:" + Application.dataPath + "/99.InternalDataBase/" + "Tracks.db";
-
+#if UNITY_EDITOR
+        public static readonly string GAME_URL = "URI=file:" + Application.streamingAssetsPath + "/99.InternalDataBase/" + "GameDataBase.db";
+        public static readonly string NPC_URL = "URI=file:" + Application.streamingAssetsPath + "/99.InternalDataBase/" + "NpcData.db";
+        public static readonly string TRACK_URL = "URI=file:" + Application.streamingAssetsPath + "/99.InternalDataBase/" + "Tracks.db";
+#else
+        public static readonly string GAME_URL = "URI=file:" + Application.persistentDataPath + "/99.InternalDataBase/" + "GameDataBase.db";
+        public static readonly string NPC_URL = "URI=file:" + Application.persistentDataPath + "/99.InternalDataBase/" + "NpcData.db";
+        public static readonly string TRACK_URL = "URI=file:" + Application.persistentDataPath + "/99.InternalDataBase/" + "Tracks.db";
+#endif
         public const string SELECT_LAST_ROWID = "SELECT last_insert_rowid();";
 
         public const string SELECT_ALL_SAVED_GAMES = "SELECT * FROM Saved_Game";
