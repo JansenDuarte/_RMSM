@@ -89,6 +89,7 @@ public class RaceDay_Controller : MonoBehaviour
         //get the time when lights finish
         float lightsOff_Time = Time.time;
 
+        //FIXME:    having and 'off' switch in here when some time passes might be the thing
         //wait for clutch click release
         yield return new WaitUntil(() => Input.GetKeyUp(KeyCode.Mouse0) == true || didFalseStart);
         float clutchOff_Time = Time.time;
@@ -223,12 +224,12 @@ public class RaceDay_Controller : MonoBehaviour
 
     private void Overtake_MiniGame()
     {
-
+        //TODO: build overtake minigame
     }
 
     private void Show_EndRace_Info()
     {
-
+        //TODO: build end race UI
     }
 
 

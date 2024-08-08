@@ -4,7 +4,6 @@
 public struct GameDate_Struct
 {
     private int m_week;
-
     public int Week
     {
         readonly get { return m_week; }
@@ -20,7 +19,6 @@ public struct GameDate_Struct
     }
 
     private Months m_month;
-
     public Months Month
     {
         readonly get { return m_month; }
@@ -36,7 +34,6 @@ public struct GameDate_Struct
     }
 
     private int m_year;
-
     public int Year
     {
         readonly get { return m_year; }

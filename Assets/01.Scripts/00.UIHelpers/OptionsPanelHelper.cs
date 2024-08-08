@@ -52,7 +52,7 @@ public class OptionsPanelHelper : MonoBehaviour
         Units_BtnText.text = GetUnitString(GameManager.Instance.PreferedUnit);
     }
 
-
+    //TODO: Verify how many times per frame this is being called
     public void UI_SoundSliderChangedValue()
     {
         AudioManager.Instance.BGM_Volume = (int)BGM_Slider.value;

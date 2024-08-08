@@ -6,6 +6,9 @@ using TMPro;
 public class Tutorial_Controler : MonoBehaviour
 {
 
+    #region VARIABLES
+
+
     [Header("Scene references")]
     [SerializeField] TMP_InputField teamName_Input;
     [SerializeField] TMP_InputField teamNumber_Input;
@@ -51,6 +54,10 @@ public class Tutorial_Controler : MonoBehaviour
     private const int MAX_INITIAL_CONTRACT_VALUE = 16;
 
     private const int INITIAL_CASH = 10;
+
+
+    #endregion // VARIABLES
+
 
 
     private void Start()

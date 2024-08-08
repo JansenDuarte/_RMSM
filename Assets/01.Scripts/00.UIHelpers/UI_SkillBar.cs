@@ -10,6 +10,8 @@ public class UI_SkillBar : MonoBehaviour
 
     private float p_barFill;
 
+    private Coroutine co_barFill;
+
 
     /// <summary>
     /// Ammount to fill the bar image. Any value is accepted, it'll get corrected internaly
@@ -28,7 +30,9 @@ public class UI_SkillBar : MonoBehaviour
             }
 
             p_barFill = value;
-            StartCoroutine(ChangeBarFill());
+            if (co_barFill != null)
+                StopCoroutine(co_barFill);
+            co_barFill = StartCoroutine(ChangeBarFill());
         }
     }
 
@@ -48,6 +52,7 @@ public class UI_SkillBar : MonoBehaviour
             yield return new WaitForEndOfFrame();
         }
 
+        co_barFill = null;
         yield break;
     }
 }
