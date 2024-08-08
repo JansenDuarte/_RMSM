@@ -48,16 +48,18 @@ public class DBConnector : MonoBehaviour
 
     private bool Connect()
     {
-        _connection = new SqliteConnection(CommandCodex.GAME_URL);
-
-        if (_connection != null)
+        try
         {
+            _connection = new SqliteConnection(CommandCodex.GAME_URL);
             _connection.Open();
             _command = _connection.CreateCommand();
             return true;
         }
-        else
+        catch (System.Exception e)
+        {
+            Debug.LogError(e.Message);
             return false;
+        }
     }
 
     public Saved_Game_Struct[] Get_SavedGames()
@@ -70,7 +72,7 @@ public class DBConnector : MonoBehaviour
 
         Initiate_OpTimer();
 
-        Saved_Game_Struct[] _returnValue = new Saved_Game_Struct[3];
+        Saved_Game_Struct[] savedGames = new Saved_Game_Struct[3];
 
         _command.CommandText = CommandCodex.SELECT_ALL_SAVED_GAMES;
 
@@ -78,7 +80,7 @@ public class DBConnector : MonoBehaviour
 
         while (_reader.Read())
         {
-            _returnValue[_reader.GetInt32(0) - 1] = new Saved_Game_Struct(
+            savedGames[_reader.GetInt32(0) - 1] = new Saved_Game_Struct(
                 _reader.GetString(1),    //Team Name
                 _reader.GetString(2),    //Car Color
                 _reader.GetInt32(3),     //Car Number
@@ -93,7 +95,7 @@ public class DBConnector : MonoBehaviour
         Print_OpTimer("Get_SavedGames()");
         CloseConnection();
 
-        return _returnValue;
+        return savedGames;
     }
 
     public bool SaveNewTeam(ref Team_Struct _team)
@@ -373,16 +375,18 @@ public class DBConnector : MonoBehaviour
 
     private bool Connect_NpcDataDb()
     {
-        _connection = new SqliteConnection(CommandCodex.NPC_URL);
-
-        if (_connection != null)
+        try
         {
+            _connection = new SqliteConnection(CommandCodex.NPC_URL);
             _connection.Open();
             _command = _connection.CreateCommand();
             return true;
         }
-        else
+        catch (System.Exception e)
+        {
+            Debug.LogError(e.Message);
             return false;
+        }
     }
 
 
@@ -548,16 +552,18 @@ public class DBConnector : MonoBehaviour
 
     private bool Connect_TrackDb()
     {
-        _connection = new SqliteConnection(CommandCodex.TRACK_URL);
-
-        if (_connection != null)
+        try
         {
+            _connection = new SqliteConnection(CommandCodex.TRACK_URL);
             _connection.Open();
             _command = _connection.CreateCommand();
             return true;
         }
-        else
+        catch (System.Exception e)
+        {
+            Debug.LogError(e.Message);
             return false;
+        }
     }
 
     public bool Load_Track(out Track _track, int _index = -1)
