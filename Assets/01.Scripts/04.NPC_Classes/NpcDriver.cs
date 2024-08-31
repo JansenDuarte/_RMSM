@@ -57,8 +57,8 @@ public class NpcDriver : NpcLayout
 
         int consistencyVariation;
 
-        //TAGED     This is the calculation that relates to a good graph for the variation of performance
-        int variationGradient = Mathf.CeilToInt((-(skills[(int)DRIVER_SKILLS.CONSISTENCY].VALUE * skills[(int)DRIVER_SKILLS.CONSISTENCY].VALUE) / 1000) + 100);
+        //INFO:     This is the calculation that relates to a good graph for the variation of performance
+        int variationGradient = Mathf.CeilToInt((-(skills[(int)DRIVER_SKILLS.CONSISTENCY].VALUE * skills[(int)DRIVER_SKILLS.CONSISTENCY].VALUE) / 100) + 10);
 
         //Consistency; The closer to 100, smaller the variations;
 
