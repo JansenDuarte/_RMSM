@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class RaceDay_Controller : MonoBehaviour
@@ -37,14 +36,6 @@ public class RaceDay_Controller : MonoBehaviour
             cars[i].trackPositionPerCent = gridPosition * DISTANCE_CONVERSION_FACTOR;
             cars[i].transform.position = track.curve.GetPointAt(gridPosition);
         }
-
-        //Simulate Race
-
-        //Race mini-games based on the happenings of the simulated race
-
-        //Show end race data
-
-        //End Raceday
     }
 
     private void PrepareRacersStats()
@@ -59,7 +50,6 @@ public class RaceDay_Controller : MonoBehaviour
         }
     }
 
-    //FIXME:    The race doesn't start until the player releases the button!
     private IEnumerator RaceStart_MiniGame()
     {
         bool didFalseStart = false;
@@ -100,7 +90,6 @@ public class RaceDay_Controller : MonoBehaviour
 
         //show results
 
-        //FIXME:    this should happen even if the player does not release the button
         StartCoroutine(SimulateRace());
 
         yield break;
@@ -118,7 +107,9 @@ public class RaceDay_Controller : MonoBehaviour
 
             //Check overtake opportunities for all cars
             Change_GridPosition();
-            Sort_ByGridPosition();
+
+            //Sorting happens when cars change position
+            //Sort_ByGridPosition();
 
             //Lap count based on car in first position
             if (Check_LapCompleted(laps))
@@ -193,26 +184,29 @@ public class RaceDay_Controller : MonoBehaviour
                 {
                     cars[i].gridPosition--;
                     cars[carInFrontIndex].gridPosition++;
+                    (cars[carInFrontIndex], cars[i]) = (cars[i], cars[carInFrontIndex]);    //Tupple for swapping positions
                     raceDayHelper.Show_GridChanges(i, carInFrontIndex);
                 }
             }
         }
     }
 
-    private void Sort_ByGridPosition()
-    {
-        RaceCar[] sorted = new RaceCar[COMPETITOR_AMMOUNT + 1];
 
-        for (int i = 0; i < cars.Length; i++)
-        {
-            sorted[cars[i].gridPosition - 1] = cars[i];
-        }
+    //INFO: Sorting after the grid changes had a bug when cars were too close
+    // private void Sort_ByGridPosition()
+    // {
+    //     RaceCar[] sorted = new RaceCar[COMPETITOR_AMMOUNT + 1];
 
-        for (int i = 0; i < cars.Length; i++)
-        {
-            cars[i] = sorted[i];
-        }
-    }
+    //     for (int i = 0; i < cars.Length; i++)
+    //     {
+    //         sorted[cars[i].gridPosition - 1] = cars[i];
+    //     }
+
+    //     for (int i = 0; i < cars.Length; i++)
+    //     {
+    //         cars[i] = sorted[i];
+    //     }
+    // }
 
     private bool Check_LapCompleted(int _eventLap)
     {
@@ -229,7 +223,13 @@ public class RaceDay_Controller : MonoBehaviour
 
     private void Show_EndRace_Info()
     {
+        //Calculate xp for the player
 
+        //Calculate money won
+
+        //Show end race stats
+
+        //Load scene 'manager'
     }
 
 
