@@ -94,6 +94,20 @@ public class PlayerManager : MonoBehaviour
             m_pitCrewLeader.pitCrew = m_pitCrewMembers;
     }
 
+
+    //TODO need to figure out how to give xp and check for level ups later
+    public void GiveTeamXp(int _xp)
+    {
+        m_driver.GainXP(_xp);
+        m_raceEngineer.GainXP(_xp);
+        m_pitCrewLeader.GainXP(_xp);
+        foreach (NpcPitCrewMember pcm in m_pitCrewMembers)
+        {
+            pcm.GainXP(_xp);
+        }
+    }
+
+
     private bool VerifyLoadedTeam(ref Team_Struct _team)
     {
         if (_team.Engineer == null || _team.Driver == null || _team.CrewLeader == null || _team.CrewMembers == null)

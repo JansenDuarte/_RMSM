@@ -157,7 +157,7 @@ public class GameManager : MonoBehaviour
     }
 
 
-    public void Save()
+    public void SaveGame()
     {
 
     }

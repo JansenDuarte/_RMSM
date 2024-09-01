@@ -224,10 +224,13 @@ public class RaceDay_Controller : MonoBehaviour
     private void Show_EndRace_Info()
     {
         //Calculate xp for the player
+        PlayerManager.Instance.GiveTeamXp(10);  //need to figure out how to calculate xp to be gained
 
         //Calculate money won
+        PlayerManager.Instance.Money += 2;
 
         //Show end race stats
+        raceDayHelper.Show_EndRace();
 
         //Load scene 'manager'
     }
@@ -241,6 +244,13 @@ public class RaceDay_Controller : MonoBehaviour
     {
         raceDayHelper.UI_StartRace();
         StartCoroutine(RaceStart_MiniGame());
+    }
+
+    public void UI_LeaveRaceDay()
+    {
+        //FIXME the saved game needs to be fixed
+
+        GameManager.Instance.LoadScene_Async((int)SceneCodex.MANAGER);
     }
 
     #endregion

@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.U2D;
@@ -101,6 +100,15 @@ public class RaceDayHelper : MonoBehaviour
         shapeController.spline.SetLeftTangent(_points.Length, _points[0].handle1);
         shapeController.spline.SetRightTangent(_points.Length, _points[0].handle2);
         shapeController.spline.SetHeight(_points.Length, trackHeight);
+    }
+
+
+    public void Show_EndRace()
+    {
+        //TODO  figure out the UI for it
+        raceEnd_Panel_GO.SetActive(true);
+        raceInfo_Panel_GO.SetActive(false);
+        race_Panel_GO.SetActive(false);
     }
 
 
