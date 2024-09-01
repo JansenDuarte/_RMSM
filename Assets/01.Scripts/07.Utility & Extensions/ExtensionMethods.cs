@@ -322,6 +322,11 @@ namespace ExtensionMethods
             return indexes;
         }
 
+        /// <summary>
+        /// Format the Team_Struct into a string fit to be inserted into the db
+        /// </summary>
+        /// <param name="ts"></param>
+        /// <returns></returns>
         public static string FormatTeamAsIds(this Team_Struct ts)
         {
             string formated_teamIDs = string.Format("{0},{1},{2},{3},{4},{5},{6}",

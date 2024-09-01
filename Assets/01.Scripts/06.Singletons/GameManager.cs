@@ -47,7 +47,7 @@ public class GameManager : MonoBehaviour
 
     private bool m_firstTimeTutorials;
 
-    public bool FirstTimeTutorials  //TODO: Usar essa informação para o tutorial da primeira corrida
+    public bool FirstTimeTutorials  //TODO Use this information to prepare first race tutorial
     {
         get
         {

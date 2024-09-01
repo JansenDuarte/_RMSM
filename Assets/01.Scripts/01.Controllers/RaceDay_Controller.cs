@@ -229,10 +229,10 @@ public class RaceDay_Controller : MonoBehaviour
         //Calculate money won
         PlayerManager.Instance.Money += 2;
 
+        //TODO Effect moral based on the result of the race
+
         //Show end race stats
         raceDayHelper.Show_EndRace();
-
-        //Load scene 'manager'
     }
 
 
@@ -248,7 +248,7 @@ public class RaceDay_Controller : MonoBehaviour
 
     public void UI_LeaveRaceDay()
     {
-        //FIXME the saved game needs to be fixed
+        GameManager.Instance.SaveGame();
 
         GameManager.Instance.LoadScene_Async((int)SceneCodex.MANAGER);
     }
