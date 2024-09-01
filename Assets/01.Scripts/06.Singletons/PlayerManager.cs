@@ -1,3 +1,4 @@
+using ExtensionMethods;
 using UnityEngine;
 
 public class PlayerManager : MonoBehaviour
@@ -66,16 +67,19 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
-    public void PrepareDataAndSave()
+    public void PrepareSaveData(out Saved_Game_Struct _saveData, out Team_Struct _teamData)
     {
         Debug.Log("<b>Player Manager</b> - Preparing data to save");
 
         string dateFormated = string.Format("{0}:{1}:{2}", GameManager.Instance.GameDate.Week, (int)GameManager.Instance.GameDate.Month, GameManager.Instance.GameDate.Year);
 
-        Saved_Game_Struct saveData = new Saved_Game_Struct(m_teamName, m_teamColor.ToString(), m_teamNumber, m_money, dateFormated, "", "");
-        Team_Struct teamData = new Team_Struct(m_raceEngineer, m_driver, m_pitCrewLeader, m_pitCrewMembers);
+        _saveData = new Saved_Game_Struct(m_teamName, m_teamColor.ToString(), m_teamNumber, m_money, dateFormated, "", "");
+        _teamData = new Team_Struct(m_raceEngineer, m_driver, m_pitCrewLeader, m_pitCrewMembers);
 
-        GameManager.Instance.SaveNewGame(ref saveData, ref teamData);
+        if (m_pitCrewMembers[0].dbId < 0)   //This means that the NPC has been generated now, and its not present in the db
+            return;
+
+        _saveData.Team_Members = _teamData.FormatTeamAsIds();
     }
 
     public void LoadTeam(Team_Struct _team)

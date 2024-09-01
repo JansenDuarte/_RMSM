@@ -160,7 +160,9 @@ public class Tutorial_Controler : MonoBehaviour
 
     public void UI_FinishTutorial()
     {
-        PlayerManager.Instance.PrepareDataAndSave();
+        PlayerManager.Instance.PrepareSaveData(out Saved_Game_Struct _saveData, out Team_Struct _teamData);
+
+        GameManager.Instance.SaveNewGame(ref _saveData, ref _teamData);
 
         GameManager.Instance.LoadScene_Async((int)SceneCodex.MANAGER);
     }

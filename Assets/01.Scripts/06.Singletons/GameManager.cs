@@ -159,7 +159,9 @@ public class GameManager : MonoBehaviour
 
     public void SaveGame()
     {
+        PlayerManager.Instance.PrepareSaveData(out Saved_Game_Struct _saveData, out Team_Struct _teamData);
 
+        DbInstance.SaveGame(_saveData, m_selectedSaveSlot);
     }
 
     /// <summary>
@@ -171,17 +173,7 @@ public class GameManager : MonoBehaviour
     {
         DbInstance.SaveNewTeam(ref _team);
 
-        //ORDER: Engineer, Driver, PitCrewLeader, PitCrewMember x4
-        string formated_teamIDs = string.Format("{0},{1},{2},{3},{4},{5},{6}",
-            _team.Engineer.dbId,
-            _team.Driver.dbId,
-            _team.CrewLeader.dbId,
-            _team.CrewMembers[0].dbId,
-            _team.CrewMembers[1].dbId,
-            _team.CrewMembers[2].dbId,
-            _team.CrewMembers[3].dbId);
-
-        _newGame.Team_Members = formated_teamIDs;
+        _newGame.Team_Members = _team.FormatTeamAsIds();
 
         DbInstance.SaveGame(_newGame, m_selectedSaveSlot);
     }

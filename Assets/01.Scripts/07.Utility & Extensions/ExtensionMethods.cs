@@ -322,6 +322,20 @@ namespace ExtensionMethods
             return indexes;
         }
 
+        public static string FormatTeamAsIds(this Team_Struct ts)
+        {
+            string formated_teamIDs = string.Format("{0},{1},{2},{3},{4},{5},{6}",
+            ts.Engineer.dbId,
+            ts.Driver.dbId,
+            ts.CrewLeader.dbId,
+            ts.CrewMembers[0].dbId,
+            ts.CrewMembers[1].dbId,
+            ts.CrewMembers[2].dbId,
+            ts.CrewMembers[3].dbId);
+
+            return formated_teamIDs;
+        }
+
 
         /// <summary>
         /// Parse the curve to a string
