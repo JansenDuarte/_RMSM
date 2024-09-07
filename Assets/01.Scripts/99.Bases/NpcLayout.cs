@@ -24,7 +24,7 @@ public abstract class NpcLayout
 
     private const int AGE_THRESHOLD = 30;
 
-    private const int LEVELUP_SCALING = 10;
+    public const int LEVELUP_SCALING = 10;
     public const int LOWER_SKILL_LIMIT = 1;
     public const int UPPER_SKILL_LIMIT = 100;
     #endregion // CONSTANTS
@@ -132,6 +132,7 @@ public abstract class NpcLayout
     /// <returns><b>TRUE</b> if NPC leveled up</returns>
     public bool GainXP(int _addedXP)
     {
+        //FIXME there is a bug here. xp is not going over the first level up. Try doing it recursevely
         xp += Mathf.Abs(_addedXP);
 
         if (xp >= level * LEVELUP_SCALING)

@@ -261,7 +261,7 @@ namespace ExtensionMethods
         /// <param name="_oldMax"></param>
         /// <param name="_newMin"></param>
         /// <param name="_newMax"></param>
-        public static void Change_Range(this float _f, float _oldMin, float _oldMax, float _newMin, float _newMax)
+        public static void Change_Range(ref this float _f, float _oldMin, float _oldMax, float _newMin, float _newMax)
         {
             _f = (_f - _oldMin) / (_oldMax - _oldMin) * (_newMax - _newMin) + _newMin;
         }

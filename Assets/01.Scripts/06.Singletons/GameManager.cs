@@ -162,6 +162,7 @@ public class GameManager : MonoBehaviour
         PlayerManager.Instance.PrepareSaveData(out Saved_Game_Struct _saveData, out Team_Struct _teamData);
 
         DbInstance.SaveGame(_saveData, m_selectedSaveSlot);
+        DbInstance.SaveTeam(_teamData);
     }
 
     /// <summary>

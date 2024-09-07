@@ -1,8 +1,8 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using ExtensionMethods;
 
 public class UI_SkillBar : MonoBehaviour
 {
@@ -23,10 +23,7 @@ public class UI_SkillBar : MonoBehaviour
                 value = 0f;
 
             if (value > 1f)
-            {
-                BarFill = value / 100f;
-                return;
-            }
+                value.Change_Range(0f, value, 0f, 1f);
 
             p_barFill = value;
             StartCoroutine(ChangeBarFill());
@@ -48,6 +45,9 @@ public class UI_SkillBar : MonoBehaviour
 
             yield return new WaitForEndOfFrame();
         }
+
+        if (p_barFill == 1f)
+            Debug.Log("Animate level up / Max skill");
 
         yield break;
     }

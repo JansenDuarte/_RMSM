@@ -223,16 +223,17 @@ public class RaceDay_Controller : MonoBehaviour
 
     private void Show_EndRace_Info()
     {
-        //Calculate xp for the player
-        PlayerManager.Instance.GiveTeamXp(10);  //need to figure out how to calculate xp to be gained
+        int xpGained = 10;
+        int moneyGained = 2;
 
-        //Calculate money won
-        PlayerManager.Instance.Money += 2;
-
-        //TODO Effect moral based on the result of the race
+        PlayerManager.Instance.xpGained = xpGained;
+        PlayerManager.Instance.moneyGained = moneyGained;
 
         //Show end race stats
-        raceDayHelper.Show_EndRace();
+        raceDayHelper.Show_EndRace(ref cars, moneyGained, xpGained);
+
+
+        //TODO Effect moral based on the result of the race
     }
 
 
@@ -248,6 +249,11 @@ public class RaceDay_Controller : MonoBehaviour
 
     public void UI_LeaveRaceDay()
     {
+        //Calculate xp for the player
+        PlayerManager.Instance.GiveTeamXp();  //need to figure out how to calculate xp to be gained
+        //Calculate money won
+        PlayerManager.Instance.GainMoney();
+
         GameManager.Instance.SaveGame();
 
         GameManager.Instance.LoadScene_Async((int)SceneCodex.MANAGER);

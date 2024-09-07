@@ -73,9 +73,9 @@ public class NpcDriver : NpcLayout
         // Determine performance:
         performance = skills[(int)DRIVER_SKILLS.SPEED].VALUE + ((100 - skills[(int)DRIVER_SKILLS.STAMINA].VALUE) / 10) + consistencyVariation;
 
-        Debug.Log(string.Format("Performance Calculations:\n" +
-            "speed : {0}\n stamina : {1}\n consistency : {2}\n consistency variation : {3}\n consistency gradient : {4}\n performance : {5}",
-            skills[(int)DRIVER_SKILLS.SPEED].VALUE, skills[(int)DRIVER_SKILLS.STAMINA].VALUE, skills[(int)DRIVER_SKILLS.CONSISTENCY].VALUE, consistencyVariation, variationGradient, performance));
+        // Debug.Log(string.Format("Performance Calculations:\n" +
+        //     "speed : {0}\n stamina : {1}\n consistency : {2}\n consistency variation : {3}\n consistency gradient : {4}\n performance : {5}",
+        //     skills[(int)DRIVER_SKILLS.SPEED].VALUE, skills[(int)DRIVER_SKILLS.STAMINA].VALUE, skills[(int)DRIVER_SKILLS.CONSISTENCY].VALUE, consistencyVariation, variationGradient, performance));
 
         return performance;
     }

@@ -244,6 +244,70 @@ public class DBConnector : MonoBehaviour
         return true;
     }
 
+    public bool SaveTeam(Team_Struct _team)
+    {
+        if (Connect() == false)
+        {
+            Debug.Log("<b>DB Connector</b> - ERROR! Database connection could not be reached!");
+            return false;
+        }
+
+        Initiate_OpTimer();
+
+        NpcLayout data;
+
+        for (int i = 0; i < 7; i++)
+        {
+            switch (i)
+            {
+                case 0: //Driver
+                    data = PlayerManager.Instance.Driver;
+                    break;
+                case 1: //Engineer
+                    data = PlayerManager.Instance.Engineer;
+                    break;
+                case 2: //Pit crew leader
+                    data = PlayerManager.Instance.PitLeader;
+                    break;
+
+                //Pit crew members
+                case 3:
+                    data = PlayerManager.Instance.PitMembers[0];
+                    break;
+                case 4:
+                    data = PlayerManager.Instance.PitMembers[1];
+                    break;
+                case 5:
+                    data = PlayerManager.Instance.PitMembers[2];
+                    break;
+                case 6:
+                    data = PlayerManager.Instance.PitMembers[3];
+                    break;
+                default:
+                    return false;
+            }
+
+            _command.CommandText = string.Format(CommandCodex.UPDATE_TEAM_MEMBER_WHERE_ID,
+            data.level,
+            data.xp,
+            data.moralValue,
+            data.potencial,
+            data.skills[0].VALUE,
+            data.skills[1].VALUE,
+            data.skills[2].VALUE,
+            data.skills[3].VALUE,
+            data.dbId);
+
+            _command.ExecuteNonQuery();
+        }
+
+        Print_OpTimer("SaveTeam()");
+
+        CloseConnection();
+
+        return true;
+    }
+
     public Team_Struct LoadTeamByString(string _teamMembers)
     {
         Team_Struct ts = new();
@@ -670,6 +734,9 @@ public class DBConnector : MonoBehaviour
         public const string UPDATE_SAVED_GAME_WHERE_ID = "UPDATE Saved_Game SET Team_Name = " +
         "\"{0}\", Car_Color = \"{1}\", Car_Number = {2}, Money = {3}, Game_Time = \"{4}\", Team_Members = \"{5}\", Current_Country = \"{6}\" " +
         "WHERE ID = {7}";
+        public const string UPDATE_TEAM_MEMBER_WHERE_ID = "UPDATE Team_Members SET Level = " +
+        "{0}, Experience = {1}, Moral = {2}, Potential = {3}, Skill_1 = {4}, Skill_2 = {5}, Skill_3 = {6} , Skill_4 = {7} " +
+        "WHERE ID = {8}";
         public const string SELECT_ALL_TEAM_MEMBERS = "SELECT * FROM Team_Members WHERE ID in ({0})";
         public const string DELETE_SAVED_GAME = "UPDATE Saved_Game SET Team_Name = " +
         "\"\", Car_Color = \"\", Car_Number = 0, Money = 0, Game_Time = \"\", Team_Members = \"\", Current_Country = \"\" " +

@@ -17,6 +17,9 @@ public class RaceDayHelper : MonoBehaviour
     public TextMeshProUGUI trackLaps;
     public TextMeshProUGUI trackWeather;
     public CompetitorData_Struct[] racersInfo;
+    public CompetitorData_Struct[] endRaceInfo;
+    public TextMeshProUGUI xpGained;
+    public TextMeshProUGUI moneyGained;
 
     //Image information
     [Header("Image Information")]
@@ -37,6 +40,9 @@ public class RaceDayHelper : MonoBehaviour
     public GameObject raceEnd_Panel_GO;
     [Space]
     public GameObject competitorList_GO;
+
+    [Header("Xp Structs")]
+    public UI_SkillBar[] xp_bars;
 
     #endregion // VARIABLES
 
@@ -103,12 +109,48 @@ public class RaceDayHelper : MonoBehaviour
     }
 
 
-    public void Show_EndRace()
+    public void Show_EndRace(ref RaceCar[] _cars, int _moneyGained, int _xpGained)
     {
-        //TODO  figure out the UI for it
+        for (int i = 0; i < _cars.Length; i++)
+        {
+            endRaceInfo[i].competitor_Name.text = _cars[i].driver.name;
+            endRaceInfo[i].competitor_CarNumber_AndColor.text = _cars[i].driver.carNumber.Format_AddLeadingZero();
+            endRaceInfo[i].competitor_CarNumber_AndColor.color = racersInfo[i].competitor_CarNumber_AndColor.color;
+        }
+
+        moneyGained.text += _moneyGained.ToString();
+        xpGained.text += _xpGained.ToString();
+
         raceEnd_Panel_GO.SetActive(true);
         raceInfo_Panel_GO.SetActive(false);
         race_Panel_GO.SetActive(false);
+
+        StartCoroutine(Show_XpChanges(_xpGained));
+    }
+
+    private IEnumerator Show_XpChanges(int _xpGained)
+    {
+        //current xp xp to next level
+        int xp2nextLevel = PlayerManager.Instance.Driver.level * NpcLayout.LEVELUP_SCALING;
+        float value = PlayerManager.Instance.Driver.xp + _xpGained;
+        value.Change_Range(0f, (float)xp2nextLevel, 0f, 1f);
+        xp_bars[0].BarFill = value;
+
+        yield return new WaitForSeconds(0.5f);
+
+        xp2nextLevel = PlayerManager.Instance.Engineer.level * NpcLayout.LEVELUP_SCALING;
+        value = PlayerManager.Instance.Engineer.xp + _xpGained;
+        value.Change_Range(0f, (float)xp2nextLevel, 0f, 1f);
+        xp_bars[1].BarFill = value;
+
+        yield return new WaitForSeconds(0.5f);
+
+        xp2nextLevel = PlayerManager.Instance.PitLeader.level * NpcLayout.LEVELUP_SCALING;
+        value = PlayerManager.Instance.PitLeader.xp + _xpGained;
+        value.Change_Range(0f, (float)xp2nextLevel, 0f, 1f);
+        xp_bars[2].BarFill = value;
+
+        yield break;
     }
 
 

@@ -36,7 +36,11 @@ public class PlayerManager : MonoBehaviour
     [SerializeField] NpcDriver m_driver;
     [SerializeField] NpcPitCrewLeader m_pitCrewLeader;
     [SerializeField] NpcPitCrewMember[] m_pitCrewMembers;
+
+    [HideInInspector] public NpcRaceEngineer Engineer { get { return m_raceEngineer; } }
     [HideInInspector] public NpcDriver Driver { get { return m_driver; } }
+    [HideInInspector] public NpcPitCrewLeader PitLeader { get { return m_pitCrewLeader; } }
+    [HideInInspector] public NpcPitCrewMember[] PitMembers { get { return m_pitCrewMembers; } }
 
     public void SetTeamData(string _name, int _number, Color _color, int _money)
     {
@@ -100,15 +104,26 @@ public class PlayerManager : MonoBehaviour
 
 
     //TODO need to figure out how to give xp and check for level ups later
-    public void GiveTeamXp(int _xp)
+    //TODO  these two need to be fixed in some place. They were moved here to allow the animation of the UI
+    public int xpGained;
+    public int moneyGained;
+    public void GiveTeamXp()
     {
-        m_driver.GainXP(_xp);
-        m_raceEngineer.GainXP(_xp);
-        m_pitCrewLeader.GainXP(_xp);
+        m_driver.GainXP(xpGained);
+        m_raceEngineer.GainXP(xpGained);
+        m_pitCrewLeader.GainXP(xpGained);
         foreach (NpcPitCrewMember pcm in m_pitCrewMembers)
         {
-            pcm.GainXP(_xp);
+            pcm.GainXP(xpGained);
         }
+
+        xpGained = 0;
+    }
+
+    public void GainMoney()
+    {
+        Money += moneyGained;
+        moneyGained = 0;
     }
 
 
