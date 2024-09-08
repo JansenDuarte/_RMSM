@@ -129,20 +129,19 @@ public abstract class NpcLayout
     /// <b>WILL CONVERT NEGATIVE XP INTO POSITIVE</b>
     /// </summary>
     /// <param name="_addedXP"> XP to be added</param>
-    /// <returns><b>TRUE</b> if NPC leveled up</returns>
-    public bool GainXP(int _addedXP)
+    /// <returns>The number of times the NPC leveled up</returns>
+    public int GainXP(int _addedXP)
     {
-        //FIXME there is a bug here. xp is not going over the first level up. Try doing it recursevely
         xp += Mathf.Abs(_addedXP);
 
         if (xp >= level * LEVELUP_SCALING)
         {
-            xp = 0;
+            xp -= level * LEVELUP_SCALING;
             level++;
-            return true;
+            return 1 + GainXP(xp);
         }
 
-        return false;
+        return 0;
     }
 
 
