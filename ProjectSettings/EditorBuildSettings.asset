@@ -15,6 +15,6 @@ EditorBuildSettings:
     path: Assets/00.Scenes/02.Manager.unity
     guid: 22b9b03aba1418347a30aa4ebaacf0bc
   - enabled: 1
-    path: Assets/00.Scenes/RaceTest.unity
+    path: Assets/00.Scenes/03.Race_Day.unity
     guid: 7ea378e7fdb38874e8f4a0060f2e6f16
   m_configObjects: {}

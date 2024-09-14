@@ -4,16 +4,20 @@ using UnityEngine;
 
 public class RaceDay_Controller : MonoBehaviour
 {
-    public RaceDayHelper raceDayHelper;
-
-    public RaceCar[] cars;
-
-    private Track track;
+    #region CONSTANTS
 
     private const int COMPETITOR_AMMOUNT = 7;
-
     public const float GRID_DIFF_FACTOR = 0.015f;
     public const float DISTANCE_CONVERSION_FACTOR = 100f;
+
+    #endregion  //CONSTANTS
+
+    public RaceDayHelper raceDayHelper;
+    public RaceCar[] cars;
+    private Track track;
+    private int laps = 1;
+    private float newTrackPosition;
+    private Vector3 targetPosition;
 
 
     void Start()
@@ -50,11 +54,12 @@ public class RaceDay_Controller : MonoBehaviour
     {
         bool didFalseStart = false;
 
-        //Show race start UI - Press clutch to start
+        //Call UI Helper to show the race start mini game
+        raceDayHelper.Show_MinigameLayout(MiniGameCodex.RACE_START);
 
         //wait for click to begin
-        Debug.Log("Press the clutch to start");
         yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.Mouse0) == true);
+        raceDayHelper.Hide_ClutchText();
 
         //send request to start the lights coroutine
         StartCoroutine(raceDayHelper.RaceLights());
@@ -86,14 +91,14 @@ public class RaceDay_Controller : MonoBehaviour
 
         //show results
 
+        raceDayHelper.HideActiveMinigame();
+
         StartCoroutine(SimulateRace());
 
         yield break;
     }
 
-    int laps = 1;
-    float newTrackPosition;
-    Vector3 targetPosition;
+
     private IEnumerator SimulateRace()
     {
         //DEBUG

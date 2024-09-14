@@ -127,6 +127,7 @@ public class Tutorial_Controler : MonoBehaviour
         driverDescription_Pivot.SetActive(true);
 
         PlayerManager.Instance.ChangeDriver(drivers[selected_driver]);
+        PlayerManager.Instance.Driver.carNumber = PlayerManager.Instance.TeamNumber;
     }
 
     public void UI_Driver_Description_NextButtonClicked()

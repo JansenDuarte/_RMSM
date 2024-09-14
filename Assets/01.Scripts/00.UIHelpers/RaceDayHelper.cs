@@ -38,11 +38,20 @@ public class RaceDayHelper : MonoBehaviour
     public GameObject raceInfo_Panel_GO;
     public GameObject race_Panel_GO;
     public GameObject raceEnd_Panel_GO;
+
+    [Space, Header("Mini-Game Panels")]
+
+    [Space, Header("Race Start Panels")]
+    public GameObject raceStart_Panel;
+    public GameObject pressClutchText;
+
     [Space]
     public GameObject competitorList_GO;
 
     [Header("Xp Structs")]
     public UI_SkillBar[] xp_bars;
+
+    private MiniGameCodex m_activeMinigame = MiniGameCodex.NONE;
 
     #endregion // VARIABLES
 
@@ -146,6 +155,45 @@ public class RaceDayHelper : MonoBehaviour
         yield break;
     }
 
+    public void Show_MinigameLayout(MiniGameCodex _minigame)
+    {
+        //TODO  show the selected minigame
+        switch (_minigame)
+        {
+            case MiniGameCodex.RACE_START:
+                raceStart_Panel.SetActive(true);
+                break;
+            case MiniGameCodex.OVERTAKE:
+                break;
+            case MiniGameCodex.DEFEND:
+                break;
+        }
+
+        m_activeMinigame = _minigame;
+    }
+
+    public void HideActiveMinigame()
+    {
+        switch (m_activeMinigame)
+        {
+            case MiniGameCodex.RACE_START:
+                raceStart_Panel.SetActive(false);
+                break;
+            case MiniGameCodex.OVERTAKE:
+                break;
+            case MiniGameCodex.DEFEND:
+                break;
+            default:
+                //No minigame active
+                return;
+        }
+    }
+
+    public void Hide_ClutchText()
+    {
+        pressClutchText.SetActive(false);
+    }
+
 
 
     #region UI_CALLED_METHODS
@@ -183,9 +231,10 @@ public class RaceDayHelper : MonoBehaviour
 
         raceLightsEnded = true;
 
+        //Don't remove the lights from the screen anymore
         //Wait 1 second and remove the lights from the screen
-        yield return new WaitForSecondsRealtime(1f);
-        for (int i = 0; i < raceLights.Length; i++) { raceLights[i].gameObject.SetActive(false); }
+        // yield return new WaitForSecondsRealtime(1f);
+        // for (int i = 0; i < raceLights.Length; i++) { raceLights[i].gameObject.SetActive(false); }
 
         yield break;
     }

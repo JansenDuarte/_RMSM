@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using ExtensionMethods;
@@ -31,7 +30,7 @@ public class GameManager : MonoBehaviour
 
     #region INITIAL_CONFIGURATIONS
 
-    public GameDate_Struct GameDate = new GameDate_Struct(1, Months.JAN, 1973); //Game initial date
+    public GameDate_Struct GameDate = new GameDate_Struct(1, Months.JAN, 1950); //Game initial date
 
     public DBConnector DbInstance = null;
 
@@ -194,6 +193,7 @@ public class GameManager : MonoBehaviour
         GameDate.Year = int.Parse(date[2]);
 
         PlayerManager.Instance.LoadTeam(DbInstance.LoadTeamByString(m_savedGames[_selectedSlot - 1].Team_Members));
+        PlayerManager.Instance.Driver.carNumber = PlayerManager.Instance.TeamNumber;
 
         LoadScene_Async((int)SceneCodex.MANAGER);
     }
