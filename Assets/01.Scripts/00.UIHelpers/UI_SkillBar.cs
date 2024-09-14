@@ -23,7 +23,7 @@ public class UI_SkillBar : MonoBehaviour
                 value = 0f;
 
             if (value > 1f)
-                value.Change_Range(0f, value, 0f, 1f);
+                value.Change_Range((float)NpcLayout.LOWER_SKILL_LIMIT, (float)NpcLayout.UPPER_SKILL_LIMIT, 0f, 1f);
 
             p_barFill = value;
             StartCoroutine(ChangeBarFill());
