@@ -21,7 +21,7 @@ public static class Competitor_Generator
                 sex = layout[i].sex,
                 age = layout[i].age,
 
-                //Debuging
+                //DEBUG
                 carNumber = Random.Range(0, 100)
             };
             skills = npcDriver.Generate_SkillsByContractValue(Random.Range(10, 16) * _difficulty);

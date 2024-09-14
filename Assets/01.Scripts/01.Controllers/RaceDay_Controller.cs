@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class RaceDay_Controller : MonoBehaviour
@@ -20,33 +21,28 @@ public class RaceDay_Controller : MonoBehaviour
         //DEBUG This needs to call the track that is beeing raced on
         DBConnector.Instance.Load_Track(out track, 1);
 
-        PrepareRacersStats();
+        PrepareRacersStatsAndSprites();
+
+        RandomizeStartingGrid();
+
+        SortCars();
 
         //Show Layout
         raceDayHelper.PrepareRaceDayInfo(ref cars, ref track);
-
-
-        //Position the cars
-        for (int i = 0; i < cars.Length; i++)
-        {
-            //FIXME: some of the cars are starting on top of eachother
-            float gridPosition = 1f - (GRID_DIFF_FACTOR * i);
-            cars[i].startingGridPosition = i + 1;  //setting the grid starting position
-            cars[i].gridPosition = i + 1;
-            cars[i].trackPositionPerCent = gridPosition * DISTANCE_CONVERSION_FACTOR;
-            cars[i].transform.position = track.curve.GetPointAt(gridPosition);
-        }
     }
 
-    private void PrepareRacersStats()
+    private void PrepareRacersStatsAndSprites()
     {
         NpcDriver[] competitors = Competitor_Generator.GenerateCompetitors(COMPETITOR_AMMOUNT, 1).ToArray();
 
         cars[0].driver = PlayerManager.Instance.Driver;
+        cars[0].sprite.color = PlayerManager.Instance.TeamColor;
 
+        //Set up all the competitors
         for (int i = 0; i < competitors.Length; i++)
         {
             cars[i + 1].driver = competitors[i];
+            cars[i + 1].sprite.color = Random.ColorHSV(0f, 1f, 1f, 1f, 0.5f, 1f, 1f, 1f);
         }
     }
 
@@ -191,22 +187,18 @@ public class RaceDay_Controller : MonoBehaviour
         }
     }
 
+    private void SortCars()
+    {
+        RaceCar[] sorted = new RaceCar[8];
+        foreach (RaceCar raceCar in cars)
+        {
+            sorted[raceCar.startingGridPosition - 1] = raceCar;
+        }
 
-    //INFO: Sorting after the grid changes had a bug when cars were too close
-    // private void Sort_ByGridPosition()
-    // {
-    //     RaceCar[] sorted = new RaceCar[COMPETITOR_AMMOUNT + 1];
+        for (int i = 0; i < cars.Length; i++)
+        { cars[i] = sorted[i]; }
+    }
 
-    //     for (int i = 0; i < cars.Length; i++)
-    //     {
-    //         sorted[cars[i].gridPosition - 1] = cars[i];
-    //     }
-
-    //     for (int i = 0; i < cars.Length; i++)
-    //     {
-    //         cars[i] = sorted[i];
-    //     }
-    // }
 
     private bool Check_LapCompleted(int _eventLap)
     {
@@ -237,6 +229,26 @@ public class RaceDay_Controller : MonoBehaviour
     }
 
 
+    private void RandomizeStartingGrid()
+    {
+        List<int> availablePositions = new List<int> { 1, 2, 3, 4, 5, 6, 7, 8 };
+        int rng = -1;
+
+        foreach (RaceCar raceCar in cars)
+        {
+            rng = Random.Range(0, availablePositions.Count);
+
+            raceCar.startingGridPosition = availablePositions[rng];
+            raceCar.gridPosition = raceCar.startingGridPosition;
+            availablePositions.RemoveAt(rng);
+
+            //Position the cars
+            //FIXME: some of the cars are starting on top of eachother. this needs to be verifyied with different tracks
+            float gridPosition = 1f - (GRID_DIFF_FACTOR * raceCar.startingGridPosition);
+            raceCar.trackPositionPerCent = gridPosition * DISTANCE_CONVERSION_FACTOR;
+            raceCar.transform.position = track.curve.GetPointAt(gridPosition);
+        }
+    }
 
 
     #region UI_CALLED_METHODS

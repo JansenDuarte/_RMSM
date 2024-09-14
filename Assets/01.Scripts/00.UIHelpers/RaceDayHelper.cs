@@ -59,19 +59,12 @@ public class RaceDayHelper : MonoBehaviour
         trackLaps.text = _trackInfo.laps.ToString();
         trackWeather.text = TrackGenerator.GenerateWeather();
 
-        racersInfo[0].competitor_Name.text = PlayerManager.Instance.Driver.name;
-        racersInfo[0].competitor_CarNumber_AndColor.text = PlayerManager.Instance.TeamNumber.Format_AddLeadingZero();
-        racersInfo[0].competitor_CarNumber_AndColor.color = PlayerManager.Instance.TeamColor;
-        _cars[0].sprite.color = PlayerManager.Instance.TeamColor;
-
-        //Set up the competitors (after the player car)
-        for (int i = 1; i < _cars.Length; i++)
+        //Set up all the
+        for (int i = 0; i < _cars.Length; i++)
         {
             racersInfo[i].competitor_Name.text = _cars[i].driver.name;
             racersInfo[i].competitor_CarNumber_AndColor.text = _cars[i].driver.carNumber.Format_AddLeadingZero();
-            Color rngColor = Random.ColorHSV(0f, 1f, 1f, 1f, 0.5f, 1f, 1f, 1f);
-            racersInfo[i].competitor_CarNumber_AndColor.color = rngColor;
-            _cars[i].sprite.color = rngColor;
+            racersInfo[i].competitor_CarNumber_AndColor.color = _cars[i].sprite.color;
         }
     }
 
