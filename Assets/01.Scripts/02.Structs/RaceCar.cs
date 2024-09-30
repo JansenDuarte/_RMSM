@@ -16,6 +16,17 @@ public class RaceCar : MonoBehaviour
     public int startingGridPosition;
     public int gridPosition;
     public int currentLap = 0;
+    private bool m_applyBonusPerf = false;
+    private float bonusPerf = 0f;
+    public float BonusPerformance
+    {
+        get { return bonusPerf; }
+        set
+        {
+            bonusPerf = value;
+            m_applyBonusPerf = true;
+        }
+    }
 
     public bool checkeredFlag = false;  //has the event ended?
     public bool raceCompleted = false;
@@ -36,6 +47,13 @@ public class RaceCar : MonoBehaviour
             else
                 raceCompleted = true;
         }
+
+        if (m_applyBonusPerf)
+        {
+            m_applyBonusPerf = false;
+            trackPositionPerCent += bonusPerf * PERFORMANCE_FACTOR;
+        }
+
         return trackPositionPerCent;
     }
 

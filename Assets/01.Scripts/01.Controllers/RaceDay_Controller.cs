@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using ExtensionMethods;
 using UnityEngine;
 
 public class RaceDay_Controller : MonoBehaviour
@@ -14,6 +15,7 @@ public class RaceDay_Controller : MonoBehaviour
 
     public RaceDayHelper raceDayHelper;
     public RaceCar[] cars;
+    private RaceCar playerCar;
     private Track track;
     private int laps = 1;
     private float newTrackPosition;
@@ -41,6 +43,8 @@ public class RaceDay_Controller : MonoBehaviour
 
         cars[0].driver = PlayerManager.Instance.Driver;
         cars[0].sprite.color = PlayerManager.Instance.TeamColor;
+
+        playerCar = cars[0];
 
         //Set up all the competitors
         for (int i = 0; i < competitors.Length; i++)
@@ -74,28 +78,51 @@ public class RaceDay_Controller : MonoBehaviour
                 //Show false start message and the penalty
                 didFalseStart = true;
                 Debug.Log("False start... you get a drive through penalty");
+
+                //TODO Apply penalties
             }
 
         }
 
         //get the time when lights finish
-        float lightsOff_Time = Time.time;
+        float lightsOffTime = Time.time;
 
         //wait for clutch click release
         yield return new WaitUntil(() => Input.GetKeyUp(KeyCode.Mouse0) == true || didFalseStart);
-        float clutchOff_Time = Time.time;
+        float clutchOffTime = Time.time;
 
         //compare times
-        float reaction_Time = clutchOff_Time - lightsOff_Time;
-        Debug.Log(string.Format("Reaction time: {0} ms", reaction_Time));
+        float reactionTime = clutchOffTime - lightsOffTime;
+        Debug.Log(string.Format("Reaction time: {0} ms", reactionTime));
 
         //show results
+        playerCar.BonusPerformance = EvaluateReactionTime(reactionTime);
 
         raceDayHelper.HideActiveMinigame();
 
         StartCoroutine(SimulateRace());
 
         yield break;
+    }
+
+    private float EvaluateReactionTime(float _reactionTime)
+    {
+        float bonus = -1f;
+
+        //Do stuff
+        if (_reactionTime < 0f)
+        {
+            //False start
+            return bonus;
+        }
+
+        //min reaction time = 0.2s, or 200ms
+        //max reaction time = positiveInfinity
+
+        //bonus should be 1 if the reaction time is 0.2
+        //bonus should get closer to 0 the further you are from the common avg. of 250ms
+
+        return bonus;
     }
 
 
